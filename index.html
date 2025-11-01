@@ -3,75 +3,96 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ChopShops</title>
+  <title>ChopShops • Curated finds</title>
   <meta name="color-scheme" content="dark light" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0e0f12;
-      --panel:#14161b;
-      --card:#171a20;
-      --muted:#9aa3b2;
-      --text:#e7ebf3;
-      --accent:#7dd3fc;
-      --ring:#2a2f3a;
+      --bg:#0b0c10;
+      --panel:#10131a;
+      --glass:rgba(255,255,255,0.04);
+      --card:#0f131a;
+      --ring:#242a36;
+      --muted:#93a0b5;
+      --text:#eaf1ff;
+      --accent:#7ee3ff;
+      --accent-2:#8bffcb;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
     }
+    *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; background:var(--bg); color:var(--text);
-      font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      margin:0; background:radial-gradient(1200px 700px at 85% -5%, #162033 0%, rgba(22,32,51,0) 60%), var(--bg);
+      color:var(--text); font:16px/1.5 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     }
-    a{color:var(--accent); text-decoration:none}
-    a:hover{text-decoration:underline}
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1200px; margin:0 auto; padding:18px}
 
     /* Header */
     .header{
       position:sticky; top:0; z-index:50;
-      background:linear-gradient(to bottom, rgba(14,15,18,.95), rgba(14,15,18,.78) 70%, rgba(14,15,18,0));
-      backdrop-filter:saturate(1.2) blur(6px);
+      backdrop-filter:saturate(1.2) blur(8px);
       border-bottom:1px solid var(--ring);
+      background:linear-gradient(180deg, rgba(12,14,18,.85), rgba(12,14,18,.55) 70%, rgba(12,14,18,0));
     }
-    .wrap{max-width:1200px; margin:0 auto; padding:14px 18px}
-    .row{display:flex; align-items:center; gap:12px}
+    .row{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
 
-    .logo{
-      display:flex; align-items:center; gap:10px; flex-shrink:0;
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      padding:6px 10px; border-radius:12px;
+      background:linear-gradient(90deg, var(--glass), transparent);
     }
-    .logo img{
-      width:36px; height:36px; object-fit:contain; display:block;
-    }
-    .brand{font-weight:700; letter-spacing:.3px}
-
+    .brand img{width:40px; height:40px; object-fit:contain}
+    .brand .title{font-weight:800; letter-spacing:.3px; font-size:20px}
     .spacer{flex:1}
 
-    .toolbar{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+    /* Filter group */
     .seg{
-      display:inline-flex; background:var(--panel); border:1px solid var(--ring);
-      border-radius:10px; overflow:hidden;
+      display:inline-flex; padding:4px; gap:6px;
+      border:1px solid var(--ring); border-radius:999px; background:var(--panel);
     }
     .seg button{
-      padding:8px 12px; background:transparent; color:var(--text);
-      border:0; cursor:pointer; font-weight:600;
+      border:0; padding:8px 12px; border-radius:999px; cursor:pointer;
+      background:transparent; color:var(--muted); font-weight:700;
     }
-    .seg button[aria-pressed="true"]{background:var(--card)}
+    .seg button[aria-pressed="true"]{
+      color:var(--text); background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.12);
+    }
 
-    .menu{
-      display:flex; gap:8px; flex-wrap:wrap;
-      background:var(--panel); border:1px solid var(--ring);
-      border-radius:10px; padding:6px;
-      max-width:100%; overflow:auto;
+    /* Category chips */
+    .catbar{
+      margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;
     }
     .chip{
-      border:1px solid var(--ring); background:transparent; color:var(--text);
-      padding:6px 10px; border-radius:999px;cursor:pointer;white-space:nowrap;
+      padding:7px 12px; border-radius:999px; border:1px solid var(--ring);
+      background:var(--glass); color:var(--muted); cursor:pointer;
+      transition:all .2s ease;
     }
-    .chip[aria-pressed="true"]{background:var(--card);}
+    .chip:hover{transform:translateY(-1px)}
+    .chip[aria-pressed="true"]{color:var(--text); border-color:#3b4354; background:rgba(126,227,255,.08)}
 
-    /* Grid */
-    main{max-width:1200px; margin:0 auto; padding:18px}
-    h2{margin:16px 2px 10px; font-size:18px; color:var(--muted)}
+    /* Hero */
+    .hero{
+      margin-top:12px; border:1px solid var(--ring); border-radius:var(--radius);
+      background:
+        radial-gradient(800px 260px at -10% 0%, rgba(139,255,203,.08), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      box-shadow: var(--shadow);
+    }
+    .hero-in{padding:28px 22px}
+    .hero h1{margin:0 0 6px; font-size:28px; letter-spacing:.2px}
+    .hero p{margin:0; color:var(--muted)}
 
+    /* Grid / Cards */
+    main{padding:18px}
+    .section-title{margin:8px 4px 14px; color:var(--muted); font-weight:600}
     .grid{
-      display:grid; gap:14px;
+      display:grid; gap:16px;
       grid-template-columns:repeat(1,minmax(0,1fr));
     }
     @media(min-width:640px){ .grid{grid-template-columns:repeat(2,1fr)} }
@@ -79,201 +100,201 @@
     @media(min-width:1200px){ .grid{grid-template-columns:repeat(4,1fr)} }
 
     .card{
-      background:var(--card); border:1px solid var(--ring); border-radius:14px;
-      overflow:hidden; display:flex; flex-direction:column; min-height:230px;
+      border:1px solid var(--ring); border-radius:18px; background:linear-gradient(180deg,#0d1117,#0b0e13);
+      overflow:hidden; box-shadow:var(--shadow); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
-    .thumb{
-      aspect-ratio:16/10; background:#0b0d11; display:flex; align-items:center;
-      justify-content:center; color:#465063; font-weight:700;
-    }
+    .card:hover{transform:translateY(-3px); border-color:#3b4354; box-shadow:0 18px 40px rgba(0,0,0,.45)}
+    .thumb{aspect-ratio:16/11; background:#0b0f14; display:grid; place-items:center}
     .thumb img{width:100%; height:100%; object-fit:cover; display:block}
-    .body{padding:10px 12px 12px}
-    .title{font-weight:700; margin:0 0 6px; font-size:15px}
-    .meta{font-size:12px; color:var(--muted); display:flex; gap:10px; align-items:center}
-    .actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
-    .btn{
-      display:inline-flex; align-items:center; gap:6px;
-      padding:7px 10px; border-radius:8px; border:1px solid var(--ring);
-      background:var(--panel); color:var(--text); cursor:pointer;
-    }
-    .btn.primary{background:#0b6; border-color:#0a5; color:white}
-    .empty{
-      padding:30px; text-align:center; color:var(--muted); border:1px dashed var(--ring);
-      border-radius:12px; background:var(--panel);
-    }
+    .noimg{color:#3b465a; font-weight:800; letter-spacing:.5px}
 
-    /* Skeletons */
-    .skel{animation:sh 1.2s infinite linear; background:linear-gradient(90deg,#1a1e26 25%,#202533 37%,#1a1e26 63%); background-size:400% 100%}
-    @keyframes sh { 0%{background-position:100% 50%} 100%{background-position:0 50%} }
-    .sk-card .thumb{background:#12151b}
+    .body{padding:12px}
+    .row2{display:flex; align-items:center; justify-content:space-between; gap:8px}
+    .title{margin:0; font-weight:700; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+    .price{padding:4px 8px; border-radius:8px; background:#0c1518; color:#9af1c9; border:1px solid #133027; font-weight:700; font-size:12px}
+    .meta{margin:8px 0 0; color:var(--muted); font-size:12px; display:flex; gap:10px; flex-wrap:wrap}
+    .actions{margin:12px 0 4px; display:flex; gap:8px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:10px;
+      border:1px solid var(--ring); background:var(--panel); color:var(--text); font-weight:700; cursor:pointer;
+      transition:transform .15s ease, background-color .15s ease, border-color .15s ease;
+    }
+    .btn:hover{transform:translateY(-1.5px); border-color:#3b4354}
+    .btn.primary{background:linear-gradient(90deg, #0bd38a, #39e3ff); color:#071014; border:0}
+
+    /* Empty & skeleton */
+    .empty{margin-top:16px; padding:28px; text-align:center; color:var(--muted);
+           border:1px dashed var(--ring); border-radius:14px; background:var(--panel)}
+    .sk{animation:sh 1.2s infinite linear; background:linear-gradient(90deg,#121620 25%,#182031 37%,#121620 63%); background-size:400% 100%}
+    @keyframes sh{0%{background-position:100% 50%}100%{background-position:0 50%}}
+    .sk-card .thumb{background:#0f141d}
     .sk-line{height:12px; border-radius:6px; margin-top:10px}
   </style>
 </head>
 <body>
-
   <!-- Header -->
   <header class="header">
     <div class="wrap">
       <div class="row">
-        <!-- Logo (click to go "home"/Latest) -->
-        <a class="logo" href="#" id="homeLink" title="ChopShops">
+        <a class="brand" href="#" id="homeLink" title="ChopShops">
           <img src="assets/logo.png" alt="ChopShops logo" />
-          <span class="brand">ChopShops</span>
+          <span class="title">ChopShops</span>
         </a>
-
         <div class="spacer"></div>
 
-        <!-- Status filter -->
-        <div class="toolbar">
-          <div class="seg" role="tablist" aria-label="Status">
-            <button role="tab" id="tab-latest"   data-status="latest"   aria-pressed="true">Latest</button>
-            <button role="tab" id="tab-approved" data-status="approved" aria-pressed="false">Approved</button>
-            <button role="tab" id="tab-ideas"    data-status="ideas"    aria-pressed="false">Ideas</button>
-          </div>
-        </div>
+        <nav class="seg" role="tablist" aria-label="Status">
+          <button role="tab" data-status="latest"   aria-pressed="true">Latest</button>
+          <button role="tab" data-status="approved" aria-pressed="false">Approved</button>
+          <button role="tab" data-status="ideas"    aria-pressed="false">Ideas</button>
+        </nav>
       </div>
 
-      <!-- Category chips (built dynamically) -->
-      <div class="row" style="margin-top:10px">
-        <nav class="menu" id="categoryMenu" aria-label="Categories">
-          <!-- chips injected here -->
-        </nav>
+      <div class="row" style="margin-top:12px">
+        <div class="catbar" id="categoryMenu">
+          <!-- chips injected -->
+        </div>
       </div>
     </div>
   </header>
 
+  <!-- Hero -->
+  <section class="wrap">
+    <div class="hero">
+      <div class="hero-in">
+        <h1 id="headline">Curated finds, updated daily</h1>
+        <p id="subhead">Tap categories to filter. “Approved” shows my green-lit picks; “Ideas” shows prospects.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Content -->
-  <main>
-    <h2 id="sectionTitle">Latest finds</h2>
-    <section class="grid" id="grid">
-      <!-- skeletons -->
-    </section>
+  <main class="wrap">
+    <div class="section-title" id="sectionTitle">Latest • All</div>
+    <section class="grid" id="grid"></section>
     <div id="empty" class="empty" style="display:none">No items match the current filters.</div>
   </main>
 
   <script>
-    // ---------- STATE ----------
+    // ====== State ======
     let ALL = [];
-    let currentStatus = 'latest';   // latest | approved | ideas
-    let currentCategory = 'All';    // 'All' or any category name
+    let status = 'latest';  // latest | approved | ideas
+    let category = 'All';
 
     const grid = document.getElementById('grid');
     const empty = document.getElementById('empty');
     const sectionTitle = document.getElementById('sectionTitle');
     const catMenu = document.getElementById('categoryMenu');
 
-    // ---------- HELPERS ----------
+    // ====== UI helpers ======
     function setStatus(next){
-      currentStatus = next;
-      for (const btn of document.querySelectorAll('.seg button')){
-        btn.setAttribute('aria-pressed', String(btn.dataset.status === next));
-      }
+      status = next;
+      document.querySelectorAll('.seg [role="tab"]').forEach(b=>{
+        b.setAttribute('aria-pressed', String(b.dataset.status === status));
+      });
       updateTitle();
       render();
     }
-
     function setCategory(next){
-      currentCategory = next;
-      for (const chip of document.querySelectorAll('.chip')){
-        chip.setAttribute('aria-pressed', String(chip.dataset.cat === next));
-      }
+      category = next;
+      document.querySelectorAll('.chip').forEach(c=>{
+        c.setAttribute('aria-pressed', String(c.dataset.cat === category));
+      });
       updateTitle();
       render();
     }
-
     function updateTitle(){
-      const nice = currentStatus === 'latest' ? 'Latest'
-                 : currentStatus === 'approved' ? 'Approved'
-                 : 'Ideas';
-      sectionTitle.textContent = currentCategory === 'All'
-        ? `${nice} finds`
-        : `${nice} • ${currentCategory}`;
+      const nice = status === 'latest' ? 'Latest' : status === 'approved' ? 'Approved' : 'Ideas';
+      sectionTitle.textContent = `${nice} • ${category}`;
     }
 
+    // Skeletons
     function showSkeletons(n=8){
       empty.style.display='none';
       grid.innerHTML='';
       for(let i=0;i<n;i++){
         const el = document.createElement('article');
-        el.className='card sk-card';
+        el.className = 'card sk-card';
         el.innerHTML = `
-          <div class="thumb skel"></div>
+          <div class="thumb sk"></div>
           <div class="body">
-            <div class="sk-line skel" style="width:70%"></div>
-            <div class="sk-line skel" style="width:40%"></div>
+            <div class="sk-line sk" style="width:70%"></div>
+            <div class="sk-line sk" style="width:40%"></div>
           </div>`;
         grid.appendChild(el);
       }
     }
 
+    // Categories
     function buildCategories(items){
-      const set = new Set(items.map(i => i.category).filter(Boolean));
+      const set = new Set(items.map(i=>i.category).filter(Boolean));
       const cats = ['All', ...Array.from(set).sort((a,b)=>a.localeCompare(b))];
       catMenu.innerHTML = '';
-      for (const c of cats){
-        const btn = document.createElement('button');
-        btn.className = 'chip';
-        btn.dataset.cat = c;
-        btn.setAttribute('aria-pressed', String(c === currentCategory));
-        btn.textContent = c;
-        btn.addEventListener('click', () => setCategory(c));
-        catMenu.appendChild(btn);
+      for(const c of cats){
+        const chip = document.createElement('button');
+        chip.className = 'chip';
+        chip.dataset.cat = c;
+        chip.setAttribute('aria-pressed', String(c===category));
+        chip.textContent = c;
+        chip.addEventListener('click', ()=> setCategory(c));
+        catMenu.appendChild(chip);
       }
     }
 
+    // Render
     function filterItems(){
       let list = [...ALL];
-
-      // status filter
-      if (currentStatus === 'approved'){
-        list = list.filter(x => (x.status || '').toLowerCase() === 'approved' || x.liked);
-      } else if (currentStatus === 'ideas'){
-        list = list.filter(x => (x.status || '').toLowerCase() === 'idea' || (x.status || '').toLowerCase() === 'ideas');
-      } else {
-        // latest: keep as-is; we’ll sort newest first if there’s a date later
+      if(status==='approved'){
+        list = list.filter(x => (x.status||'').toLowerCase()==='approved' || x.liked);
+      }else if(status==='ideas'){
+        const s = (x)=> (x.status||'').toLowerCase();
+        list = list.filter(x => s(x)==='idea' || s(x)==='ideas');
       }
-
-      // category filter
-      if (currentCategory !== 'All'){
-        list = list.filter(x => (x.category || '') === currentCategory);
+      if(category!=='All'){
+        list = list.filter(x => (x.category||'')===category);
       }
-
       return list;
     }
 
     function render(){
       const list = filterItems();
       grid.innerHTML = '';
-
-      if (!list.length){
-        empty.style.display = 'block';
+      if(!list.length){
+        empty.style.display='block';
         return;
       }
-      empty.style.display = 'none';
+      empty.style.display='none';
 
-      for (const item of list){
-        const img = item.image ? `<img src="${item.image}" alt="">`
-                               : `<div style="color:#3b4557;font-weight:700">No Image</div>`;
-        const buy = item.url ? `<a class="btn primary" href="${item.url}" target="_blank" rel="noopener">Buy →</a>`
-                             : '';
-        const why = item.why ? `<span title="${item.why}">• ${item.why}</span>` : '';
-        const cat = item.category ? `<span>${item.category}</span>` : '';
-        const price = (item.price ?? '') !== '' && item.price !== null ? `<span>$${Number(item.price).toFixed(2)}</span>` : '';
+      for(const item of list){
+        const img = item.image
+          ? `<img src="${item.image}" alt="">`
+          : `<div class="noimg">NO IMAGE</div>`;
+        const price = (item.price ?? '') !== '' && item.price !== null
+          ? `<span class="price">$${Number(item.price).toFixed(2)}</span>` : '';
 
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
+        const buyBtn = item.url
+          ? `<a class="btn primary" href="${item.url}" target="_blank" rel="noopener">Buy →</a>`
+          : '';
+
+        const why = item.why ? `<span title="${escapeHtml(item.why)}">• ${escapeHtml(item.why)}</span>` : '';
+        const metaBits = [ item.category ? `#${escapeHtml(item.category)}` : '', why ]
+          .filter(Boolean).join(' ');
+
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.innerHTML = `
           <div class="thumb">${img}</div>
           <div class="body">
-            <h3 class="title">${escapeHtml(item.title || 'Untitled')}</h3>
-            <div class="meta">${[cat, price, why].filter(Boolean).join(' ')}</div>
+            <div class="row2">
+              <h3 class="title" title="${escapeHtml(item.title || 'Untitled')}">${escapeHtml(item.title || 'Untitled')}</h3>
+              ${price}
+            </div>
+            <div class="meta">${metaBits}</div>
             <div class="actions">
-              ${buy}
+              ${buyBtn}
               ${item.hook ? `<span class="btn" title="${escapeHtml(item.hook)}">Hook</span>` : ''}
             </div>
-          </div>
-        `;
-        grid.appendChild(card);
+          </div>`;
+        grid.appendChild(el);
       }
     }
 
@@ -286,32 +307,28 @@
         .replaceAll("'","&#39;");
     }
 
-    // ---------- DATA LOAD ----------
+    // ====== Data load ======
     async function load(){
       showSkeletons();
       try{
         const res = await fetch('/fetchProducts', { cache: 'no-store' });
-        const json = await res.json();   // { items:[...] }
-        ALL = Array.isArray(json.items) ? json.items : [];
+        const data = await res.json();
+        ALL = Array.isArray(data.items) ? data.items : [];
         buildCategories(ALL);
         render();
       }catch(err){
         console.error(err);
-        grid.innerHTML = '';
+        grid.innerHTML='';
         empty.style.display='block';
-        empty.textContent = 'Failed to load products.';
+        empty.textContent='Failed to load products.';
       }
     }
 
-    // ---------- EVENTS ----------
-    document.getElementById('homeLink').addEventListener('click', (e)=>{
-      e.preventDefault();
-      setStatus('latest');
-      setCategory('All');
+    // ====== Events ======
+    document.getElementById('homeLink').addEventListener('click', (e)=>{ e.preventDefault(); setStatus('latest'); setCategory('All'); });
+    document.querySelectorAll('.seg [role="tab"]').forEach(btn=>{
+      btn.addEventListener('click', ()=> setStatus(btn.dataset.status));
     });
-    document.getElementById('tab-latest').addEventListener('click', ()=>setStatus('latest'));
-    document.getElementById('tab-approved').addEventListener('click', ()=>setStatus('approved'));
-    document.getElementById('tab-ideas').addEventListener('click', ()=>setStatus('ideas'));
 
     // Init
     updateTitle();
