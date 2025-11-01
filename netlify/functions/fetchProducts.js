@@ -1,8 +1,4 @@
-/**
- * Netlify Function: fetchProducts
- * Securely pulls product data from your Notion database
- * using environment variables for all secrets.
- */
+// netlify/functions/fetchProducts.js
 
 const NOTION_SECRET = process.env.NOTION_SECRET;
 const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID;
@@ -10,40 +6,58 @@ const DEFAULT_TAG = process.env.DEFAULT_TAG || "chopshops-20";
 
 const NOTION_URL = `https://api.notion.com/v1/databases/${NOTION_DATABASE_ID}/query`;
 
-/** Helper to safely read property values */
-function getValue(prop) {
-  if (!prop) return null;
-  if (prop.type === "title") return prop.title?.[0]?.plain_text || null;
-  if (prop.type === "rich_text") return prop.rich_text?.[0]?.plain_text || null;
-  if (prop.type === "number") return prop.number ?? null;
-  if (prop.type === "select") return prop.select?.name || null;
-  if (prop.type === "checkbox") return prop.checkbox || false;
-  if (prop.type === "url") return prop.url || null;
-  if (prop.type === "files")
-    return prop.files?.[0]?.file?.url || prop.files?.[0]?.name || null;
-  return null;
+function val(p) {
+  if (!p) return null;
+  switch (p.type) {
+    case "title": return p.title?.[0]?.plain_text ?? null;
+    case "rich_text": return p.rich_text?.[0]?.plain_text ?? null;
+    case "number": return p.number ?? null;
+    case "select": return p.select?.name ?? null;
+    case "checkbox": return !!p.checkbox;
+    case "url": return p.url ?? null;
+    case "files": return p.files?.[0]?.file?.url || p.files?.[0]?.name || null;
+    default: return null;
+  }
 }
 
-/** Format one Notion row into a product object */
 function mapRow(page) {
-  const props = page.properties;
-  const name = getValue(props.Name);
-  const url =
-    getValue(props["Product URL"]) ||
-    `https://www.amazon.com/s?k=${encodeURIComponent(name)}&tag=${DEFAULT_TAG}`;
-  const image = getValue(props.Image);
-  const price = getValue(props.Price);
-  const category = getValue(props.Category);
-  const approved = getValue(props.Approved);
+  const props = page.properties || {};
+  const name = val(props.Name);
+  const productUrl = val(props["Product URL"]);
+  const url = productUrl
+    ? appendAmazonTag(productUrl, DEFAULT_TAG)
+    : `https://www.amazon.com/s?k=${encodeURIComponent(name || "")}&tag=${DEFAULT_TAG}`;
+  const image = val(props.Image);
+  const price = val(props.Price);
+  const category = val(props.Category);
+  const approved = !!val(props.Approved);
 
-  // Show only approved items
-  if (!approved) return null;
+  if (!approved || !name) return null;
 
   return { name, url, image, price, category };
 }
 
+function appendAmazonTag(url, tag) {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes("amazon.") || u.hostname.endsWith("amazon.com")) {
+      // If no tag, add it. If tag exists, keep existing.
+      if (!u.searchParams.get("tag")) u.searchParams.set("tag", tag);
+      return u.toString();
+    }
+  } catch (_) {}
+  return url;
+}
+
 exports.handler = async () => {
   try {
+    if (!NOTION_SECRET || !NOTION_DATABASE_ID) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "Missing NOTION env vars" }),
+      };
+    }
+
     const res = await fetch(NOTION_URL, {
       method: "POST",
       headers: {
@@ -52,21 +66,20 @@ exports.handler = async () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        // Pull rows; you can add a filter for Approved here if you want server-side
         sorts: [{ property: "Name", direction: "ascending" }],
         page_size: 50,
       }),
     });
 
     if (!res.ok) {
-      console.error("Notion API error:", await res.text());
-      return {
-        statusCode: res.status,
-        body: JSON.stringify({ error: "Failed to fetch from Notion" }),
-      };
+      const text = await res.text();
+      console.error("Notion error:", text);
+      return { statusCode: res.status, body: JSON.stringify({ error: "Notion query failed" }) };
     }
 
     const data = await res.json();
-    const products = (data.results || []).map(mapRow).filter(Boolean);
+    const items = (data.results || []).map(mapRow).filter(Boolean);
 
     return {
       statusCode: 200,
@@ -74,13 +87,10 @@ exports.handler = async () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({ items: products }),
+      body: JSON.stringify({ items }),
     };
   } catch (err) {
-    console.error("Function error:", err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Server error fetching products" }),
-    };
+    console.error(err);
+    return { statusCode: 500, body: JSON.stringify({ error: "Server error" }) };
   }
 };
