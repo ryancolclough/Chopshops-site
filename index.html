@@ -4,203 +4,318 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ChopShops</title>
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="color-scheme" content="dark light" />
   <style>
-    /* Card skeleton shimmer */
-    .shimmer {
-      background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.14) 37%, rgba(255,255,255,0.06) 63%);
-      background-size: 400% 100%;
-      animation: shimmer 1.2s ease-in-out infinite;
+    :root{
+      --bg:#0e0f12;
+      --panel:#14161b;
+      --card:#171a20;
+      --muted:#9aa3b2;
+      --text:#e7ebf3;
+      --accent:#7dd3fc;
+      --ring:#2a2f3a;
     }
-    @keyframes shimmer { 0%{background-position:100% 0} 100%{background-position:0 0} }
-    /* Clamp text lines */
-    .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Header */
+    .header{
+      position:sticky; top:0; z-index:50;
+      background:linear-gradient(to bottom, rgba(14,15,18,.95), rgba(14,15,18,.78) 70%, rgba(14,15,18,0));
+      backdrop-filter:saturate(1.2) blur(6px);
+      border-bottom:1px solid var(--ring);
+    }
+    .wrap{max-width:1200px; margin:0 auto; padding:14px 18px}
+    .row{display:flex; align-items:center; gap:12px}
+
+    .logo{
+      display:flex; align-items:center; gap:10px; flex-shrink:0;
+    }
+    .logo img{
+      width:36px; height:36px; object-fit:contain; display:block;
+    }
+    .brand{font-weight:700; letter-spacing:.3px}
+
+    .spacer{flex:1}
+
+    .toolbar{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+    .seg{
+      display:inline-flex; background:var(--panel); border:1px solid var(--ring);
+      border-radius:10px; overflow:hidden;
+    }
+    .seg button{
+      padding:8px 12px; background:transparent; color:var(--text);
+      border:0; cursor:pointer; font-weight:600;
+    }
+    .seg button[aria-pressed="true"]{background:var(--card)}
+
+    .menu{
+      display:flex; gap:8px; flex-wrap:wrap;
+      background:var(--panel); border:1px solid var(--ring);
+      border-radius:10px; padding:6px;
+      max-width:100%; overflow:auto;
+    }
+    .chip{
+      border:1px solid var(--ring); background:transparent; color:var(--text);
+      padding:6px 10px; border-radius:999px;cursor:pointer;white-space:nowrap;
+    }
+    .chip[aria-pressed="true"]{background:var(--card);}
+
+    /* Grid */
+    main{max-width:1200px; margin:0 auto; padding:18px}
+    h2{margin:16px 2px 10px; font-size:18px; color:var(--muted)}
+
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns:repeat(1,minmax(0,1fr));
+    }
+    @media(min-width:640px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media(min-width:900px){ .grid{grid-template-columns:repeat(3,1fr)} }
+    @media(min-width:1200px){ .grid{grid-template-columns:repeat(4,1fr)} }
+
+    .card{
+      background:var(--card); border:1px solid var(--ring); border-radius:14px;
+      overflow:hidden; display:flex; flex-direction:column; min-height:230px;
+    }
+    .thumb{
+      aspect-ratio:16/10; background:#0b0d11; display:flex; align-items:center;
+      justify-content:center; color:#465063; font-weight:700;
+    }
+    .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+    .body{padding:10px 12px 12px}
+    .title{font-weight:700; margin:0 0 6px; font-size:15px}
+    .meta{font-size:12px; color:var(--muted); display:flex; gap:10px; align-items:center}
+    .actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:7px 10px; border-radius:8px; border:1px solid var(--ring);
+      background:var(--panel); color:var(--text); cursor:pointer;
+    }
+    .btn.primary{background:#0b6; border-color:#0a5; color:white}
+    .empty{
+      padding:30px; text-align:center; color:var(--muted); border:1px dashed var(--ring);
+      border-radius:12px; background:var(--panel);
+    }
+
+    /* Skeletons */
+    .skel{animation:sh 1.2s infinite linear; background:linear-gradient(90deg,#1a1e26 25%,#202533 37%,#1a1e26 63%); background-size:400% 100%}
+    @keyframes sh { 0%{background-position:100% 50%} 100%{background-position:0 50%} }
+    .sk-card .thumb{background:#12151b}
+    .sk-line{height:12px; border-radius:6px; margin-top:10px}
   </style>
 </head>
-<body class="bg-neutral-950 text-neutral-100">
-<!-- Header -->
-<header class="sticky top-0 z-50 border-b border-neutral-800 bg-black/95 backdrop-blur">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-between">
-      <!-- Clickable logo -> home -->
-      <a href="/" class="flex items-center gap-2 group" aria-label="Go to homepage">
-        <img
-          id="brandImg"
-          src="assets/logo.png"
-          alt="ChopShops logo"
-          class="h-9 w-auto max-w-[180px] object-contain transition-transform duration-200 group-hover:scale-105"
-          style="max-height:40px"
-          onerror="this.style.display='none';document.getElementById('brandText').style.display='inline-block';"
-        />
-        <span id="brandText" style="display:none" class="text-xl font-black tracking-tight">ChopShops</span>
-      </a>
+<body>
 
-      <!-- MENU -->
-      <div class="relative">
-        <button id="menuBtn"
-          class="inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm hover:bg-neutral-800">
-          MENU
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
-        </button>
-        <div id="menuDrop"
-          class="absolute right-0 mt-2 hidden w-48 overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 shadow-xl"></div>
-      </div>
-    </div>
-  </div>
-</header>
-        <!-- Menu -->
-        <div class="relative">
-          <button id="menuBtn" class="inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm hover:bg-neutral-800">
-            MENU
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
-          </button>
-          <div id="menuDrop" class="absolute right-0 mt-2 hidden w-48 overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 shadow-xl">
-            <a href="#latest" class="block px-3 py-2 text-sm hover:bg-neutral-800">Latest</a>
-            <a href="#approved" class="block px-3 py-2 text-sm hover:bg-neutral-800">Approved</a>
-            <a href="#ideas" class="block px-3 py-2 text-sm hover:bg-neutral-800">Ideas</a>
-            <a href="#about" class="block px-3 py-2 text-sm hover:bg-neutral-800">About</a>
+  <!-- Header -->
+  <header class="header">
+    <div class="wrap">
+      <div class="row">
+        <!-- Logo (click to go "home"/Latest) -->
+        <a class="logo" href="#" id="homeLink" title="ChopShops">
+          <img src="assets/logo.png" alt="ChopShops logo" />
+          <span class="brand">ChopShops</span>
+        </a>
+
+        <div class="spacer"></div>
+
+        <!-- Status filter -->
+        <div class="toolbar">
+          <div class="seg" role="tablist" aria-label="Status">
+            <button role="tab" id="tab-latest"   data-status="latest"   aria-pressed="true">Latest</button>
+            <button role="tab" id="tab-approved" data-status="approved" aria-pressed="false">Approved</button>
+            <button role="tab" id="tab-ideas"    data-status="ideas"    aria-pressed="false">Ideas</button>
           </div>
         </div>
+      </div>
+
+      <!-- Category chips (built dynamically) -->
+      <div class="row" style="margin-top:10px">
+        <nav class="menu" id="categoryMenu" aria-label="Categories">
+          <!-- chips injected here -->
+        </nav>
       </div>
     </div>
   </header>
 
-  <!-- Page -->
-  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-    <section id="latest" class="space-y-6">
-      <h2 class="text-2xl font-bold tracking-tight">Latest finds</h2>
-
-      <!-- Filters (optional, shows when categories found) -->
-      <div id="filters" class="hidden flex-wrap gap-2"></div>
-
-      <!-- Grid -->
-      <div id="grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <!-- skeletons -->
-        <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
-          <div class="aspect-[4/3] shimmer rounded-lg mb-3"></div>
-          <div class="h-4 w-2/3 shimmer rounded mb-2"></div>
-          <div class="h-3 w-1/2 shimmer rounded"></div>
-        </div>
-        <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
-          <div class="aspect-[4/3] shimmer rounded-lg mb-3"></div>
-          <div class="h-4 w-2/3 shimmer rounded mb-2"></div>
-          <div class="h-3 w-1/2 shimmer rounded"></div>
-        </div>
-        <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
-          <div class="aspect-[4/3] shimmer rounded-lg mb-3"></div>
-          <div class="h-4 w-2/3 shimmer rounded mb-2"></div>
-          <div class="h-3 w-1/2 shimmer rounded"></div>
-        </div>
-      </div>
-
-      <!-- Empty state -->
-      <div id="empty" class="hidden text-neutral-400">No products yet. Mark items as <span class="font-semibold text-neutral-200">Approved</span> in Notion.</div>
+  <!-- Content -->
+  <main>
+    <h2 id="sectionTitle">Latest finds</h2>
+    <section class="grid" id="grid">
+      <!-- skeletons -->
     </section>
+    <div id="empty" class="empty" style="display:none">No items match the current filters.</div>
   </main>
 
-  <footer id="about" class="mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8 pb-12 text-sm text-neutral-400">
-    <p>© <span id="year"></span> ChopShops • curated finds</p>
-  </footer>
+  <script>
+    // ---------- STATE ----------
+    let ALL = [];
+    let currentStatus = 'latest';   // latest | approved | ideas
+    let currentCategory = 'All';    // 'All' or any category name
 
-<script>
-// ===== MENU SETUP =====
-const btn = document.getElementById('menuBtn');
-const drop = document.getElementById('menuDrop');
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+    const sectionTitle = document.getElementById('sectionTitle');
+    const catMenu = document.getElementById('categoryMenu');
 
-btn.addEventListener('click', () => drop.classList.toggle('hidden'));
-document.addEventListener('click', (e) => {
-  if (!btn.contains(e.target) && !drop.contains(e.target)) drop.classList.add('hidden');
-});
-
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// ===== FETCH PRODUCTS (Cloudflare only) =====
-async function fetchProducts() {
-  // Try both likely Cloudflare worker routes
-  const endpoints = ['/fetchProducts', '/api/fetchProducts'];
-  for (const url of endpoints) {
-    try {
-      const res = await fetch(url, { headers: { 'cache-control': 'no-cache' } });
-      if (res.ok) return res.json();
-    } catch (err) {
-      console.warn(`Fetch failed for ${url}`, err);
+    // ---------- HELPERS ----------
+    function setStatus(next){
+      currentStatus = next;
+      for (const btn of document.querySelectorAll('.seg button')){
+        btn.setAttribute('aria-pressed', String(btn.dataset.status === next));
+      }
+      updateTitle();
+      render();
     }
-  }
-  return { items: [] };
-}
 
-// ===== HELPERS =====
-function fmtPrice(value) {
-  const n = Number(value);
-  return isFinite(n) ? `$${n.toFixed(2)}` : value || '';
-}
+    function setCategory(next){
+      currentCategory = next;
+      for (const chip of document.querySelectorAll('.chip')){
+        chip.setAttribute('aria-pressed', String(chip.dataset.cat === next));
+      }
+      updateTitle();
+      render();
+    }
 
-function card(p) {
-  const img = p.image || '';
-  const title = p.title || 'Untitled';
-  const why = p.why || '';
-  const price = p.price ? fmtPrice(p.price) : '';
-  const url = p.url || '#';
-  const cat = p.category || '';
-  const hook = p.hook || '';
+    function updateTitle(){
+      const nice = currentStatus === 'latest' ? 'Latest'
+                 : currentStatus === 'approved' ? 'Approved'
+                 : 'Ideas';
+      sectionTitle.textContent = currentCategory === 'All'
+        ? `${nice} finds`
+        : `${nice} • ${currentCategory}`;
+    }
 
-  return `
-    <article class="group rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden hover:border-neutral-700 transition" data-cat="${cat}">
-      <a href="${url}" target="_blank" rel="noopener" class="block">
-        <div class="aspect-[4/3] bg-neutral-800 overflow-hidden">
-          ${img ? `<img src="${img}" alt="" class="h-full w-full object-cover group-hover:opacity-95">`
-                 : `<div class="h-full w-full grid place-items-center text-neutral-600">No Image</div>`}
-        </div>
-      </a>
-      <div class="p-4 space-y-2">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold leading-tight line-clamp-2">${title}</h3>
-          ${price ? `<span class="ml-3 rounded-md bg-neutral-800 px-2 py-0.5 text-xs">${price}</span>` : ``}
-        </div>
-        ${hook ? `<p class="text-sm text-neutral-300 line-clamp-2">${hook}</p>` : ``}
-        ${why ? `<p class="text-sm text-neutral-400 line-clamp-2">${why}</p>` : ``}
-        <div class="flex items-center justify-between pt-1">
-          ${cat ? `<span class="text-xs text-neutral-400">${cat}</span>` : ``}
-          <a href="${url}" target="_blank" rel="noopener" class="text-xs text-blue-400 hover:underline">Buy →</a>
-        </div>
-      </div>
-    </article>`;
-}
+    function showSkeletons(n=8){
+      empty.style.display='none';
+      grid.innerHTML='';
+      for(let i=0;i<n;i++){
+        const el = document.createElement('article');
+        el.className='card sk-card';
+        el.innerHTML = `
+          <div class="thumb skel"></div>
+          <div class="body">
+            <div class="sk-line skel" style="width:70%"></div>
+            <div class="sk-line skel" style="width:40%"></div>
+          </div>`;
+        grid.appendChild(el);
+      }
+    }
 
-// ===== MAIN =====
-(async () => {
-  const grid = document.getElementById('grid');
-  const { items = [] } = await fetchProducts();
+    function buildCategories(items){
+      const set = new Set(items.map(i => i.category).filter(Boolean));
+      const cats = ['All', ...Array.from(set).sort((a,b)=>a.localeCompare(b))];
+      catMenu.innerHTML = '';
+      for (const c of cats){
+        const btn = document.createElement('button');
+        btn.className = 'chip';
+        btn.dataset.cat = c;
+        btn.setAttribute('aria-pressed', String(c === currentCategory));
+        btn.textContent = c;
+        btn.addEventListener('click', () => setCategory(c));
+        catMenu.appendChild(btn);
+      }
+    }
 
-  if (!items.length) {
-    grid.innerHTML = '<p class="text-neutral-500">No products yet. Check your Notion integration.</p>';
-    return;
-  }
+    function filterItems(){
+      let list = [...ALL];
 
-  // Build product cards
-  grid.innerHTML = items.map(card).join('');
+      // status filter
+      if (currentStatus === 'approved'){
+        list = list.filter(x => (x.status || '').toLowerCase() === 'approved' || x.liked);
+      } else if (currentStatus === 'ideas'){
+        list = list.filter(x => (x.status || '').toLowerCase() === 'idea' || (x.status || '').toLowerCase() === 'ideas');
+      } else {
+        // latest: keep as-is; we’ll sort newest first if there’s a date later
+      }
 
-  // Build dynamic menu from unique categories
-  const cats = [...new Set(items.map(i => i.category).filter(Boolean))];
-  const menuHTML = cats.map(c => 
-    `<a href="#" data-cat="${c}" class="block px-3 py-2 text-sm hover:bg-neutral-800">${c}</a>`
-  ).join('') + `
-    <a href="#about" class="block px-3 py-2 text-sm hover:bg-neutral-800 border-t border-neutral-800">About</a>`;
+      // category filter
+      if (currentCategory !== 'All'){
+        list = list.filter(x => (x.category || '') === currentCategory);
+      }
 
-  drop.innerHTML = menuHTML;
+      return list;
+    }
 
-  // Filter cards by category
-  drop.addEventListener('click', (e) => {
-    const link = e.target.closest('a[data-cat]');
-    if (!link) return;
-    e.preventDefault();
-    const cat = link.dataset.cat;
-    document.querySelectorAll('#grid article').forEach(card => {
-      card.style.display = (card.dataset.cat === cat || !cat) ? '' : 'none';
+    function render(){
+      const list = filterItems();
+      grid.innerHTML = '';
+
+      if (!list.length){
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      for (const item of list){
+        const img = item.image ? `<img src="${item.image}" alt="">`
+                               : `<div style="color:#3b4557;font-weight:700">No Image</div>`;
+        const buy = item.url ? `<a class="btn primary" href="${item.url}" target="_blank" rel="noopener">Buy →</a>`
+                             : '';
+        const why = item.why ? `<span title="${item.why}">• ${item.why}</span>` : '';
+        const cat = item.category ? `<span>${item.category}</span>` : '';
+        const price = (item.price ?? '') !== '' && item.price !== null ? `<span>$${Number(item.price).toFixed(2)}</span>` : '';
+
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="thumb">${img}</div>
+          <div class="body">
+            <h3 class="title">${escapeHtml(item.title || 'Untitled')}</h3>
+            <div class="meta">${[cat, price, why].filter(Boolean).join(' ')}</div>
+            <div class="actions">
+              ${buy}
+              ${item.hook ? `<span class="btn" title="${escapeHtml(item.hook)}">Hook</span>` : ''}
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      }
+    }
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#39;");
+    }
+
+    // ---------- DATA LOAD ----------
+    async function load(){
+      showSkeletons();
+      try{
+        const res = await fetch('/fetchProducts', { cache: 'no-store' });
+        const json = await res.json();   // { items:[...] }
+        ALL = Array.isArray(json.items) ? json.items : [];
+        buildCategories(ALL);
+        render();
+      }catch(err){
+        console.error(err);
+        grid.innerHTML = '';
+        empty.style.display='block';
+        empty.textContent = 'Failed to load products.';
+      }
+    }
+
+    // ---------- EVENTS ----------
+    document.getElementById('homeLink').addEventListener('click', (e)=>{
+      e.preventDefault();
+      setStatus('latest');
+      setCategory('All');
     });
-    drop.classList.add('hidden');
-  });
-})();
-</script></body>
+    document.getElementById('tab-latest').addEventListener('click', ()=>setStatus('latest'));
+    document.getElementById('tab-approved').addEventListener('click', ()=>setStatus('approved'));
+    document.getElementById('tab-ideas').addEventListener('click', ()=>setStatus('ideas'));
+
+    // Init
+    updateTitle();
+    load();
+  </script>
+</body>
 </html>
