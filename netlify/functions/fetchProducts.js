@@ -1,136 +1,86 @@
-// netlify/functions/fetchProducts.js
-const NOTION_SECRET = process.env.NOTION_SECRET;
-const NOTION_DB     = process.env.NOTION_DATABASE_ID;
-const DEFAULT_TAG   = process.env.DEFAULT_TAG;
-const HEADERS = {
-  "Authorization": `Bearer ${NOTION_SECRET}`,
-  "Notion-Version": "2025-09-03",
-  "Content-Type": "application/json",
-};
+/**
+ * Netlify Function: fetchProducts
+ * Securely pulls product data from your Notion database
+ * using environment variables for all secrets.
+ */
 
-// Your live column names from the export:
-const COLS = {
-  LIKE: "Like This Idea",
-  NAME: "Product Name",
-  WHY: "Why It Saves Money",
-  PRICE: "Est. Price (USD)",
-  CATEGORY: "Category",
-  HOOK: "Video Idea / Hook",
-  STATUS: "Status",
-  // Optional (supported if you add later):
-  URL: "Product URL",
-  IMAGE: "Image",
-};
+const NOTION_SECRET = process.env.NOTION_SECRET;
+const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID;
+const DEFAULT_TAG = process.env.DEFAULT_TAG || "chopshops-20";
+
+const NOTION_URL = `https://api.notion.com/v1/databases/${NOTION_DATABASE_ID}/query`;
+
+/** Helper to safely read property values */
+function getValue(prop) {
+  if (!prop) return null;
+  if (prop.type === "title") return prop.title?.[0]?.plain_text || null;
+  if (prop.type === "rich_text") return prop.rich_text?.[0]?.plain_text || null;
+  if (prop.type === "number") return prop.number ?? null;
+  if (prop.type === "select") return prop.select?.name || null;
+  if (prop.type === "checkbox") return prop.checkbox || false;
+  if (prop.type === "url") return prop.url || null;
+  if (prop.type === "files")
+    return prop.files?.[0]?.file?.url || prop.files?.[0]?.name || null;
+  return null;
+}
+
+/** Format one Notion row into a product object */
+function mapRow(page) {
+  const props = page.properties;
+  const name = getValue(props.Name);
+  const url =
+    getValue(props["Product URL"]) ||
+    `https://www.amazon.com/s?k=${encodeURIComponent(name)}&tag=${DEFAULT_TAG}`;
+  const image = getValue(props.Image);
+  const price = getValue(props.Price);
+  const category = getValue(props.Category);
+  const approved = getValue(props.Approved);
+
+  // Show only approved items
+  if (!approved) return null;
+
+  return { name, url, image, price, category };
+}
 
 exports.handler = async () => {
   try {
-    // No filter so we can see everything; we’ll filter in code.
-    const res = await fetch(`https://api.notion.com/v1/databases/${NOTION_DB}/query`, {
+    const res = await fetch(NOTION_URL, {
       method: "POST",
-      headers: HEADERS,
-      body: JSON.stringify({ page_size: 100 }),
+      headers: {
+        Authorization: `Bearer ${NOTION_SECRET}`,
+        "Notion-Version": "2025-09-03",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sorts: [{ property: "Name", direction: "ascending" }],
+        page_size: 50,
+      }),
     });
 
     if (!res.ok) {
-      const text = await res.text();
-      return j({ error: "Notion query failed", details: text }, 500);
+      console.error("Notion API error:", await res.text());
+      return {
+        statusCode: res.status,
+        body: JSON.stringify({ error: "Failed to fetch from Notion" }),
+      };
     }
 
     const data = await res.json();
+    const products = (data.results || []).map(mapRow).filter(Boolean);
 
-    const items = (data.results || [])
-      .map(page => mapRow(page.properties || {}))
-      .filter(Boolean);
-
-    return j({ items });
+    return {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ items: products }),
+    };
   } catch (err) {
-    return j({ error: err.message }, 500);
+    console.error("Function error:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Server error fetching products" }),
+    };
   }
 };
-
-/** ---------- helpers ---------- */
-
-function mapRow(p) {
-  // Readers by Notion prop type
-  const val = (prop) => {
-    if (!prop) return null;
-    switch (prop.type) {
-      case "title":        return prop.title?.[0]?.plain_text?.trim() || "";
-      case "rich_text":    return prop.rich_text?.[0]?.plain_text?.trim() || "";
-      case "url":          return prop.url || "";
-      case "files": {
-        const f = prop.files?.[0];
-        return f?.external?.url || f?.file?.url || "";
-      }
-      case "number":       return (typeof prop.number === "number" ? prop.number : null);
-      case "select":       return prop.select?.name || "";
-      case "multi_select": return (prop.multi_select || []).map(x => x.name);
-      case "checkbox":     return !!prop.checkbox;
-      default:             return null;
-    }
-  };
-
-  // Pull your columns (with tolerant fallbacks)
-  const title =
-    val(p[COLS.NAME]) ||
-    val(p.Name) || // if someone renames it later
-    "";
-  if (!title) return null;
-
-  const why = val(p[COLS.WHY]) || "";
-  const price = val(p[COLS.PRICE]);
-  const category = val(p[COLS.CATEGORY]) || "";
-  const hook = val(p[COLS.HOOK]) || "";
-
-  const status = (val(p[COLS.STATUS]) || "").toString().trim();
-  const liked = !!val(p[COLS.LIKE]);
-
-  // Prefer a real URL if you later add a URL column.
-  let url =
-    val(p[COLS.URL]) ||
-    val(p.URL) || "";
-
-  // If still no URL, build a tagged Amazon search from the title.
-  if (!url) {
-    const q = encodeURIComponent(title);
-    url = `https://www.amazon.com/s?k=${q}&tag=${encodeURIComponent(DEFAULT_TAG)}`;
-  } else {
-    // If user pasted a raw Amazon link, append tag when missing.
-    if (/amazon\./i.test(url) && !/[\?&]tag=/.test(url)) {
-      const sep = url.includes("?") ? "&" : "?";
-      url = `${url}${sep}tag=${encodeURIComponent(DEFAULT_TAG)}`;
-    }
-  }
-
-  // Image (optional): use later if you add "Image" files column
-  const image =
-    val(p[COLS.IMAGE]) ||
-    val(p.Image) || null;
-
-  // Filter logic that matches your flow:
-  // show only Approved OR “Like This Idea” checked
-  const show = (status && /approved/i.test(status)) || liked;
-  if (!show) return null;
-
-  return {
-    title,
-    url,
-    image,
-    price,
-    category,
-    why,
-    hook,
-    status,
-  };
-}
-
-function j(body, statusCode = 200) {
-  return {
-    statusCode,
-    headers: {
-      "content-type": "application/json",
-      "access-control-allow-origin": "*",
-    },
-    body: JSON.stringify(body),
-  };
-}
