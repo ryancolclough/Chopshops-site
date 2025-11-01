@@ -1,100 +1,79 @@
-<script>
-// ===== MENU SETUP =====
-const btn = document.getElementById('menuBtn');
-const drop = document.getElementById('menuDrop');
+// functions/fetchProducts.js
+// Cloudflare Pages Functions format (no Netlify, no JSX)
 
-btn.addEventListener('click', () => drop.classList.toggle('hidden'));
-document.addEventListener('click', (e) => {
-  if (!btn.contains(e.target) && !drop.contains(e.target)) drop.classList.add('hidden');
-});
+export async function onRequest(context) {
+  const { env } = context;
 
-document.getElementById('year').textContent = new Date().getFullYear();
+  const NOTION_SECRET = env.NOTION_SECRET;
+  const NOTION_DATABASE_ID = env.NOTION_DATABASE_ID;
+  const DEFAULT_TAG = env.DEFAULT_TAG || "chopshops-20";
 
-// ===== FETCH PRODUCTS (Cloudflare only) =====
-async function fetchProducts() {
-  // Try both likely Cloudflare worker routes
-  const endpoints = ['/fetchProducts', '/api/fetchProducts'];
-  for (const url of endpoints) {
-    try {
-      const res = await fetch(url, { headers: { 'cache-control': 'no-cache' } });
-      if (res.ok) return res.json();
-    } catch (err) {
-      console.warn(`Fetch failed for ${url}`, err);
+  try {
+    // Query Notion DB
+    const notionRes = await fetch(
+      `https://api.notion.com/v1/databases/${NOTION_DATABASE_ID}/query`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${NOTION_SECRET}`,
+          "Notion-Version": "2022-06-28",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sorts: [{ property: "Name", direction: "ascending" }],
+        }),
+      }
+    );
+
+    if (!notionRes.ok) {
+      const text = await notionRes.text();
+      return new Response(
+        JSON.stringify({ error: "Notion query failed", detail: text }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
     }
-  }
-  return { items: [] };
-}
 
-// ===== HELPERS =====
-function fmtPrice(value) {
-  const n = Number(value);
-  return isFinite(n) ? `$${n.toFixed(2)}` : value || '';
-}
+    const data = await notionRes.json();
 
-function card(p) {
-  const img = p.image || '';
-  const title = p.title || 'Untitled';
-  const why = p.why || '';
-  const price = p.price ? fmtPrice(p.price) : '';
-  const url = p.url || '#';
-  const cat = p.category || '';
-  const hook = p.hook || '';
+    // Map Notion properties -> simple objects for the UI
+    const items = (data.results || [])
+      .map((page) => {
+        const props = page.properties || {};
 
-  return `
-    <article class="group rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden hover:border-neutral-700 transition" data-cat="${cat}">
-      <a href="${url}" target="_blank" rel="noopener" class="block">
-        <div class="aspect-[4/3] bg-neutral-800 overflow-hidden">
-          ${img ? `<img src="${img}" alt="" class="h-full w-full object-cover group-hover:opacity-95">`
-                 : `<div class="h-full w-full grid place-items-center text-neutral-600">No Image</div>`}
-        </div>
-      </a>
-      <div class="p-4 space-y-2">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold leading-tight line-clamp-2">${title}</h3>
-          ${price ? `<span class="ml-3 rounded-md bg-neutral-800 px-2 py-0.5 text-xs">${price}</span>` : ``}
-        </div>
-        ${hook ? `<p class="text-sm text-neutral-300 line-clamp-2">${hook}</p>` : ``}
-        ${why ? `<p class="text-sm text-neutral-400 line-clamp-2">${why}</p>` : ``}
-        <div class="flex items-center justify-between pt-1">
-          ${cat ? `<span class="text-xs text-neutral-400">${cat}</span>` : ``}
-          <a href="${url}" target="_blank" rel="noopener" class="text-xs text-blue-400 hover:underline">Buy →</a>
-        </div>
-      </div>
-    </article>`;
-}
+        const title = props["Name"]?.title?.[0]?.plain_text || "Untitled";
 
-// ===== MAIN =====
-(async () => {
-  const grid = document.getElementById('grid');
-  const { items = [] } = await fetchProducts();
+        const rawUrl = props["Product URL"]?.url || null;
+        const url = rawUrl
+          ? `${rawUrl}${rawUrl.includes("?") ? "&" : "?"}tag=${DEFAULT_TAG}`
+          : null;
 
-  if (!items.length) {
-    grid.innerHTML = '<p class="text-neutral-500">No products yet. Check your Notion integration.</p>';
-    return;
-  }
+        const image =
+          props["Image"]?.files?.[0]?.external?.url ||
+          props["Image"]?.files?.[0]?.file?.url ||
+          null;
 
-  // Build product cards
-  grid.innerHTML = items.map(card).join('');
+        const price = props["Price"]?.number ?? null;
+        const category = props["Category"]?.select?.name || null;
+        const why = props["Why"]?.rich_text?.[0]?.plain_text || "";
+        const hook = props["Hook"]?.rich_text?.[0]?.plain_text || "";
+        const status = props["Status"]?.select?.name || "";
+        const liked = !!props["Liked"]?.checkbox;
 
-  // Build dynamic menu from unique categories
-  const cats = [...new Set(items.map(i => i.category).filter(Boolean))];
-  const menuHTML = cats.map(c => 
-    `<a href="#" data-cat="${c}" class="block px-3 py-2 text-sm hover:bg-neutral-800">${c}</a>`
-  ).join('') + `
-    <a href="#about" class="block px-3 py-2 text-sm hover:bg-neutral-800 border-t border-neutral-800">About</a>`;
+        // Only show Approved or Liked
+        if (status !== "Approved" && !liked) return null;
 
-  drop.innerHTML = menuHTML;
+        return { title, url, image, price, category, why, hook, status, liked };
+      })
+      .filter(Boolean);
 
-  // Filter cards by category
-  drop.addEventListener('click', (e) => {
-    const link = e.target.closest('a[data-cat]');
-    if (!link) return;
-    e.preventDefault();
-    const cat = link.dataset.cat;
-    document.querySelectorAll('#grid article').forEach(card => {
-      card.style.display = (card.dataset.cat === cat || !cat) ? '' : 'none';
+    return new Response(JSON.stringify({ items }, null, 2), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
     });
-    drop.classList.add('hidden');
-  });
-})();
-</script>
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
