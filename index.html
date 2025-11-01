@@ -4,58 +4,194 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ChopShops</title>
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { margin:0; font:16px/1.4 ui-sans-serif,system-ui,-apple-system; background:#0b0b0b; color:#fff; }
-    header { display:flex; align-items:center; gap:14px; padding:18px 20px; background:#000; position:sticky; top:0; }
-    header img { height:38px; }
-    h1 { font-size:20px; margin:0; letter-spacing:0.3px; }
-    main { max-width:1100px; margin:28px auto; padding:0 16px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
-    .card { background:#121212; border:1px solid #222; border-radius:14px; overflow:hidden; }
-    .thumb { aspect-ratio:1/1; object-fit:cover; width:100%; background:#1a1a1a; }
-    .meta { padding:12px; }
-    .title { font-weight:600; margin:0 0 6px; }
-    .muted { color:#a0a0a0; font-size:14px; }
+    /* Card skeleton shimmer */
+    .shimmer {
+      background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.14) 37%, rgba(255,255,255,0.06) 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.2s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0%{background-position:100% 0} 100%{background-position:0 0} }
+    /* Clamp text lines */
+    .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
   </style>
 </head>
-<body>
-  <header>
-    <!-- If you add your white logo file later, just change the src -->
-    <img src="https://dummyimage.com/150x150/000000/ffffff&text=ChopShops" alt="ChopShops" />
-    <h1>ChopShops</h1>
+<body class="bg-neutral-950 text-neutral-100">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 border-b border-neutral-800 bg-black/95 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <div class="flex items-center gap-3">
+          <!-- Logo: swap src to your white logo file if you add /logo.png -->
+          <img src="/logo.png" alt="ChopShops" class="hidden h-8 w-auto sm:block" onerror="this.style.display='none';document.getElementById('logoText').classList.remove('hidden')">
+          <span id="logoText" class="hidden text-xl font-black tracking-tight">ChopShops</span>
+        </div>
+
+        <!-- Menu -->
+        <div class="relative">
+          <button id="menuBtn" class="inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm hover:bg-neutral-800">
+            MENU
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+          </button>
+          <div id="menuDrop" class="absolute right-0 mt-2 hidden w-48 overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 shadow-xl">
+            <a href="#latest" class="block px-3 py-2 text-sm hover:bg-neutral-800">Latest</a>
+            <a href="#approved" class="block px-3 py-2 text-sm hover:bg-neutral-800">Approved</a>
+            <a href="#ideas" class="block px-3 py-2 text-sm hover:bg-neutral-800">Ideas</a>
+            <a href="#about" class="block px-3 py-2 text-sm hover:bg-neutral-800">About</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <h2 style="margin:0 0 12px">Latest finds</h2>
-    <div id="status" class="muted">Loading…</div>
-    <div id="grid" class="grid" hidden></div>
+  <!-- Page -->
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+    <section id="latest" class="space-y-6">
+      <h2 class="text-2xl font-bold tracking-tight">Latest finds</h2>
+
+      <!-- Filters (optional, shows when categories found) -->
+      <div id="filters" class="hidden flex-wrap gap-2"></div>
+
+      <!-- Grid -->
+      <div id="grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <!-- skeletons -->
+        <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
+          <div class="aspect-[4/3] shimmer rounded-lg mb-3"></div>
+          <div class="h-4 w-2/3 shimmer rounded mb-2"></div>
+          <div class="h-3 w-1/2 shimmer rounded"></div>
+        </div>
+        <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
+          <div class="aspect-[4/3] shimmer rounded-lg mb-3"></div>
+          <div class="h-4 w-2/3 shimmer rounded mb-2"></div>
+          <div class="h-3 w-1/2 shimmer rounded"></div>
+        </div>
+        <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
+          <div class="aspect-[4/3] shimmer rounded-lg mb-3"></div>
+          <div class="h-4 w-2/3 shimmer rounded mb-2"></div>
+          <div class="h-3 w-1/2 shimmer rounded"></div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="empty" class="hidden text-neutral-400">No products yet. Mark items as <span class="font-semibold text-neutral-200">Approved</span> in Notion.</div>
+    </section>
   </main>
 
+  <footer id="about" class="mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8 pb-12 text-sm text-neutral-400">
+    <p>© <span id="year"></span> ChopShops • curated finds</p>
+  </footer>
+
   <script>
-    async function load() {
-      const status = document.getElementById('status');
-      const grid = document.getElementById('grid');
-      try {
-        const res = await fetch('/fetchProducts', { headers: { 'accept':'application/json' }});
-        const data = await res.json();
-        const items = data.items || [];
-        status.textContent = items.length ? '' : 'No products yet.';
-        if (!items.length) return;
-        grid.hidden = false;
-        grid.innerHTML = items.map(x => `
-          <a class="card" href="${x.url ?? '#'}" target="_blank" rel="noopener">
-            <img class="thumb" src="${x.image || 'https://dummyimage.com/600x600/111/222&text=No+Image'}" alt="">
-            <div class="meta">
-              <p class="title">${x.title ?? 'Untitled'}</p>
-              <div class="muted">${x.price ? `$${x.price}` : ''} ${x.status ? ' • ' + x.status : ''}</div>
-            </div>
-          </a>`).join('');
-      } catch (e) {
-        status.textContent = 'Error loading products.';
-        console.error(e);
+    // MENU
+    const btn = document.getElementById('menuBtn');
+    const drop = document.getElementById('menuDrop');
+    btn.addEventListener('click', () => drop.classList.toggle('hidden'));
+    document.addEventListener('click', (e) => { if (!btn.contains(e.target) && !drop.contains(e.target)) drop.classList.add('hidden'); });
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Helper: resolve the function endpoint across hosts
+    async function fetchProducts() {
+      const endpoints = [
+        '/functions/fetchProducts',            // Cloudflare Pages Functions (recommended)
+        '/api/fetchProducts',                  // Alternate mapping if configured
+        '/netlify/functions/fetchProducts'     // Legacy Netlify path (fallback)
+      ];
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url, { headers: { 'cache-control': 'no-cache' } });
+          if (res.ok) return res.json();
+        } catch (e) { /* try next */ }
       }
+      return { items: [] };
     }
-    load();
+
+    function fmtPrice(v){
+      if (v==null || v==='') return '';
+      const n = Number(v);
+      if (!isFinite(n)) return v;
+      return `$${n.toFixed(2)}`;
+    }
+
+    function card(p){
+      const img = p.image || '';
+      const title = p.title || 'Untitled';
+      const why = p.why || '';
+      const price = p.price ? fmtPrice(p.price) : '';
+      const url = p.url || '#';
+      const cat = p.category || '';
+      const hook = p.hook || '';
+      return `
+        <article class="group rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden hover:border-neutral-700 transition">
+          <a href="${url}" target="_blank" rel="noopener" class="block">
+            <div class="aspect-[4/3] bg-neutral-800 overflow-hidden">
+              ${img
+                ? `<img src="${img}" alt="" class="h-full w-full object-cover group-hover:opacity-95">`
+                : `<div class="h-full w-full grid place-items-center text-neutral-600">No Image</div>`}
+            </div>
+          </a>
+          <div class="p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold leading-tight line-clamp-2">${title}</h3>
+              ${price ? `<span class="ml-3 rounded-md bg-neutral-800 px-2 py-0.5 text-xs">${price}</span>` : ``}
+            </div>
+            ${hook ? `<p class="text-sm text-neutral-300 line-clamp-2">${hook}</p>` : ``}
+            ${why ? `<p class="text-sm text-neutral-400 line-clamp-2">${why}</p>` : ``}
+            <div class="flex items-center justify-between pt-1">
+              <div class="flex flex-wrap gap-1 text-xs text-neutral-400">
+                ${cat ? `<span class="rounded bg-neutral-800 px-2 py-0.5">${cat}</span>` : ``}
+              </div>
+              <a href="${url}" target="_blank" rel="noopener" class="text-xs text-blue-400 hover:underline">Buy →</a>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function buildFilters(categories){
+      const holder = document.getElementById('filters');
+      if (!categories.size) return;
+      holder.classList.remove('hidden');
+      holder.innerHTML = `<button data-cat="__all" class="rounded-full border border-neutral-700 px-3 py-1 text-sm bg-neutral-800">All</button>` +
+        [...categories].sort().map(c => `<button data-cat="${c}" class="rounded-full border border-neutral-700 px-3 py-1 text-sm hover:bg-neutral-800">${c}</button>`).join('');
+      holder.addEventListener('click', (e)=>{
+        const b = e.target.closest('button'); if (!b) return;
+        const cat = b.dataset.cat;
+        document.querySelectorAll('#filters button').forEach(x=>x.classList.remove('bg-neutral-800'));
+        b.classList.add('bg-neutral-800');
+        document.querySelectorAll('#grid article').forEach(card=>{
+          const has = cat==='__all' || (card.querySelector('.bg-neutral-800.px-2')?.textContent===cat);
+          card.style.display = has ? '' : 'none';
+        });
+      });
+    }
+
+    (async () => {
+      const grid = document.getElementById('grid');
+      const empty = document.getElementById('empty');
+
+      const { items=[] } = await fetchProducts();
+
+      if (!items.length) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      // only show Approved or liked (the function usually filters already)
+      const approved = items;
+
+      const cats = new Set();
+      grid.innerHTML = approved.map(p => {
+        if (p.category) cats.add(p.category);
+        return card(p);
+      }).join('');
+
+      buildFilters(cats);
+    })();
   </script>
 </body>
 </html>
