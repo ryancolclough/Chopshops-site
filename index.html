@@ -2,336 +2,240 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ChopShops • Curated finds</title>
-  <meta name="color-scheme" content="dark light" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ChopShops — curated finds</title>
+  <link rel="icon" href="assets/logo.png" />
   <style>
     :root{
-      --bg:#0b0c10;
-      --panel:#10131a;
-      --glass:rgba(255,255,255,0.04);
-      --card:#0f131a;
-      --ring:#242a36;
-      --muted:#93a0b5;
-      --text:#eaf1ff;
-      --accent:#7ee3ff;
-      --accent-2:#8bffcb;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius:16px;
+      --bg:#0b0c0f;--panel:#12141a;--muted:#8b93a1;--text:#e8ecf1;
+      --brand:#79ffe1;--brand2:#14b8a6;--chip:#1b1f29;--card:#10131a;
+      --stroke:#262a36;--hover:#171a22;--danger:#ef4444;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; background:radial-gradient(1200px 700px at 85% -5%, #162033 0%, rgba(22,32,51,0) 60%), var(--bg);
-      color:var(--text); font:16px/1.5 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      margin:0;background:linear-gradient(180deg,#0b0c0f 0%,#0e1117 100%);
+      color:var(--text);font:400 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
     }
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:1200px; margin:0 auto; padding:18px}
-
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
     /* Header */
-    .header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter:saturate(1.2) blur(8px);
-      border-bottom:1px solid var(--ring);
-      background:linear-gradient(180deg, rgba(12,14,18,.85), rgba(12,14,18,.55) 70%, rgba(12,14,18,0));
+    .nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(11,12,15,.6);backdrop-filter:saturate(120%) blur(10px);
+      border-bottom:1px solid var(--stroke);
     }
-    .row{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
-
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      padding:6px 10px; border-radius:12px;
-      background:linear-gradient(90deg, var(--glass), transparent);
+    .nav-inner{display:flex;align-items:center;gap:16px;padding:12px 24px}
+    .logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+    .logo img{height:28px;width:auto;border-radius:6px}
+    .logo-title{font-weight:700;letter-spacing:.2px}
+    .badge{font-size:12px;color:#0b0c0f;background:var(--brand);padding:2px 8px;border-radius:999px}
+    /* Toolbar */
+    .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:20px 0}
+    .tabs{display:flex;gap:8px}
+    .tab{
+      padding:8px 12px;border:1px solid var(--stroke);border-radius:10px;background:var(--chip);
+      color:var(--muted);cursor:pointer;transition:.15s;
     }
-    .brand img{width:40px; height:40px; object-fit:contain}
-    .brand .title{font-weight:800; letter-spacing:.3px; font-size:20px}
-    .spacer{flex:1}
-
-    /* Filter group */
-    .seg{
-      display:inline-flex; padding:4px; gap:6px;
-      border:1px solid var(--ring); border-radius:999px; background:var(--panel);
-    }
-    .seg button{
-      border:0; padding:8px 12px; border-radius:999px; cursor:pointer;
-      background:transparent; color:var(--muted); font-weight:700;
-    }
-    .seg button[aria-pressed="true"]{
-      color:var(--text); background:linear-gradient(90deg, var(--accent), var(--accent-2));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.12);
-    }
-
-    /* Category chips */
-    .catbar{
-      margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;
-    }
+    .tab.active{background:linear-gradient(90deg,var(--brand2),var(--brand));color:#00130f;font-weight:700;border-color:transparent}
+    .chips{display:flex;gap:8px;overflow:auto;padding-bottom:4px}
     .chip{
-      padding:7px 12px; border-radius:999px; border:1px solid var(--ring);
-      background:var(--glass); color:var(--muted); cursor:pointer;
-      transition:all .2s ease;
+      padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:var(--chip);
+      color:var(--muted);white-space:nowrap;cursor:pointer;transition:.15s;
     }
-    .chip:hover{transform:translateY(-1px)}
-    .chip[aria-pressed="true"]{color:var(--text); border-color:#3b4354; background:rgba(126,227,255,.08)}
-
-    /* Hero */
-    .hero{
-      margin-top:12px; border:1px solid var(--ring); border-radius:var(--radius);
-      background:
-        radial-gradient(800px 260px at -10% 0%, rgba(139,255,203,.08), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      box-shadow: var(--shadow);
-    }
-    .hero-in{padding:28px 22px}
-    .hero h1{margin:0 0 6px; font-size:28px; letter-spacing:.2px}
-    .hero p{margin:0; color:var(--muted)}
-
-    /* Grid / Cards */
-    main{padding:18px}
-    .section-title{margin:8px 4px 14px; color:var(--muted); font-weight:600}
-    .grid{
-      display:grid; gap:16px;
-      grid-template-columns:repeat(1,minmax(0,1fr));
-    }
-    @media(min-width:640px){ .grid{grid-template-columns:repeat(2,1fr)} }
-    @media(min-width:900px){ .grid{grid-template-columns:repeat(3,1fr)} }
-    @media(min-width:1200px){ .grid{grid-template-columns:repeat(4,1fr)} }
-
-    .card{
-      border:1px solid var(--ring); border-radius:18px; background:linear-gradient(180deg,#0d1117,#0b0e13);
-      overflow:hidden; box-shadow:var(--shadow); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .card:hover{transform:translateY(-3px); border-color:#3b4354; box-shadow:0 18px 40px rgba(0,0,0,.45)}
-    .thumb{aspect-ratio:16/11; background:#0b0f14; display:grid; place-items:center}
-    .thumb img{width:100%; height:100%; object-fit:cover; display:block}
-    .noimg{color:#3b465a; font-weight:800; letter-spacing:.5px}
-
-    .body{padding:12px}
-    .row2{display:flex; align-items:center; justify-content:space-between; gap:8px}
-    .title{margin:0; font-weight:700; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-    .price{padding:4px 8px; border-radius:8px; background:#0c1518; color:#9af1c9; border:1px solid #133027; font-weight:700; font-size:12px}
-    .meta{margin:8px 0 0; color:var(--muted); font-size:12px; display:flex; gap:10px; flex-wrap:wrap}
-    .actions{margin:12px 0 4px; display:flex; gap:8px; flex-wrap:wrap}
+    .chip.active{background:#0f766e;color:#d1faf5;border-color:#0d9488}
+    .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--chip);border:1px solid var(--stroke);border-radius:12px;padding:8px 12px}
+    .search input{background:transparent;border:0;outline:0;color:var(--text);width:220px}
+    /* Grid */
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
+    @media (max-width:1100px){ .grid{grid-template-columns:repeat(8,1fr)} }
+    @media (max-width:720px){ .grid{grid-template-columns:repeat(4,1fr)} .search input{width:140px}}
+    .col-3{grid-column:span 3}
+    /* Card */
+    .card{border:1px solid var(--stroke);background:var(--card);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:.18s}
+    .card:hover{transform:translateY(-2px);background:var(--hover)}
+    .thumb{aspect-ratio:16/12;background:#0d1117;display:grid;place-items:center;color:#303645}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .content{padding:14px}
+    .title{font-weight:650;margin:0 0 6px 0}
+    .meta{color:var(--muted);font-size:13px;display:flex;gap:10px;align-items:center}
+    .price{color:#e0fffb;background:#0b3b36;padding:2px 8px;border-radius:999px;border:1px solid #14524d}
+    .why{margin-top:10px;color:#bac2cf;font-size:14px}
+    .row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
     .btn{
-      display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:10px;
-      border:1px solid var(--ring); background:var(--panel); color:var(--text); font-weight:700; cursor:pointer;
-      transition:transform .15s ease, background-color .15s ease, border-color .15s ease;
+      background:linear-gradient(90deg,var(--brand2),var(--brand));color:#00130f;font-weight:700;
+      border:0;padding:8px 12px;border-radius:10px;cursor:pointer
     }
-    .btn:hover{transform:translateY(-1.5px); border-color:#3b4354}
-    .btn.primary{background:linear-gradient(90deg, #0bd38a, #39e3ff); color:#071014; border:0}
-
-    /* Empty & skeleton */
-    .empty{margin-top:16px; padding:28px; text-align:center; color:var(--muted);
-           border:1px dashed var(--ring); border-radius:14px; background:var(--panel)}
-    .sk{animation:sh 1.2s infinite linear; background:linear-gradient(90deg,#121620 25%,#182031 37%,#121620 63%); background-size:400% 100%}
-    @keyframes sh{0%{background-position:100% 50%}100%{background-position:0 50%}}
-    .sk-card .thumb{background:#0f141d}
-    .sk-line{height:12px; border-radius:6px; margin-top:10px}
+    .skeleton{animation:pulse 1.2s ease-in-out infinite;background:#11161d;border-radius:12px;border:1px solid var(--stroke)}
+    .sk-img{height:150px}
+    .sk-ln{height:12px;margin:10px}
+    @keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
+    .empty{color:var(--muted);text-align:center;padding:40px;border:1px dashed var(--stroke);border-radius:14px;background:var(--panel)}
+    footer{opacity:.6;margin:52px 0 24px}
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="wrap">
-      <div class="row">
-        <a class="brand" href="#" id="homeLink" title="ChopShops">
-          <img src="assets/logo.png" alt="ChopShops logo" />
-          <span class="title">ChopShops</span>
-        </a>
-        <div class="spacer"></div>
-
-        <nav class="seg" role="tablist" aria-label="Status">
-          <button role="tab" data-status="latest"   aria-pressed="true">Latest</button>
-          <button role="tab" data-status="approved" aria-pressed="false">Approved</button>
-          <button role="tab" data-status="ideas"    aria-pressed="false">Ideas</button>
-        </nav>
+  <!-- HEADER -->
+  <div class="nav">
+    <div class="nav-inner container">
+      <div class="logo" onclick="location.href='/'">
+        <img src="assets/logo.png" alt="ChopShops logo"/>
+        <div class="logo-title">ChopShops</div>
+        <span class="badge">curated finds</span>
       </div>
-
-      <div class="row" style="margin-top:12px">
-        <div class="catbar" id="categoryMenu">
-          <!-- chips injected -->
-        </div>
+      <div class="search" id="searchBox">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" stroke="#8b93a1" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="q" placeholder="Search products…" />
       </div>
     </div>
-  </header>
+  </div>
 
-  <!-- Hero -->
-  <section class="wrap">
-    <div class="hero">
-      <div class="hero-in">
-        <h1 id="headline">Curated finds, updated daily</h1>
-        <p id="subhead">Tap categories to filter. “Approved” shows my green-lit picks; “Ideas” shows prospects.</p>
+  <main class="container">
+    <!-- TABS + CATEGORY CHIPS -->
+    <div class="toolbar">
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-scope="latest">Latest</button>
+        <button class="tab" data-scope="approved">Approved</button>
+        <button class="tab" data-scope="ideas">Ideas</button>
       </div>
+      <div class="chips" id="chips"></div>
     </div>
-  </section>
 
-  <!-- Content -->
-  <main class="wrap">
-    <div class="section-title" id="sectionTitle">Latest • All</div>
-    <section class="grid" id="grid"></section>
-    <div id="empty" class="empty" style="display:none">No items match the current filters.</div>
+    <!-- GRID -->
+    <section id="grid" class="grid"></section>
+
+    <div id="empty" class="empty" style="display:none">
+      No items match your filters.
+    </div>
+
+    <footer class="container">© <span id="y"></span> ChopShops — curated finds</footer>
   </main>
 
   <script>
-    // ====== State ======
-    let ALL = [];
-    let status = 'latest';  // latest | approved | ideas
-    let category = 'All';
+    // --- helpers -------------------------------------------------------------
+    const $ = (s, r=document)=>r.querySelector(s);
+    const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+    const money = n => (n==null||n==="") ? "" : `$${Number(n).toFixed(2)}`;
 
-    const grid = document.getElementById('grid');
-    const empty = document.getElementById('empty');
-    const sectionTitle = document.getElementById('sectionTitle');
-    const catMenu = document.getElementById('categoryMenu');
+    // --- state ---------------------------------------------------------------
+    let SCOPE = 'latest';           // latest | approved | ideas
+    let ACTIVE_CATEGORY = 'All';    // chip selection
+    let QUERY = '';
 
-    // ====== UI helpers ======
-    function setStatus(next){
-      status = next;
-      document.querySelectorAll('.seg [role="tab"]').forEach(b=>{
-        b.setAttribute('aria-pressed', String(b.dataset.status === status));
+    // --- UI: tabs & chips ----------------------------------------------------
+    $$('#tabs .tab').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        $$('#tabs .tab').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        SCOPE = btn.dataset.scope;
+        render();
       });
-      updateTitle();
-      render();
-    }
-    function setCategory(next){
-      category = next;
-      document.querySelectorAll('.chip').forEach(c=>{
-        c.setAttribute('aria-pressed', String(c.dataset.cat === category));
-      });
-      updateTitle();
-      render();
-    }
-    function updateTitle(){
-      const nice = status === 'latest' ? 'Latest' : status === 'approved' ? 'Approved' : 'Ideas';
-      sectionTitle.textContent = `${nice} • ${category}`;
-    }
+    });
 
-    // Skeletons
-    function showSkeletons(n=8){
-      empty.style.display='none';
-      grid.innerHTML='';
+    $('#q').addEventListener('input', e=>{ QUERY = e.target.value.trim().toLowerCase(); render(); });
+
+    // --- data ----------------------------------------------------------------
+    let ITEMS = [];  // filled after fetch
+    const GRID = $('#grid');
+    const EMPTY = $('#empty');
+    $('#y').textContent = new Date().getFullYear();
+
+    function skeleton(n=8){
+      GRID.innerHTML = '';
       for(let i=0;i<n;i++){
-        const el = document.createElement('article');
-        el.className = 'card sk-card';
-        el.innerHTML = `
-          <div class="thumb sk"></div>
-          <div class="body">
-            <div class="sk-line sk" style="width:70%"></div>
-            <div class="sk-line sk" style="width:40%"></div>
-          </div>`;
-        grid.appendChild(el);
+        const d = document.createElement('div');
+        d.className = 'col-3 card skeleton';
+        d.innerHTML = `<div class="sk-img"></div><div class="sk-ln"></div><div class="sk-ln" style="width:60%"></div>`;
+        GRID.appendChild(d);
       }
     }
 
-    // Categories
-    function buildCategories(items){
-      const set = new Set(items.map(i=>i.category).filter(Boolean));
-      const cats = ['All', ...Array.from(set).sort((a,b)=>a.localeCompare(b))];
-      catMenu.innerHTML = '';
-      for(const c of cats){
-        const chip = document.createElement('button');
-        chip.className = 'chip';
-        chip.dataset.cat = c;
-        chip.setAttribute('aria-pressed', String(c===category));
-        chip.textContent = c;
-        chip.addEventListener('click', ()=> setCategory(c));
-        catMenu.appendChild(chip);
+    async function load(){
+      skeleton(12);
+      try{
+        const res = await fetch('/functions/fetchProducts', { headers: { 'cache-control': 'no-cache' }});
+        const json = await res.json();
+        ITEMS = (json.items || []).map(x=>({
+          title: x.title || 'Untitled',
+          url: x.url || '#',
+          image: x.image || '',
+          price: x.price ?? null,
+          category: x.category || 'Other',
+          status: (x.status || '').toLowerCase(),
+          why: x.why || '',
+          hook: x.hook || '',
+          liked: !!x.liked
+        }));
+        buildChips();
+        render();
+      }catch(e){
+        GRID.innerHTML = `<div class="empty">Error loading products.</div>`;
+        console.error(e);
       }
     }
 
-    // Render
+    function buildChips(){
+      const cats = Array.from(new Set(ITEMS.map(i=>i.category))).sort();
+      const chips = ['All', ...cats];
+      const wrap = $('#chips');
+      wrap.innerHTML = '';
+      chips.forEach(c=>{
+        const b = document.createElement('button');
+        b.className = 'chip' + (c===ACTIVE_CATEGORY?' active':'');
+        b.textContent = c;
+        b.addEventListener('click', ()=>{
+          ACTIVE_CATEGORY = c;
+          $$('#chips .chip').forEach(x=>x.classList.remove('active'));
+          b.classList.add('active');
+          render();
+        });
+        wrap.appendChild(b);
+      });
+    }
+
     function filterItems(){
-      let list = [...ALL];
-      if(status==='approved'){
-        list = list.filter(x => (x.status||'').toLowerCase()==='approved' || x.liked);
-      }else if(status==='ideas'){
-        const s = (x)=> (x.status||'').toLowerCase();
-        list = list.filter(x => s(x)==='idea' || s(x)==='ideas');
-      }
-      if(category!=='All'){
-        list = list.filter(x => (x.category||'')===category);
-      }
-      return list;
+      let a = ITEMS.slice();
+      if (SCOPE === 'approved') a = a.filter(i => i.status === 'approved' || i.liked);
+      if (SCOPE === 'ideas') a = a.filter(i => i.status.startsWith('idea'));
+      if (ACTIVE_CATEGORY !== 'All') a = a.filter(i => i.category === ACTIVE_CATEGORY);
+      if (QUERY) a = a.filter(i =>
+        (i.title?.toLowerCase().includes(QUERY)) ||
+        (i.why?.toLowerCase().includes(QUERY)) ||
+        (i.category?.toLowerCase().includes(QUERY))
+      );
+      return a;
+    }
+
+    function card(i){
+      const img = i.image
+        ? `<img src="${i.image}" alt="${i.title}"/>`
+        : `<div class="thumb"><span>No Image</span></div>`;
+      return `
+      <article class="card col-3">
+        <div class="thumb">${img}</div>
+        <div class="content">
+          <h3 class="title">${i.title}</h3>
+          <div class="meta">
+            <span>${i.category}</span>
+            ${i.price!=null ? `<span class="price">${money(i.price)}</span>` : ''}
+            ${i.hook ? `<span>• ${i.hook}</span>` : ''}
+          </div>
+          ${i.why ? `<div class="why">${i.why}</div>` : ''}
+          <div class="row">
+            <a class="btn" href="${i.url}" target="_blank" rel="noopener">Buy →</a>
+            <span style="color:${i.status==='approved'?'#34d399':i.status.startsWith('idea')?'#fde68a':'#8b93a1'};font-size:12px">${i.status||'—'}</span>
+          </div>
+        </div>
+      </article>`;
     }
 
     function render(){
       const list = filterItems();
-      grid.innerHTML = '';
-      if(!list.length){
-        empty.style.display='block';
-        return;
-      }
-      empty.style.display='none';
-
-      for(const item of list){
-        const img = item.image
-          ? `<img src="${item.image}" alt="">`
-          : `<div class="noimg">NO IMAGE</div>`;
-        const price = (item.price ?? '') !== '' && item.price !== null
-          ? `<span class="price">$${Number(item.price).toFixed(2)}</span>` : '';
-
-        const buyBtn = item.url
-          ? `<a class="btn primary" href="${item.url}" target="_blank" rel="noopener">Buy →</a>`
-          : '';
-
-        const why = item.why ? `<span title="${escapeHtml(item.why)}">• ${escapeHtml(item.why)}</span>` : '';
-        const metaBits = [ item.category ? `#${escapeHtml(item.category)}` : '', why ]
-          .filter(Boolean).join(' ');
-
-        const el = document.createElement('article');
-        el.className = 'card';
-        el.innerHTML = `
-          <div class="thumb">${img}</div>
-          <div class="body">
-            <div class="row2">
-              <h3 class="title" title="${escapeHtml(item.title || 'Untitled')}">${escapeHtml(item.title || 'Untitled')}</h3>
-              ${price}
-            </div>
-            <div class="meta">${metaBits}</div>
-            <div class="actions">
-              ${buyBtn}
-              ${item.hook ? `<span class="btn" title="${escapeHtml(item.hook)}">Hook</span>` : ''}
-            </div>
-          </div>`;
-        grid.appendChild(el);
-      }
+      if (!list.length){ GRID.innerHTML=''; EMPTY.style.display='block'; return; }
+      EMPTY.style.display='none';
+      GRID.innerHTML = list.map(card).join('');
     }
 
-    function escapeHtml(s){
-      return String(s)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#39;");
-    }
-
-    // ====== Data load ======
-    async function load(){
-      showSkeletons();
-      try{
-        const res = await fetch('/fetchProducts', { cache: 'no-store' });
-        const data = await res.json();
-        ALL = Array.isArray(data.items) ? data.items : [];
-        buildCategories(ALL);
-        render();
-      }catch(err){
-        console.error(err);
-        grid.innerHTML='';
-        empty.style.display='block';
-        empty.textContent='Failed to load products.';
-      }
-    }
-
-    // ====== Events ======
-    document.getElementById('homeLink').addEventListener('click', (e)=>{ e.preventDefault(); setStatus('latest'); setCategory('All'); });
-    document.querySelectorAll('.seg [role="tab"]').forEach(btn=>{
-      btn.addEventListener('click', ()=> setStatus(btn.dataset.status));
-    });
-
-    // Init
-    updateTitle();
     load();
   </script>
 </body>
