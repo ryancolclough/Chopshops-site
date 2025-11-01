@@ -1,8 +1,7 @@
 // netlify/functions/fetchProducts.js
 const NOTION_SECRET = process.env.NOTION_SECRET;
-const NOTION_DB = process.env.NOTION_DATABASE_ID;
-const DEFAULT_TAG = process.env.DEFAULT_TAG || "chopshops-20";
-
+const NOTION_DB     = process.env.NOTION_DATABASE_ID;
+const DEFAULT_TAG   = process.env.DEFAULT_TAG;
 const HEADERS = {
   "Authorization": `Bearer ${NOTION_SECRET}`,
   "Notion-Version": "2025-09-03",
