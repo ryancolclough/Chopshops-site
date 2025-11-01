@@ -20,15 +20,38 @@
 </head>
 <body class="bg-neutral-950 text-neutral-100">
   <!-- Header -->
-  <header class="sticky top-0 z-50 border-b border-neutral-800 bg-black/95 backdrop-blur">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between">
-        <div class="flex items-center gap-3">
-          <!-- Logo: swap src to your white logo file if you add /logo.png -->
-          <img src="/logo.png" alt="ChopShops" class="hidden h-8 w-auto sm:block" onerror="this.style.display='none';document.getElementById('logoText').classList.remove('hidden')">
-          <span id="logoText" class="hidden text-xl font-black tracking-tight">ChopShops</span>
-        </div>
+  <!-- Header -->
+<header class="sticky top-0 z-50 border-b border-neutral-800 bg-black/95 backdrop-blur">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <!-- LOGO + HOME LINK -->
+      <a href="/" class="flex items-center gap-2 group" aria-label="Go to homepage">
+        <img 
+          src="assets/logo.png" 
+          alt="ChopShops logo"
+          class="h-9 w-auto max-w-[160px] object-contain transition-transform duration-200 group-hover:scale-105"
+          style="max-height: 40px;" 
+        />
+      </a>
 
+      <!-- MENU DROPDOWN -->
+      <div class="relative">
+        <button id="menuBtn" 
+                class="inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm hover:bg-neutral-800">
+          MENU
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 10l5 5 5-5H7z"/>
+          </svg>
+        </button>
+        <div id="menuDrop" 
+             class="absolute right-0 mt-2 hidden w-48 overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 shadow-xl">
+          <!-- Dynamic categories load here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
         <!-- Menu -->
         <div class="relative">
           <button id="menuBtn" class="inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm hover:bg-neutral-800">
