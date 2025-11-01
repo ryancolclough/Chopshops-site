@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ChopShops</title>
+  <style>
+    body { margin:0; font:16px/1.4 ui-sans-serif,system-ui,-apple-system; background:#0b0b0b; color:#fff; }
+    header { display:flex; align-items:center; gap:14px; padding:18px 20px; background:#000; position:sticky; top:0; }
+    header img { height:38px; }
+    h1 { font-size:20px; margin:0; letter-spacing:0.3px; }
+    main { max-width:1100px; margin:28px auto; padding:0 16px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+    .card { background:#121212; border:1px solid #222; border-radius:14px; overflow:hidden; }
+    .thumb { aspect-ratio:1/1; object-fit:cover; width:100%; background:#1a1a1a; }
+    .meta { padding:12px; }
+    .title { font-weight:600; margin:0 0 6px; }
+    .muted { color:#a0a0a0; font-size:14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- If you add your white logo file later, just change the src -->
+    <img src="https://dummyimage.com/150x150/000000/ffffff&text=ChopShops" alt="ChopShops" />
+    <h1>ChopShops</h1>
+  </header>
+
+  <main>
+    <h2 style="margin:0 0 12px">Latest finds</h2>
+    <div id="status" class="muted">Loading…</div>
+    <div id="grid" class="grid" hidden></div>
+  </main>
+
+  <script>
+    async function load() {
+      const status = document.getElementById('status');
+      const grid = document.getElementById('grid');
+      try {
+        const res = await fetch('/fetchProducts', { headers: { 'accept':'application/json' }});
+        const data = await res.json();
+        const items = data.items || [];
+        status.textContent = items.length ? '' : 'No products yet.';
+        if (!items.length) return;
+        grid.hidden = false;
+        grid.innerHTML = items.map(x => `
+          <a class="card" href="${x.url ?? '#'}" target="_blank" rel="noopener">
+            <img class="thumb" src="${x.image || 'https://dummyimage.com/600x600/111/222&text=No+Image'}" alt="">
+            <div class="meta">
+              <p class="title">${x.title ?? 'Untitled'}</p>
+              <div class="muted">${x.price ? `$${x.price}` : ''} ${x.status ? ' • ' + x.status : ''}</div>
+            </div>
+          </a>`).join('');
+      } catch (e) {
+        status.textContent = 'Error loading products.';
+        console.error(e);
+      }
+    }
+    load();
+  </script>
+</body>
+</html>
