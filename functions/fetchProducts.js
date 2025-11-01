@@ -1,79 +1,76 @@
-// functions/fetchProducts.js
-// Cloudflare Pages Functions format (no Netlify, no JSX)
+// /functions/fetchProducts.js  (Cloudflare Pages Function)
 
 export async function onRequest(context) {
-  const { env } = context;
+  const { NOTION_SECRET, NOTION_DATABASE_ID, DEFAULT_TAG } = context.env;
 
-  const NOTION_SECRET = env.NOTION_SECRET;
-  const NOTION_DATABASE_ID = env.NOTION_DATABASE_ID;
-  const DEFAULT_TAG = env.DEFAULT_TAG || "chopshops-20";
+  const headers = {
+    Authorization: `Bearer ${NOTION_SECRET}`,
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json",
+  };
 
-  try {
-    // Query Notion DB
-    const notionRes = await fetch(
-      `https://api.notion.com/v1/databases/${NOTION_DATABASE_ID}/query`,
-      {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${NOTION_SECRET}`,
-          "Notion-Version": "2022-06-28",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          sorts: [{ property: "Name", direction: "ascending" }],
-        }),
-      }
-    );
+  // 1) Query the database (feel free to tweak sorts/filters)
+  const query = await fetch(`https://api.notion.com/v1/databases/${NOTION_DATABASE_ID}/query`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      sorts: [{ property: "Last edited time", direction: "descending" }], // "Edited time" fallback is also fine
+      page_size: 100,
+    }),
+  });
 
-    if (!notionRes.ok) {
-      const text = await notionRes.text();
-      return new Response(
-        JSON.stringify({ error: "Notion query failed", detail: text }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
-      );
+  if (!query.ok) {
+    return json({ items: [], error: "notion_query_failed", status: query.status });
+  }
+
+  const data = await query.json();
+
+  // 2) Map Notion properties → site fields
+  const items = (data.results || []).map(page => {
+    const props = page.properties || {};
+    const get = (name) => props[name];
+
+    const title = (get("Name")?.title?.[0]?.plain_text || "").trim();
+    const url =
+      get("Product URL")?.url ||
+      ""; // if EMPTY we still render the card w/out buy link
+    const price = get("Price")?.number ?? null;
+    const category = get("Category")?.select?.name || "Other";
+    const status = (get("Status")?.select?.name || "").toLowerCase();
+    const why = (get("Why")?.rich_text?.[0]?.plain_text || "").trim();
+    const hook = (get("Hook")?.rich_text?.[0]?.plain_text || "").trim();
+    const liked = !!get("Liked")?.checkbox;
+
+    // Image: accept first file OR an external URL users pasted into the "Image" prop
+    let image = "";
+    const imgProp = get("Image");
+    if (imgProp?.files?.length) {
+      const f = imgProp.files[0];
+      image = f?.external?.url || f?.file?.url || "";
+    } else if (imgProp?.url) {
+      image = imgProp.url;
     }
 
-    const data = await notionRes.json();
+    // Optional: tag affiliate if you set a DEFAULT_TAG
+    let buy = url;
+    if (DEFAULT_TAG && buy && /amazon\./i.test(buy) && !/[?&]tag=/.test(buy)) {
+      const sep = buy.includes("?") ? "&" : "?";
+      buy = `${buy}${sep}tag=${encodeURIComponent(DEFAULT_TAG)}`;
+    }
 
-    // Map Notion properties -> simple objects for the UI
-    const items = (data.results || [])
-      .map((page) => {
-        const props = page.properties || {};
+    return { title, url: buy, image, price, category, status, why, hook, liked };
+  });
 
-        const title = props["Name"]?.title?.[0]?.plain_text || "Untitled";
+  return json({ items });
+}
 
-        const rawUrl = props["Product URL"]?.url || null;
-        const url = rawUrl
-          ? `${rawUrl}${rawUrl.includes("?") ? "&" : "?"}tag=${DEFAULT_TAG}`
-          : null;
-
-        const image =
-          props["Image"]?.files?.[0]?.external?.url ||
-          props["Image"]?.files?.[0]?.file?.url ||
-          null;
-
-        const price = props["Price"]?.number ?? null;
-        const category = props["Category"]?.select?.name || null;
-        const why = props["Why"]?.rich_text?.[0]?.plain_text || "";
-        const hook = props["Hook"]?.rich_text?.[0]?.plain_text || "";
-        const status = props["Status"]?.select?.name || "";
-        const liked = !!props["Liked"]?.checkbox;
-
-        // Only show Approved or Liked
-        if (status !== "Approved" && !liked) return null;
-
-        return { title, url, image, price, category, why, hook, status, liked };
-      })
-      .filter(Boolean);
-
-    return new Response(JSON.stringify({ items }, null, 2), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+// Small helper
+function json(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      "content-type": "application/json",
+      "cache-control": "no-store",
+    },
+  });
 }
