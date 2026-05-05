@@ -4,1509 +4,1673 @@
 
 <head>
 
-  <meta charset="UTF-8" />
+<meta charset="UTF-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Chop Shops | Save More. Buy Smarter.</title>
+<title>Chop Shops | Save More. Buy Smarter.</title>
 
-  <style>
+<style>
 
-    :root {
+:root{
 
-      --green: #69b53b;
+  --green:#5dae32;
 
-      --dark: #050505;
+  --green-dark:#3f8421;
 
-      --soft-dark: #111;
+  --black:#050505;
 
-      --light: #f6f6f3;
+  --soft-black:#101010;
 
-      --text: #ffffff;
+  --white:#fff;
 
-      --muted: #cfcfcf;
+  --cream:#f7f7f4;
 
-      --border: #ddd;
+  --border:#dedede;
 
-    }
+  --text:#111;
 
-    * {
+}
 
-      box-sizing: border-box;
+*{
 
-      margin: 0;
+  margin:0;
 
-      padding: 0;
+  padding:0;
 
-    }
+  box-sizing:border-box;
 
-    body {
+}
 
-      font-family: Arial, Helvetica, sans-serif;
+body{
 
-      background: var(--light);
+  font-family:Arial, Helvetica, sans-serif;
 
-      color: #111;
+  background:var(--cream);
 
-    }
+  color:var(--text);
 
-    a {
+}
 
-      text-decoration: none;
+a{
 
-      color: inherit;
+  color:inherit;
 
-    }
+  text-decoration:none;
 
-    .topbar {
+}
 
-      background: #000;
+/* HEADER */
 
-      color: white;
+.header{
 
-      height: 74px;
+  height:74px;
 
-      display: flex;
+  background:#000;
 
-      align-items: center;
+  color:white;
 
-      justify-content: space-between;
+  display:flex;
 
-      padding: 0 28px;
+  align-items:center;
 
-      border-bottom: 1px solid #222;
+  justify-content:space-between;
 
-      position: sticky;
+  padding:0 34px;
 
-      top: 0;
+  border-bottom:1px solid #1f1f1f;
 
-      z-index: 100;
+  position:sticky;
 
-    }
+  top:0;
 
-    .logo {
+  z-index:100;
 
-      display: flex;
+}
 
-      align-items: center;
+.logo{
 
-      gap: 12px;
+  display:flex;
 
-      font-weight: 900;
+  align-items:center;
 
-      line-height: 1;
+}
 
-    }
+.logo img{
 
-    .logo-icon {
+  height:46px;
 
-      font-size: 30px;
+  width:auto;
 
-    }
+  display:block;
 
-    .logo-main {
+}
 
-      font-size: 26px;
+.nav{
 
-      letter-spacing: 1px;
+  display:flex;
 
-    }
+  align-items:center;
 
-    .logo-main span {
+  gap:28px;
 
-      color: var(--green);
+  font-size:14px;
 
-    }
+  font-weight:800;
 
-    .logo-sub {
+}
 
-      font-size: 11px;
+.header-actions{
 
-      letter-spacing: 1px;
+  display:flex;
 
-      color: #ddd;
+  align-items:center;
 
-    }
+  gap:14px;
 
-    .nav {
+}
 
-      display: flex;
+.search{
 
-      gap: 26px;
+  background:#090909;
 
-      font-size: 14px;
+  border:1px solid #333;
 
-      font-weight: 700;
+  border-radius:8px;
 
-    }
+  padding:11px 14px;
 
-    .search {
+  color:white;
 
-      display: flex;
+  width:205px;
 
-      gap: 12px;
+}
 
-      align-items: center;
+.cart{
 
-    }
+  font-size:23px;
 
-    .search input {
+}
 
-      background: #090909;
+.menu{
 
-      border: 1px solid #333;
+  display:none;
 
-      color: white;
+  font-size:28px;
 
-      padding: 12px 16px;
+}
 
-      border-radius: 8px;
+/* HERO */
 
-      width: 210px;
+.hero{
 
-    }
+  min-height:390px;
 
-    .cart {
+  background:
 
-      font-size: 25px;
+    linear-gradient(90deg, rgba(0,0,0,.94) 0%, rgba(0,0,0,.78) 42%, rgba(0,0,0,.28) 100%),
 
-    }
+    url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1800&q=80");
 
-    .hero {
+  background-size:cover;
 
-      min-height: 380px;
+  background-position:center;
 
-      background:
+  color:white;
 
-        linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.75) 42%, rgba(0,0,0,.25) 100%),
+  display:flex;
 
-        url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1600&q=80");
+  align-items:center;
 
-      background-size: cover;
+  padding:72px 8%;
 
-      background-position: center;
+}
 
-      color: white;
+.hero-content{
 
-      display: flex;
+  max-width:650px;
 
-      align-items: center;
+}
 
-      padding: 70px 8%;
+.hero h1{
 
-    }
+  font-size:clamp(42px,6vw,72px);
 
-    .hero-content {
+  line-height:.95;
 
-      max-width: 650px;
+  letter-spacing:-2px;
 
-    }
+  font-weight:1000;
 
-    .hero h1 {
+  text-transform:uppercase;
 
-      font-size: clamp(42px, 6vw, 72px);
+  margin-bottom:22px;
 
-      line-height: .95;
+}
 
-      font-weight: 1000;
+.hero h1 span,
 
-      letter-spacing: -2px;
+.hero p span{
 
-      margin-bottom: 22px;
+  color:var(--green);
 
-      text-transform: uppercase;
+}
 
-    }
+.hero p{
 
-    .hero h1 span {
+  font-size:22px;
 
-      color: var(--green);
+  line-height:1.4;
 
-    }
+  margin-bottom:28px;
 
-    .hero p {
+  max-width:560px;
 
-      font-size: 22px;
+}
 
-      line-height: 1.35;
+.hero-buttons{
 
-      color: #eee;
+  display:flex;
 
-      max-width: 560px;
+  gap:14px;
 
-      margin-bottom: 28px;
+  flex-wrap:wrap;
 
-    }
+}
 
-    .hero p span {
+.btn{
 
-      color: var(--green);
+  display:inline-flex;
 
-      font-weight: 800;
+  align-items:center;
 
-    }
+  justify-content:center;
 
-    .buttons {
+  gap:8px;
 
-      display: flex;
+  padding:15px 28px;
 
-      gap: 14px;
+  border-radius:7px;
 
-      flex-wrap: wrap;
+  font-weight:900;
 
-    }
+  text-transform:uppercase;
 
-    .btn {
+  font-size:14px;
 
-      padding: 15px 28px;
+  cursor:pointer;
 
-      border-radius: 8px;
+}
 
-      font-weight: 900;
+.btn-green{
 
-      display: inline-block;
+  background:var(--green);
 
-      text-align: center;
+  color:white;
 
-      border: 2px solid transparent;
+}
 
-      cursor: pointer;
+.btn-green:hover{
 
-    }
+  background:var(--green-dark);
 
-    .btn-green {
+}
 
-      background: var(--green);
+.btn-outline{
 
-      color: white;
+  border:2px solid white;
 
-    }
+  color:white;
 
-    .btn-outline {
+}
 
-      border-color: white;
+/* TRUST STRIP */
 
-      color: white;
+.trust-strip{
 
-      background: transparent;
+  background:#060606;
 
-    }
+  color:white;
 
-    .trust-strip {
+  display:grid;
 
-      background: #080808;
+  grid-template-columns:repeat(4,1fr);
 
-      color: white;
+  padding:28px 7%;
 
-      display: grid;
+  border-top:1px solid #191919;
 
-      grid-template-columns: repeat(4, 1fr);
+  border-bottom:1px solid #191919;
 
-      gap: 0;
+}
 
-      padding: 28px 8%;
+.trust-item{
 
-    }
+  display:flex;
 
-    .trust-item {
+  align-items:center;
 
-      display: flex;
+  gap:16px;
 
-      gap: 16px;
+  padding:0 24px;
 
-      align-items: center;
+  border-right:1px solid #252525;
 
-      border-right: 1px solid #2a2a2a;
+}
 
-      padding: 0 24px;
+.trust-item:last-child{
 
-    }
+  border-right:0;
 
-    .trust-item:last-child {
+}
 
-      border-right: 0;
+.trust-icon{
 
-    }
+  color:var(--green);
 
-    .trust-icon {
+  font-size:38px;
 
-      color: var(--green);
+}
 
-      font-size: 38px;
+.trust-item h3{
 
-    }
+  font-size:15px;
 
-    .trust-item h3 {
+  margin-bottom:5px;
 
-      font-size: 15px;
+}
 
-      margin-bottom: 5px;
+.trust-item p{
 
-    }
+  color:#d8d8d8;
 
-    .trust-item p {
+  font-size:14px;
 
-      font-size: 14px;
+  line-height:1.35;
 
-      color: #ddd;
+}
 
-      line-height: 1.35;
+/* SECTIONS */
 
-    }
+.section{
 
-    .section {
+  padding:38px 6%;
 
-      padding: 34px 6%;
+}
 
-    }
+.section-header{
 
-    .section-header {
+  display:flex;
 
-      display: flex;
+  justify-content:space-between;
 
-      justify-content: space-between;
+  align-items:center;
 
-      align-items: center;
+  margin-bottom:22px;
 
-      margin-bottom: 22px;
+}
 
-    }
+.section-title{
 
-    .section h2 {
+  font-size:30px;
 
-      font-size: 30px;
+  font-weight:1000;
 
-      text-transform: uppercase;
+  text-transform:uppercase;
 
-      letter-spacing: -1px;
+  letter-spacing:-1px;
 
-    }
+}
 
-    .view-all {
+.view-all{
 
-      color: var(--green);
+  color:var(--green-dark);
 
-      font-weight: 800;
+  font-weight:900;
 
-    }
+}
 
-    .deals-grid {
+/* DEAL CARDS */
 
-      display: grid;
+.deals-grid{
 
-      grid-template-columns: repeat(5, 1fr);
+  display:grid;
 
-      gap: 20px;
+  grid-template-columns:repeat(5,1fr);
 
-    }
+  gap:18px;
 
-    .deal-card {
+}
 
-      background: white;
+.deal-card{
 
-      border: 1px solid var(--border);
+  background:white;
 
-      border-radius: 8px;
+  border:1px solid var(--border);
 
-      overflow: hidden;
+  border-radius:8px;
 
-      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  overflow:hidden;
 
-    }
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
 
-    .deal-card img {
+}
 
-      width: 100%;
+.deal-card img{
 
-      height: 205px;
+  width:100%;
 
-      object-fit: cover;
+  height:200px;
 
-      display: block;
+  object-fit:cover;
 
-    }
+  display:block;
 
-    .deal-body {
+}
 
-      padding: 15px;
+.deal-body{
 
-    }
+  padding:15px;
 
-    .deal-body h3 {
+}
 
-      font-size: 17px;
+.deal-body h3{
 
-      margin-bottom: 8px;
+  font-size:17px;
 
-    }
+  margin-bottom:8px;
 
-    .price {
+}
 
-      font-size: 22px;
+.price{
 
-      font-weight: 900;
+  font-size:22px;
 
-      margin-bottom: 8px;
+  font-weight:1000;
 
-    }
+  margin-bottom:8px;
 
-    .prime {
+}
 
-      color: #1684d8;
+.prime{
 
-      font-size: 14px;
+  color:#1684d8;
 
-      font-weight: 800;
+  font-size:13px;
 
-    }
+  font-weight:900;
 
-    .savings {
+}
 
-      color: var(--green);
+.annual{
 
-      font-weight: 900;
+  margin:10px 0;
 
-      font-size: 14px;
+  font-size:14px;
 
-      margin-bottom: 12px;
+  line-height:1.35;
 
-      text-transform: uppercase;
+}
 
-    }
+.annual strong{
 
-    .replaces {
+  display:block;
 
-      font-size: 14px;
+  color:var(--green-dark);
 
-      line-height: 1.45;
+  text-transform:uppercase;
 
-      margin-bottom: 14px;
+  font-size:13px;
 
-    }
+}
 
-    .card-buttons {
+.annual span{
 
-      display: grid;
+  color:var(--green-dark);
 
-      gap: 8px;
+  font-weight:1000;
 
-    }
+}
 
-    .small-btn {
+.replaces{
 
-      display: block;
+  font-size:14px;
 
-      text-align: center;
+  line-height:1.4;
 
-      padding: 11px;
+  margin-bottom:14px;
 
-      border-radius: 6px;
+}
 
-      font-size: 14px;
+.replaces strong{
 
-      font-weight: 900;
+  display:block;
 
-      border: 1px solid #ccc;
+  margin-bottom:3px;
 
-    }
+}
 
-    .small-btn.green {
+.card-actions{
 
-      background: var(--green);
+  display:grid;
 
-      color: white;
+  gap:8px;
 
-      border-color: var(--green);
+}
 
-    }
+.small-btn{
 
-    .breakdown {
+  display:block;
 
-      display: grid;
+  text-align:center;
 
-      grid-template-columns: 1.3fr 1.1fr 1fr;
+  padding:11px;
 
-      gap: 18px;
+  border-radius:6px;
 
-      background: white;
+  font-size:13px;
 
-      border: 1px solid var(--border);
+  font-weight:1000;
 
-      border-radius: 10px;
+  text-transform:uppercase;
 
-      overflow: hidden;
+  border:1px solid #ccc;
 
-      margin-top: 28px;
+}
 
-    }
+.small-btn.green{
 
-    .breakdown-image img {
+  background:var(--green);
 
-      width: 100%;
+  color:white;
 
-      height: 100%;
+  border-color:var(--green);
 
-      min-height: 290px;
+}
 
-      object-fit: cover;
+/* BREAKDOWN */
 
-      display: block;
+.breakdown{
 
-    }
+  margin-top:28px;
 
-    .breakdown-content,
+  background:white;
 
-    .savings-box,
+  border:1px solid var(--border);
 
-    .replace-box {
+  border-radius:10px;
 
-      padding: 24px;
+  overflow:hidden;
 
-    }
+  display:grid;
 
-    .breakdown-content h2 {
+  grid-template-columns:1.2fr 1.1fr 1fr 1fr;
 
-      text-transform: none;
+}
 
-      font-size: 30px;
+.breakdown-img img{
 
-      margin-bottom: 20px;
+  width:100%;
 
-    }
+  height:100%;
 
-    .breakdown-content p {
+  min-height:280px;
 
-      margin-bottom: 12px;
+  object-fit:cover;
 
-      line-height: 1.45;
+  display:block;
 
-    }
+}
 
-    .big-save {
+.breakdown-panel{
 
-      background: #eef7e8;
+  padding:24px;
 
-      color: var(--green);
+  border-left:1px solid #e6e6e6;
 
-      padding: 18px;
+}
 
-      border-radius: 8px;
+.breakdown-panel h2,
 
-      margin-top: 18px;
+.breakdown-panel h3{
 
-      font-size: 30px;
+  margin-bottom:18px;
 
-      font-weight: 1000;
+  text-transform:uppercase;
 
-    }
+}
 
-    .savings-box,
+.breakdown-panel p{
 
-    .replace-box {
+  font-size:15px;
 
-      margin: 20px 0;
+  line-height:1.45;
 
-      border: 1px solid #eee;
+  margin-bottom:12px;
 
-      border-radius: 10px;
+}
 
-      background: #fafafa;
+.big-save{
 
-    }
+  background:#eef7e8;
 
-    .savings-row {
+  color:var(--green-dark);
 
-      display: flex;
+  padding:18px;
 
-      justify-content: space-between;
+  border-radius:8px;
 
-      border-bottom: 1px solid #e5e5e5;
+  margin-top:18px;
 
-      padding: 13px 0;
+}
 
-      font-size: 15px;
+.big-save small{
 
-    }
+  display:block;
 
-    .savings-row:last-child {
+  color:#333;
 
-      border-bottom: none;
+  font-size:14px;
 
-    }
+  margin-bottom:4px;
 
-    .replace-box ul {
+}
 
-      list-style: none;
+.big-save strong{
 
-      margin: 15px 0 22px;
+  font-size:32px;
 
-      line-height: 2;
+}
 
-      font-size: 15px;
+.savings-row{
 
-    }
+  display:flex;
 
-    .replace-box li::before {
+  justify-content:space-between;
 
-      content: "✓ ";
+  gap:15px;
 
-      color: var(--green);
+  border-bottom:1px solid #eee;
 
-      font-weight: 900;
+  padding:12px 0;
 
-    }
+  font-size:14px;
 
-    .categories {
+}
 
-      display: grid;
+.savings-row:last-child{
 
-      grid-template-columns: repeat(6, 1fr);
+  border-bottom:0;
 
-      gap: 16px;
+}
 
-    }
+.replace-list{
 
-    .cat-card {
+  list-style:none;
 
-      background: white;
+  line-height:2;
 
-      border: 1px solid var(--border);
+  font-size:14px;
 
-      border-radius: 9px;
+  margin-bottom:20px;
 
-      text-align: center;
+}
 
-      padding: 26px 10px;
+.replace-list li::before{
 
-      font-weight: 900;
+  content:"✓ ";
 
-      font-size: 18px;
+  color:var(--green);
 
-    }
+  font-weight:1000;
 
-    .cat-icon {
+}
 
-      font-size: 42px;
+/* CATEGORIES */
 
-      color: var(--green);
+.categories{
 
-      margin-bottom: 10px;
+  display:grid;
 
-      display: block;
+  grid-template-columns:repeat(6,1fr);
 
-    }
+  gap:16px;
 
-    .why {
+}
 
-      background: #030303;
+.category-card{
 
-      color: white;
+  background:white;
 
-      padding: 32px 8%;
+  border:1px solid var(--border);
 
-    }
+  border-radius:9px;
 
-    .why h2 {
+  padding:25px 10px;
 
-      text-align: center;
+  text-align:center;
 
-      font-size: 32px;
+  font-weight:1000;
 
-      text-transform: uppercase;
+  font-size:17px;
 
-      margin-bottom: 26px;
+}
 
-    }
+.category-icon{
 
-    .why h2 span {
+  display:block;
 
-      color: var(--green);
+  color:var(--green-dark);
 
-    }
+  font-size:42px;
 
-    .why-grid {
+  margin-bottom:10px;
 
-      display: grid;
+}
 
-      grid-template-columns: repeat(4, 1fr);
+/* WHY */
 
-      gap: 32px;
+.why{
 
-    }
+  background:#030303;
 
-    .why-item {
+  color:white;
 
-      display: flex;
+  padding:34px 7%;
 
-      gap: 15px;
+}
 
-      align-items: center;
+.why h2{
 
-      color: #eee;
+  text-align:center;
 
-      line-height: 1.45;
+  font-size:32px;
 
-    }
+  text-transform:uppercase;
 
-    .why-icon {
+  margin-bottom:28px;
 
-      font-size: 38px;
+}
 
-      color: var(--green);
+.why h2 span{
 
-    }
+  color:var(--green);
 
-    .bottom-cta {
+}
 
-      background: linear-gradient(90deg, #75b843, #8cc95d);
+.why-grid{
 
-      color: white;
+  display:grid;
 
-      padding: 28px 8%;
+  grid-template-columns:repeat(4,1fr);
 
-      display: flex;
+  gap:30px;
 
-      justify-content: space-between;
+}
 
-      align-items: center;
+.why-item{
 
-      gap: 25px;
+  display:flex;
 
-    }
+  align-items:center;
 
-    .bottom-cta h2 {
+  gap:15px;
 
-      font-size: 34px;
+  color:#eee;
 
-      text-transform: uppercase;
+  line-height:1.45;
 
-    }
+  font-size:15px;
 
-    .bottom-cta p {
+}
 
-      font-size: 22px;
+.why-icon{
 
-    }
+  color:var(--green);
 
-    .bottom-buttons {
+  font-size:38px;
 
-      display: flex;
+}
 
-      gap: 18px;
+/* CTA */
 
-    }
+.bottom-cta{
 
-    .btn-dark {
+  background:linear-gradient(90deg,var(--green-dark),var(--green));
 
-      background: #000;
+  color:white;
 
-      color: white;
+  padding:28px 7%;
 
-    }
+  display:flex;
 
-    .btn-white {
+  align-items:center;
 
-      background: white;
+  justify-content:space-between;
 
-      color: #111;
+  gap:24px;
 
-    }
+}
 
-    .mobile-sticky {
+.bottom-cta h2{
 
-      display: none;
+  font-size:34px;
 
-    }
+  text-transform:uppercase;
 
-    @media (max-width: 1000px) {
+}
 
-      .nav,
+.bottom-cta p{
 
-      .search {
+  font-size:21px;
 
-        display: none;
+}
 
-      }
+.bottom-actions{
 
-      .trust-strip,
+  display:flex;
 
-      .deals-grid,
+  gap:16px;
 
-      .categories,
+}
 
-      .why-grid {
+.btn-dark{
 
-        grid-template-columns: repeat(2, 1fr);
+  background:#000;
 
-      }
+  color:white;
 
-      .breakdown {
+}
 
-        grid-template-columns: 1fr;
+.btn-white{
 
-      }
+  background:white;
 
-      .bottom-cta {
+  color:#111;
 
-        flex-direction: column;
+}
 
-        text-align: center;
+/* MOBILE STICKY */
 
-      }
+.mobile-sticky{
 
-    }
+  display:none;
 
-    @media (max-width: 650px) {
+}
 
-      .topbar {
+/* RESPONSIVE */
 
-        height: 68px;
+@media(max-width:1100px){
 
-        padding: 0 16px;
+  .deals-grid{
 
-      }
+    grid-template-columns:repeat(3,1fr);
 
-      .logo-main {
+  }
 
-        font-size: 22px;
+  .breakdown{
 
-      }
+    grid-template-columns:1fr 1fr;
 
-      .hero {
+  }
 
-        padding: 55px 22px;
+  .categories{
 
-        min-height: 500px;
+    grid-template-columns:repeat(3,1fr);
 
-        background-position: center;
+  }
 
-      }
+  .trust-strip,
 
-      .hero h1 {
+  .why-grid{
 
-        font-size: 43px;
+    grid-template-columns:repeat(2,1fr);
 
-      }
+  }
 
-      .hero p {
+  .trust-item{
 
-        font-size: 18px;
+    border-bottom:1px solid #252525;
 
-      }
+    padding:18px;
 
-      .trust-strip,
+  }
 
-      .deals-grid,
+}
 
-      .categories,
+@media(max-width:760px){
 
-      .why-grid {
+  .header{
 
-        grid-template-columns: 1fr;
+    height:70px;
 
-      }
+    padding:0 16px;
 
-      .trust-item {
+  }
 
-        border-right: none;
+  .logo img{
 
-        border-bottom: 1px solid #222;
+    height:36px;
 
-        padding: 18px 0;
+  }
 
-      }
+  .nav,
 
-      .section {
+  .header-actions{
 
-        padding: 28px 18px;
+    display:none;
 
-      }
+  }
 
-      .deal-card img {
+  .menu{
 
-        height: 230px;
+    display:block;
 
-      }
+  }
 
-      .bottom-buttons {
+  .hero{
 
-        flex-direction: column;
+    min-height:430px;
 
-        width: 100%;
+    padding:48px 20px;
 
-      }
+    background:
 
-      .mobile-sticky {
+      linear-gradient(90deg, rgba(0,0,0,.94), rgba(0,0,0,.58)),
 
-        display: grid;
+      url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80");
 
-        grid-template-columns: 1fr 1fr;
+    background-position:center;
 
-        gap: 8px;
+  }
 
-        position: fixed;
+  .hero h1{
 
-        bottom: 0;
+    font-size:40px;
 
-        left: 0;
+  }
 
-        width: 100%;
+  .hero p{
 
-        background: #000;
+    font-size:17px;
 
-        padding: 10px;
+  }
 
-        z-index: 200;
+  .hero-buttons{
 
-      }
+    display:grid;
 
-      .mobile-sticky a {
+    grid-template-columns:1fr;
 
-        padding: 13px;
+  }
 
-        text-align: center;
+  .trust-strip{
 
-        border-radius: 7px;
+    grid-template-columns:repeat(4,1fr);
 
-        font-weight: 900;
+    gap:0;
 
-      }
+    padding:18px 10px;
 
-      .mobile-sticky .deal {
+    text-align:center;
 
-        background: var(--green);
+  }
 
-        color: white;
+  .trust-item{
 
-      }
+    display:block;
 
-      .mobile-sticky .details {
+    padding:8px 5px;
 
-        background: white;
+    border:0;
 
-        color: #000;
+  }
 
-      }
+  .trust-icon{
 
-      body {
+    font-size:30px;
 
-        padding-bottom: 70px;
+    margin-bottom:6px;
 
-      }
+  }
 
-    }
+  .trust-item h3{
 
-  </style>
+    font-size:11px;
+
+  }
+
+  .trust-item p{
+
+    display:none;
+
+  }
+
+  .section{
+
+    padding:28px 16px;
+
+  }
+
+  .section-title{
+
+    font-size:24px;
+
+  }
+
+  .deals-grid{
+
+    grid-template-columns:1fr;
+
+    gap:14px;
+
+  }
+
+  .deal-card{
+
+    display:grid;
+
+    grid-template-columns:120px 1fr;
+
+  }
+
+  .deal-card img{
+
+    height:100%;
+
+    min-height:170px;
+
+  }
+
+  .deal-body{
+
+    padding:12px;
+
+  }
+
+  .deal-body h3{
+
+    font-size:15px;
+
+  }
+
+  .price{
+
+    font-size:20px;
+
+  }
+
+  .card-actions{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .breakdown{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .breakdown-panel{
+
+    border-left:0;
+
+    border-top:1px solid #e6e6e6;
+
+  }
+
+  .categories{
+
+    grid-template-columns:repeat(2,1fr);
+
+  }
+
+  .why-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .bottom-cta{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    padding-bottom:90px;
+
+  }
+
+  .bottom-actions{
+
+    width:100%;
+
+    flex-direction:column;
+
+  }
+
+  .mobile-sticky{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    background:#000;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+
+    padding:10px;
+
+    z-index:200;
+
+  }
+
+  .mobile-sticky a{
+
+    text-align:center;
+
+    padding:14px 10px;
+
+    border-radius:7px;
+
+    font-weight:1000;
+
+    text-transform:uppercase;
+
+    font-size:13px;
+
+  }
+
+  .mobile-sticky .shop{
+
+    background:var(--green);
+
+    color:white;
+
+  }
+
+  .mobile-sticky .cat{
+
+    background:#101010;
+
+    color:white;
+
+    border:1px solid #555;
+
+  }
+
+}
+
+</style>
 
 </head>
 
 <body>
 
-  <header class="topbar">
+<header class="header">
 
-    <div class="logo">
+  <div class="logo">
 
-      <div class="logo-icon">☠</div>
-
-      <div>
-
-        <div class="logo-main">CHOP <span>SHOPS</span></div>
-
-        <div class="logo-sub">SAVE MORE. BUY SMARTER.</div>
-
-      </div>
-
-    </div>
-
-    <nav class="nav">
-
-      <a href="#deals">Deals</a>
-
-      <a href="#categories">Categories</a>
-
-      <a href="#how">How It Works</a>
-
-      <a href="#calculator">Savings Calculator</a>
-
-      <a href="#about">About Us</a>
-
-    </nav>
-
-    <div class="search">
-
-      <input type="text" placeholder="Search deals..." />
-
-      <div class="cart">🛒</div>
-
-    </div>
-
-  </header>
-
-  <section class="hero">
-
-    <div class="hero-content">
-
-      <h1>Stop Overpaying<br>For <span>Everyday Stuff.</span></h1>
-
-      <p>We find products that replace recurring expenses and <span>save you money</span> all year long.</p>
-
-      <div class="buttons">
-
-        <a href="#deals" class="btn btn-green">🛒 Shop Deals</a>
-
-        <a href="#how" class="btn btn-outline">How It Saves You</a>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  <section class="trust-strip">
-
-    <div class="trust-item">
-
-      <div class="trust-icon">🏷</div>
-
-      <div>
-
-        <h3>Handpicked Deals</h3>
-
-        <p>Only products that save you real money.</p>
-
-      </div>
-
-    </div>
-
-    <div class="trust-item">
-
-      <div class="trust-icon">💲</div>
-
-      <div>
-
-        <h3>Real Yearly Savings</h3>
-
-        <p>We show you the estimated savings.</p>
-
-      </div>
-
-    </div>
-
-    <div class="trust-item">
-
-      <div class="trust-icon">↔</div>
-
-      <div>
-
-        <h3>Replaces Expenses</h3>
-
-        <p>Each item replaces something you're already paying for.</p>
-
-      </div>
-
-    </div>
-
-    <div class="trust-item">
-
-      <div class="trust-icon">🛡</div>
-
-      <div>
-
-        <h3>Trusted & Transparent</h3>
-
-        <p>No fluff. Just smart, money-saving picks.</p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  <main>
-
-    <section class="section" id="deals">
-
-      <div class="section-header">
-
-        <h2>Featured Deals</h2>
-
-        <a href="#" class="view-all">View all deals →</a>
-
-      </div>
-
-      <div class="deals-grid" id="dealsGrid"></div>
-
-      <div class="breakdown" id="how">
-
-        <div class="breakdown-image">
-
-          <img src="https://images.unsplash.com/photo-1622484212850-eb596d769edc?auto=format&fit=crop&w=900&q=80" alt="Water filter pitcher">
-
-        </div>
-
-        <div class="breakdown-content">
-
-          <h2>Water Filter Pitcher</h2>
-
-          <p><strong>Instead of:</strong><br>$10 / week on bottled water</p>
-
-          <p><strong>You pay:</strong><br>$29.99 once + filters</p>
-
-          <div class="big-save">
-
-            $180 – $600+
-
-          </div>
-
-        </div>
-
-        <div class="savings-box">
-
-          <h4>Your Savings By Household Size</h4>
-
-          <div class="savings-row"><span>👤 1 Person</span><strong>$180 / year</strong></div>
-
-          <div class="savings-row"><span>👥 2 People</span><strong>$320 / year</strong></div>
-
-          <div class="savings-row"><span>👨‍👩‍👧 3–4 People</span><strong>$480 / year</strong></div>
-
-          <div class="savings-row"><span>👨‍👩‍👧‍👦 5+ People</span><strong>$600+ / year</strong></div>
-
-        </div>
-
-        <div class="replace-box">
-
-          <h4>What It Replaces</h4>
-
-          <ul>
-
-            <li>Bottled water packs</li>
-
-            <li>Delivery water</li>
-
-            <li>Plastic waste</li>
-
-            <li>Store runs</li>
-
-            <li>Recurring expenses</li>
-
-          </ul>
-
-          <a href="#" class="btn btn-green">🛒 See Best Price</a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="section" id="categories">
-
-      <h2>Shop By Category</h2>
-
-      <br>
-
-      <div class="categories">
-
-        <div class="cat-card"><span class="cat-icon">🍳</span>Kitchen<br>Savings</div>
-
-        <div class="cat-card"><span class="cat-icon">🧽</span>Cleaning<br>Hacks</div>
-
-        <div class="cat-card"><span class="cat-icon">🍼</span>Kids &<br>Baby</div>
-
-        <div class="cat-card"><span class="cat-icon">🐾</span>Pets</div>
-
-        <div class="cat-card"><span class="cat-icon">🚗</span>Car &<br>Garage</div>
-
-        <div class="cat-card"><span class="cat-icon">💲</span>High Profit<br>Deals</div>
-
-      </div>
-
-    </section>
-
-    <section class="why" id="about">
-
-      <h2>Why Chop <span>Shops?</span></h2>
-
-      <div class="why-grid">
-
-        <div class="why-item">
-
-          <div class="why-icon">🏷</div>
-
-          <p>We focus on saving you money, not just selling products.</p>
-
-        </div>
-
-        <div class="why-item">
-
-          <div class="why-icon">↔</div>
-
-          <p>Every item replaces a recurring cost or reduces repeat purchases.</p>
-
-        </div>
-
-        <div class="why-item">
-
-          <div class="why-icon">📈</div>
-
-          <p>We show real yearly savings so you know it’s worth it.</p>
-
-        </div>
-
-        <div class="why-item">
-
-          <div class="why-icon">🛡</div>
-
-          <p>No fluff. Just handpicked deals that make your life cheaper.</p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="bottom-cta">
-
-      <div>
-
-        <h2>Start Saving Smarter Today</h2>
-
-        <p>Small changes. Big savings. Every year.</p>
-
-      </div>
-
-      <div class="bottom-buttons">
-
-        <a href="#deals" class="btn btn-dark">Browse All Deals</a>
-
-        <a href="#deals" class="btn btn-white">Best Savings This Week</a>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <div class="mobile-sticky">
-
-    <a href="#deals" class="deal">Shop Deals</a>
-
-    <a href="#how" class="details">View Details</a>
+    <img src="logo.png" alt="Chop Shops Logo">
 
   </div>
 
-  <script>
+  <nav class="nav">
 
-    /*
+    <a href="#deals">Deals</a>
 
-      FUTURE NOTION SETUP:
+    <a href="#categories">Categories</a>
 
-      Later, this array gets replaced by products pulled from Notion.
+    <a href="#how">How It Works</a>
 
-      Public fields shown on website:
+    <a href="#calculator">Savings Calculator</a>
 
-      - name
+    <a href="#about">About Us</a>
 
-      - price
+  </nav>
 
-      - image
+  <div class="header-actions">
 
-      - affiliateLink
+    <input class="search" type="text" placeholder="Search deals..." />
 
-      - yearlySavings
+    <div class="cart">🛒</div>
 
-      - replaces
+  </div>
 
-      - category
+  <div class="menu">☰</div>
 
-      Hidden backend fields in Notion:
+</header>
 
-      - approvalStatus
+<section class="hero">
 
-      - live
+  <div class="hero-content">
 
-      - featured
+    <h1>Stop Overpaying<br>For <span>Everyday Stuff.</span></h1>
 
-      Website should only show:
+    <p>We find products that replace recurring expenses and <span>save you money</span> all year long.</p>
 
-      approvalStatus = "Approved"
+    <div class="hero-buttons">
 
-      live = true
+      <a href="#deals" class="btn btn-green">🛒 Shop Deals</a>
 
-    */
+      <a href="#how" class="btn btn-outline">How It Saves You</a>
 
-    const products = [
+    </div>
 
-      {
+  </div>
 
-        name: "Water Filter Pitcher",
+</section>
 
-        price: "$29.99",
+<section class="trust-strip">
 
-        yearlySavings: "$180–$600 / YEAR",
+  <div class="trust-item">
 
-        replaces: "Bottled Water & Delivery Water",
+    <div class="trust-icon">🏷</div>
 
-        category: "Kitchen Savings",
+    <div>
 
-        affiliateLink: "#",
+      <h3>Handpicked Deals</h3>
 
-        image: "https://images.unsplash.com/photo-1622484212850-eb596d769edc?auto=format&fit=crop&w=900&q=80",
+      <p>Only products that save you real money.</p>
 
-        approvalStatus: "Approved",
+    </div>
 
-        live: true,
+  </div>
 
-        featured: true
+  <div class="trust-item">
 
-      },
+    <div class="trust-icon">💲</div>
 
-      {
+    <div>
 
-        name: "Reusable Paper Towels",
+      <h3>Real Yearly Savings</h3>
 
-        price: "$19.99",
+      <p>We show estimated annual savings.</p>
 
-        yearlySavings: "$100–$250 / YEAR",
+    </div>
 
-        replaces: "Paper Towels & Napkins",
+  </div>
 
-        category: "Cleaning Hacks",
+  <div class="trust-item">
 
-        affiliateLink: "#",
+    <div class="trust-icon">↔</div>
 
-        image: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=900&q=80",
+    <div>
 
-        approvalStatus: "Approved",
+      <h3>Replaces Expenses</h3>
 
-        live: true,
+      <p>Each item replaces something you already pay for.</p>
 
-        featured: true
+    </div>
 
-      },
+  </div>
 
-      {
+  <div class="trust-item">
 
-        name: "Safety Razor Kit",
+    <div class="trust-icon">🛡</div>
 
-        price: "$24.99",
+    <div>
 
-        yearlySavings: "$80–$200 / YEAR",
+      <h3>Trusted & Transparent</h3>
 
-        replaces: "Disposable Razors",
+      <p>No fluff. Just smart money-saving picks.</p>
 
-        category: "Bathroom Savings",
+    </div>
 
-        affiliateLink: "#",
+  </div>
 
-        image: "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=900&q=80",
+</section>
 
-        approvalStatus: "Approved",
+<main>
 
-        live: true,
+<section class="section" id="deals">
 
-        featured: true
+  <div class="section-header">
 
-      },
+    <h2 class="section-title">Featured Deals</h2>
 
-      {
+    <a class="view-all" href="#">View all deals →</a>
 
-        name: "Reusable Coffee Filter",
+  </div>
 
-        price: "$13.99",
+  <div class="deals-grid" id="dealsGrid"></div>
 
-        yearlySavings: "$60–$150 / YEAR",
+  <div class="breakdown" id="how">
 
-        replaces: "Paper Filters & Pods",
+    <div class="breakdown-img">
 
-        category: "Kitchen Savings",
+      <img src="https://images.unsplash.com/photo-1622484212850-eb596d769edc?auto=format&fit=crop&w=900&q=80" alt="Water Filter Pitcher">
 
-        affiliateLink: "#",
+    </div>
 
-        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80",
+    <div class="breakdown-panel">
 
-        approvalStatus: "Approved",
+      <h2>Water Filter Pitcher</h2>
 
-        live: true,
+      <p><strong>Instead of:</strong><br>$10 / week on bottled water</p>
 
-        featured: true
+      <p><strong>You pay:</strong><br>$29.99 once + $20 / year for filters</p>
 
-      },
+      <div class="big-save">
 
-      {
+        <small>Estimated Annual Savings:</small>
 
-        name: "Steam Mop Cleaner",
+        <strong>$180 – $600+</strong>
 
-        price: "$79.99",
+      </div>
 
-        yearlySavings: "$100–$300 / YEAR",
+    </div>
 
-        replaces: "Disposable Cleaning Pads",
+    <div class="breakdown-panel">
 
-        category: "Cleaning Hacks",
+      <h3>Your Savings By Household Size</h3>
 
-        affiliateLink: "#",
+      <div class="savings-row"><span>👤 1 Person</span><strong>$180 / year</strong></div>
 
-        image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80",
+      <div class="savings-row"><span>👥 2 People</span><strong>$320 / year</strong></div>
 
-        approvalStatus: "Approved",
+      <div class="savings-row"><span>👨‍👩‍👧 3–4 People</span><strong>$480 / year</strong></div>
 
-        live: true,
+      <div class="savings-row"><span>👨‍👩‍👧‍👦 5+ People</span><strong>$600+ / year</strong></div>
 
-        featured: true
+    </div>
 
-      }
+    <div class="breakdown-panel">
 
-    ];
+      <h3>What It Replaces</h3>
 
-    const dealsGrid = document.getElementById("dealsGrid");
+      <ul class="replace-list">
 
-    const visibleProducts = products.filter(product =>
+        <li>Bottled water packs</li>
 
-      product.approvalStatus === "Approved" &&
+        <li>Delivery water</li>
 
-      product.live === true &&
+        <li>Plastic waste</li>
 
-      product.featured === true
+        <li>Store runs</li>
 
-    );
+        <li>Recurring expenses</li>
 
-    dealsGrid.innerHTML = visibleProducts.map(product => `
+      </ul>
 
-      <article class="deal-card">
+      <a href="#" class="btn btn-green">🛒 See Best Price</a>
 
-        <img src="${product.image}" alt="${product.name}">
+    </div>
 
-        <div class="deal-body">
+  </div>
 
-          <h3>${product.name}</h3>
+</section>
 
-          <div class="price">${product.price} <span class="prime">✓prime</span></div>
+<section class="section" id="categories">
 
-          <div class="savings">Saves ${product.yearlySavings}</div>
+  <h2 class="section-title">Shop By Category</h2>
 
-          <div class="replaces">
+  <br>
 
-            <strong>Replaces:</strong> ${product.replaces}
+  <div class="categories">
 
-          </div>
+    <div class="category-card"><span class="category-icon">🍳</span>Kitchen<br>Savings</div>
 
-          <div class="card-buttons">
+    <div class="category-card"><span class="category-icon">🧽</span>Cleaning<br>Hacks</div>
 
-            <a href="${product.affiliateLink}" class="small-btn green">View Deal</a>
+    <div class="category-card"><span class="category-icon">🍼</span>Kids &<br>Baby</div>
 
-            <a href="#how" class="small-btn">See Breakdown</a>
+    <div class="category-card"><span class="category-icon">🐾</span>Pets</div>
 
-          </div>
+    <div class="category-card"><span class="category-icon">🚗</span>Car &<br>Garage</div>
 
-        </div>
+    <div class="category-card"><span class="category-icon">💲</span>High Profit<br>Deals</div>
 
-      </article>
+  </div>
 
-    `).join("");
+</section>
 
-  </script>
+<section class="why" id="about">
+
+  <h2>Why Chop <span>Shops?</span></h2>
+
+  <div class="why-grid">
+
+    <div class="why-item">
+
+      <div class="why-icon">🏷</div>
+
+      <p>We focus on saving you money, not just selling products.</p>
+
+    </div>
+
+    <div class="why-item">
+
+      <div class="why-icon">↔</div>
+
+      <p>Every item replaces a recurring cost or reduces repeat purchases.</p>
+
+    </div>
+
+    <div class="why-item">
+
+      <div class="why-icon">📈</div>
+
+      <p>We show real yearly savings so you know it’s worth it.</p>
+
+    </div>
+
+    <div class="why-item">
+
+      <div class="why-icon">🛡</div>
+
+      <p>No fluff. Just handpicked deals that make your life cheaper.</p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="bottom-cta">
+
+  <div>
+
+    <h2>Start Saving Smarter Today</h2>
+
+    <p>Small changes. Big savings. Every year.</p>
+
+  </div>
+
+  <div class="bottom-actions">
+
+    <a href="#deals" class="btn btn-dark">Browse All Deals</a>
+
+    <a href="#deals" class="btn btn-white">Best Savings This Week</a>
+
+  </div>
+
+</section>
+
+</main>
+
+<div class="mobile-sticky">
+
+  <a href="#deals" class="shop">🛒 Shop Deals</a>
+
+  <a href="#categories" class="cat">☰ Categories</a>
+
+</div>
+
+<script>
+
+/*
+
+  FUTURE NOTION READY:
+
+  Later this array can be replaced by products pulled from Notion.
+
+  Public website fields:
+
+  name, price, image, affiliateLink, annualSavings, replaces, category
+
+  Hidden backend Notion fields:
+
+  approvalStatus, live, featured, commission, source, lastChecked
+
+  Website only shows:
+
+  approvalStatus = Approved
+
+  live = true
+
+  featured = true
+
+*/
+
+const products = [
+
+  {
+
+    name:"Water Filter Pitcher",
+
+    price:"$29.99",
+
+    annualSavings:"$180 – $600 / year",
+
+    replaces:"Bottled water & delivery water",
+
+    category:"Kitchen Savings",
+
+    affiliateLink:"#",
+
+    image:"https://images.unsplash.com/photo-1622484212850-eb596d769edc?auto=format&fit=crop&w=900&q=80",
+
+    approvalStatus:"Approved",
+
+    live:true,
+
+    featured:true
+
+  },
+
+  {
+
+    name:"Reusable Paper Towels",
+
+    price:"$19.99",
+
+    annualSavings:"$100 – $250 / year",
+
+    replaces:"Paper towels & napkins",
+
+    category:"Cleaning Hacks",
+
+    affiliateLink:"#",
+
+    image:"https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=900&q=80",
+
+    approvalStatus:"Approved",
+
+    live:true,
+
+    featured:true
+
+  },
+
+  {
+
+    name:"Safety Razor Kit",
+
+    price:"$24.99",
+
+    annualSavings:"$80 – $200 / year",
+
+    replaces:"Disposable razors",
+
+    category:"Bathroom Savings",
+
+    affiliateLink:"#",
+
+    image:"https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=900&q=80",
+
+    approvalStatus:"Approved",
+
+    live:true,
+
+    featured:true
+
+  },
+
+  {
+
+    name:"Reusable Coffee Filter",
+
+    price:"$13.99",
+
+    annualSavings:"$60 – $150 / year",
+
+    replaces:"Paper coffee filters & pods",
+
+    category:"Kitchen Savings",
+
+    affiliateLink:"#",
+
+    image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80",
+
+    approvalStatus:"Approved",
+
+    live:true,
+
+    featured:true
+
+  },
+
+  {
+
+    name:"Steam Mop Cleaner",
+
+    price:"$79.99",
+
+    annualSavings:"$100 – $300 / year",
+
+    replaces:"Disposable cleaning pads & chemicals",
+
+    category:"Cleaning Hacks",
+
+    affiliateLink:"#",
+
+    image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80",
+
+    approvalStatus:"Approved",
+
+    live:true,
+
+    featured:true
+
+  }
+
+];
+
+const dealsGrid = document.getElementById("dealsGrid");
+
+const visibleProducts = products.filter(product =>
+
+  product.approvalStatus === "Approved" &&
+
+  product.live === true &&
+
+  product.featured === true
+
+);
+
+dealsGrid.innerHTML = visibleProducts.map(product => `
+
+  <article class="deal-card">
+
+    <img src="${product.image}" alt="${product.name}">
+
+    <div class="deal-body">
+
+      <h3>${product.name}</h3>
+
+      <div class="price">${product.price} <span class="prime">✓prime</span></div>
+
+      <div class="annual">
+
+        <strong>Annual Savings:</strong>
+
+        <span>${product.annualSavings}</span>
+
+      </div>
+
+      <div class="replaces">
+
+        <strong>Replaces:</strong>
+
+        ${product.replaces}
+
+      </div>
+
+      <div class="card-actions">
+
+        <a href="${product.affiliateLink}" class="small-btn green">View Deal</a>
+
+        <a href="#how" class="small-btn">See Breakdown</a>
+
+      </div>
+
+    </div>
+
+  </article>
+
+`).join("");
+
+</script>
 
 </body>
 
