@@ -1,242 +1,1513 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ChopShops — curated finds</title>
-  <link rel="icon" href="assets/logo.png" />
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chop Shops | Save More. Buy Smarter.</title>
+
   <style>
-    :root{
-      --bg:#0b0c0f;--panel:#12141a;--muted:#8b93a1;--text:#e8ecf1;
-      --brand:#79ffe1;--brand2:#14b8a6;--chip:#1b1f29;--card:#10131a;
-      --stroke:#262a36;--hover:#171a22;--danger:#ef4444;
+
+    :root {
+
+      --green: #69b53b;
+
+      --dark: #050505;
+
+      --soft-dark: #111;
+
+      --light: #f6f6f3;
+
+      --text: #ffffff;
+
+      --muted: #cfcfcf;
+
+      --border: #ddd;
+
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;background:linear-gradient(180deg,#0b0c0f 0%,#0e1117 100%);
-      color:var(--text);font:400 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+
+    * {
+
+      box-sizing: border-box;
+
+      margin: 0;
+
+      padding: 0;
+
     }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1200px;margin:0 auto;padding:24px}
-    /* Header */
-    .nav{
-      position:sticky;top:0;z-index:50;
-      background:rgba(11,12,15,.6);backdrop-filter:saturate(120%) blur(10px);
-      border-bottom:1px solid var(--stroke);
+
+    body {
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      background: var(--light);
+
+      color: #111;
+
     }
-    .nav-inner{display:flex;align-items:center;gap:16px;padding:12px 24px}
-    .logo{display:flex;align-items:center;gap:12px;cursor:pointer}
-    .logo img{height:28px;width:auto;border-radius:6px}
-    .logo-title{font-weight:700;letter-spacing:.2px}
-    .badge{font-size:12px;color:#0b0c0f;background:var(--brand);padding:2px 8px;border-radius:999px}
-    /* Toolbar */
-    .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:20px 0}
-    .tabs{display:flex;gap:8px}
-    .tab{
-      padding:8px 12px;border:1px solid var(--stroke);border-radius:10px;background:var(--chip);
-      color:var(--muted);cursor:pointer;transition:.15s;
+
+    a {
+
+      text-decoration: none;
+
+      color: inherit;
+
     }
-    .tab.active{background:linear-gradient(90deg,var(--brand2),var(--brand));color:#00130f;font-weight:700;border-color:transparent}
-    .chips{display:flex;gap:8px;overflow:auto;padding-bottom:4px}
-    .chip{
-      padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:var(--chip);
-      color:var(--muted);white-space:nowrap;cursor:pointer;transition:.15s;
+
+    .topbar {
+
+      background: #000;
+
+      color: white;
+
+      height: 74px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 0 28px;
+
+      border-bottom: 1px solid #222;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
     }
-    .chip.active{background:#0f766e;color:#d1faf5;border-color:#0d9488}
-    .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--chip);border:1px solid var(--stroke);border-radius:12px;padding:8px 12px}
-    .search input{background:transparent;border:0;outline:0;color:var(--text);width:220px}
-    /* Grid */
-    .grid{display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}
-    @media (max-width:1100px){ .grid{grid-template-columns:repeat(8,1fr)} }
-    @media (max-width:720px){ .grid{grid-template-columns:repeat(4,1fr)} .search input{width:140px}}
-    .col-3{grid-column:span 3}
-    /* Card */
-    .card{border:1px solid var(--stroke);background:var(--card);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:.18s}
-    .card:hover{transform:translateY(-2px);background:var(--hover)}
-    .thumb{aspect-ratio:16/12;background:#0d1117;display:grid;place-items:center;color:#303645}
-    .thumb img{width:100%;height:100%;object-fit:cover}
-    .content{padding:14px}
-    .title{font-weight:650;margin:0 0 6px 0}
-    .meta{color:var(--muted);font-size:13px;display:flex;gap:10px;align-items:center}
-    .price{color:#e0fffb;background:#0b3b36;padding:2px 8px;border-radius:999px;border:1px solid #14524d}
-    .why{margin-top:10px;color:#bac2cf;font-size:14px}
-    .row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
-    .btn{
-      background:linear-gradient(90deg,var(--brand2),var(--brand));color:#00130f;font-weight:700;
-      border:0;padding:8px 12px;border-radius:10px;cursor:pointer
+
+    .logo {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      font-weight: 900;
+
+      line-height: 1;
+
     }
-    .skeleton{animation:pulse 1.2s ease-in-out infinite;background:#11161d;border-radius:12px;border:1px solid var(--stroke)}
-    .sk-img{height:150px}
-    .sk-ln{height:12px;margin:10px}
-    @keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
-    .empty{color:var(--muted);text-align:center;padding:40px;border:1px dashed var(--stroke);border-radius:14px;background:var(--panel)}
-    footer{opacity:.6;margin:52px 0 24px}
+
+    .logo-icon {
+
+      font-size: 30px;
+
+    }
+
+    .logo-main {
+
+      font-size: 26px;
+
+      letter-spacing: 1px;
+
+    }
+
+    .logo-main span {
+
+      color: var(--green);
+
+    }
+
+    .logo-sub {
+
+      font-size: 11px;
+
+      letter-spacing: 1px;
+
+      color: #ddd;
+
+    }
+
+    .nav {
+
+      display: flex;
+
+      gap: 26px;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+    }
+
+    .search {
+
+      display: flex;
+
+      gap: 12px;
+
+      align-items: center;
+
+    }
+
+    .search input {
+
+      background: #090909;
+
+      border: 1px solid #333;
+
+      color: white;
+
+      padding: 12px 16px;
+
+      border-radius: 8px;
+
+      width: 210px;
+
+    }
+
+    .cart {
+
+      font-size: 25px;
+
+    }
+
+    .hero {
+
+      min-height: 380px;
+
+      background:
+
+        linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.75) 42%, rgba(0,0,0,.25) 100%),
+
+        url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1600&q=80");
+
+      background-size: cover;
+
+      background-position: center;
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      padding: 70px 8%;
+
+    }
+
+    .hero-content {
+
+      max-width: 650px;
+
+    }
+
+    .hero h1 {
+
+      font-size: clamp(42px, 6vw, 72px);
+
+      line-height: .95;
+
+      font-weight: 1000;
+
+      letter-spacing: -2px;
+
+      margin-bottom: 22px;
+
+      text-transform: uppercase;
+
+    }
+
+    .hero h1 span {
+
+      color: var(--green);
+
+    }
+
+    .hero p {
+
+      font-size: 22px;
+
+      line-height: 1.35;
+
+      color: #eee;
+
+      max-width: 560px;
+
+      margin-bottom: 28px;
+
+    }
+
+    .hero p span {
+
+      color: var(--green);
+
+      font-weight: 800;
+
+    }
+
+    .buttons {
+
+      display: flex;
+
+      gap: 14px;
+
+      flex-wrap: wrap;
+
+    }
+
+    .btn {
+
+      padding: 15px 28px;
+
+      border-radius: 8px;
+
+      font-weight: 900;
+
+      display: inline-block;
+
+      text-align: center;
+
+      border: 2px solid transparent;
+
+      cursor: pointer;
+
+    }
+
+    .btn-green {
+
+      background: var(--green);
+
+      color: white;
+
+    }
+
+    .btn-outline {
+
+      border-color: white;
+
+      color: white;
+
+      background: transparent;
+
+    }
+
+    .trust-strip {
+
+      background: #080808;
+
+      color: white;
+
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 0;
+
+      padding: 28px 8%;
+
+    }
+
+    .trust-item {
+
+      display: flex;
+
+      gap: 16px;
+
+      align-items: center;
+
+      border-right: 1px solid #2a2a2a;
+
+      padding: 0 24px;
+
+    }
+
+    .trust-item:last-child {
+
+      border-right: 0;
+
+    }
+
+    .trust-icon {
+
+      color: var(--green);
+
+      font-size: 38px;
+
+    }
+
+    .trust-item h3 {
+
+      font-size: 15px;
+
+      margin-bottom: 5px;
+
+    }
+
+    .trust-item p {
+
+      font-size: 14px;
+
+      color: #ddd;
+
+      line-height: 1.35;
+
+    }
+
+    .section {
+
+      padding: 34px 6%;
+
+    }
+
+    .section-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 22px;
+
+    }
+
+    .section h2 {
+
+      font-size: 30px;
+
+      text-transform: uppercase;
+
+      letter-spacing: -1px;
+
+    }
+
+    .view-all {
+
+      color: var(--green);
+
+      font-weight: 800;
+
+    }
+
+    .deals-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(5, 1fr);
+
+      gap: 20px;
+
+    }
+
+    .deal-card {
+
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 8px;
+
+      overflow: hidden;
+
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+
+    }
+
+    .deal-card img {
+
+      width: 100%;
+
+      height: 205px;
+
+      object-fit: cover;
+
+      display: block;
+
+    }
+
+    .deal-body {
+
+      padding: 15px;
+
+    }
+
+    .deal-body h3 {
+
+      font-size: 17px;
+
+      margin-bottom: 8px;
+
+    }
+
+    .price {
+
+      font-size: 22px;
+
+      font-weight: 900;
+
+      margin-bottom: 8px;
+
+    }
+
+    .prime {
+
+      color: #1684d8;
+
+      font-size: 14px;
+
+      font-weight: 800;
+
+    }
+
+    .savings {
+
+      color: var(--green);
+
+      font-weight: 900;
+
+      font-size: 14px;
+
+      margin-bottom: 12px;
+
+      text-transform: uppercase;
+
+    }
+
+    .replaces {
+
+      font-size: 14px;
+
+      line-height: 1.45;
+
+      margin-bottom: 14px;
+
+    }
+
+    .card-buttons {
+
+      display: grid;
+
+      gap: 8px;
+
+    }
+
+    .small-btn {
+
+      display: block;
+
+      text-align: center;
+
+      padding: 11px;
+
+      border-radius: 6px;
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      border: 1px solid #ccc;
+
+    }
+
+    .small-btn.green {
+
+      background: var(--green);
+
+      color: white;
+
+      border-color: var(--green);
+
+    }
+
+    .breakdown {
+
+      display: grid;
+
+      grid-template-columns: 1.3fr 1.1fr 1fr;
+
+      gap: 18px;
+
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 10px;
+
+      overflow: hidden;
+
+      margin-top: 28px;
+
+    }
+
+    .breakdown-image img {
+
+      width: 100%;
+
+      height: 100%;
+
+      min-height: 290px;
+
+      object-fit: cover;
+
+      display: block;
+
+    }
+
+    .breakdown-content,
+
+    .savings-box,
+
+    .replace-box {
+
+      padding: 24px;
+
+    }
+
+    .breakdown-content h2 {
+
+      text-transform: none;
+
+      font-size: 30px;
+
+      margin-bottom: 20px;
+
+    }
+
+    .breakdown-content p {
+
+      margin-bottom: 12px;
+
+      line-height: 1.45;
+
+    }
+
+    .big-save {
+
+      background: #eef7e8;
+
+      color: var(--green);
+
+      padding: 18px;
+
+      border-radius: 8px;
+
+      margin-top: 18px;
+
+      font-size: 30px;
+
+      font-weight: 1000;
+
+    }
+
+    .savings-box,
+
+    .replace-box {
+
+      margin: 20px 0;
+
+      border: 1px solid #eee;
+
+      border-radius: 10px;
+
+      background: #fafafa;
+
+    }
+
+    .savings-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      border-bottom: 1px solid #e5e5e5;
+
+      padding: 13px 0;
+
+      font-size: 15px;
+
+    }
+
+    .savings-row:last-child {
+
+      border-bottom: none;
+
+    }
+
+    .replace-box ul {
+
+      list-style: none;
+
+      margin: 15px 0 22px;
+
+      line-height: 2;
+
+      font-size: 15px;
+
+    }
+
+    .replace-box li::before {
+
+      content: "✓ ";
+
+      color: var(--green);
+
+      font-weight: 900;
+
+    }
+
+    .categories {
+
+      display: grid;
+
+      grid-template-columns: repeat(6, 1fr);
+
+      gap: 16px;
+
+    }
+
+    .cat-card {
+
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 9px;
+
+      text-align: center;
+
+      padding: 26px 10px;
+
+      font-weight: 900;
+
+      font-size: 18px;
+
+    }
+
+    .cat-icon {
+
+      font-size: 42px;
+
+      color: var(--green);
+
+      margin-bottom: 10px;
+
+      display: block;
+
+    }
+
+    .why {
+
+      background: #030303;
+
+      color: white;
+
+      padding: 32px 8%;
+
+    }
+
+    .why h2 {
+
+      text-align: center;
+
+      font-size: 32px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 26px;
+
+    }
+
+    .why h2 span {
+
+      color: var(--green);
+
+    }
+
+    .why-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 32px;
+
+    }
+
+    .why-item {
+
+      display: flex;
+
+      gap: 15px;
+
+      align-items: center;
+
+      color: #eee;
+
+      line-height: 1.45;
+
+    }
+
+    .why-icon {
+
+      font-size: 38px;
+
+      color: var(--green);
+
+    }
+
+    .bottom-cta {
+
+      background: linear-gradient(90deg, #75b843, #8cc95d);
+
+      color: white;
+
+      padding: 28px 8%;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 25px;
+
+    }
+
+    .bottom-cta h2 {
+
+      font-size: 34px;
+
+      text-transform: uppercase;
+
+    }
+
+    .bottom-cta p {
+
+      font-size: 22px;
+
+    }
+
+    .bottom-buttons {
+
+      display: flex;
+
+      gap: 18px;
+
+    }
+
+    .btn-dark {
+
+      background: #000;
+
+      color: white;
+
+    }
+
+    .btn-white {
+
+      background: white;
+
+      color: #111;
+
+    }
+
+    .mobile-sticky {
+
+      display: none;
+
+    }
+
+    @media (max-width: 1000px) {
+
+      .nav,
+
+      .search {
+
+        display: none;
+
+      }
+
+      .trust-strip,
+
+      .deals-grid,
+
+      .categories,
+
+      .why-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+      }
+
+      .breakdown {
+
+        grid-template-columns: 1fr;
+
+      }
+
+      .bottom-cta {
+
+        flex-direction: column;
+
+        text-align: center;
+
+      }
+
+    }
+
+    @media (max-width: 650px) {
+
+      .topbar {
+
+        height: 68px;
+
+        padding: 0 16px;
+
+      }
+
+      .logo-main {
+
+        font-size: 22px;
+
+      }
+
+      .hero {
+
+        padding: 55px 22px;
+
+        min-height: 500px;
+
+        background-position: center;
+
+      }
+
+      .hero h1 {
+
+        font-size: 43px;
+
+      }
+
+      .hero p {
+
+        font-size: 18px;
+
+      }
+
+      .trust-strip,
+
+      .deals-grid,
+
+      .categories,
+
+      .why-grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+      .trust-item {
+
+        border-right: none;
+
+        border-bottom: 1px solid #222;
+
+        padding: 18px 0;
+
+      }
+
+      .section {
+
+        padding: 28px 18px;
+
+      }
+
+      .deal-card img {
+
+        height: 230px;
+
+      }
+
+      .bottom-buttons {
+
+        flex-direction: column;
+
+        width: 100%;
+
+      }
+
+      .mobile-sticky {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+
+        position: fixed;
+
+        bottom: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        background: #000;
+
+        padding: 10px;
+
+        z-index: 200;
+
+      }
+
+      .mobile-sticky a {
+
+        padding: 13px;
+
+        text-align: center;
+
+        border-radius: 7px;
+
+        font-weight: 900;
+
+      }
+
+      .mobile-sticky .deal {
+
+        background: var(--green);
+
+        color: white;
+
+      }
+
+      .mobile-sticky .details {
+
+        background: white;
+
+        color: #000;
+
+      }
+
+      body {
+
+        padding-bottom: 70px;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
 <body>
-  <!-- HEADER -->
-  <div class="nav">
-    <div class="nav-inner container">
-      <div class="logo" onclick="location.href='/'">
-        <img src="assets/logo.png" alt="ChopShops logo"/>
-        <div class="logo-title">ChopShops</div>
-        <span class="badge">curated finds</span>
-      </div>
-      <div class="search" id="searchBox">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" stroke="#8b93a1" stroke-width="2" stroke-linecap="round"/></svg>
-        <input id="q" placeholder="Search products…" />
-      </div>
-    </div>
-  </div>
 
-  <main class="container">
-    <!-- TABS + CATEGORY CHIPS -->
-    <div class="toolbar">
-      <div class="tabs" id="tabs">
-        <button class="tab active" data-scope="latest">Latest</button>
-        <button class="tab" data-scope="approved">Approved</button>
-        <button class="tab" data-scope="ideas">Ideas</button>
+  <header class="topbar">
+
+    <div class="logo">
+
+      <div class="logo-icon">☠</div>
+
+      <div>
+
+        <div class="logo-main">CHOP <span>SHOPS</span></div>
+
+        <div class="logo-sub">SAVE MORE. BUY SMARTER.</div>
+
       </div>
-      <div class="chips" id="chips"></div>
+
     </div>
 
-    <!-- GRID -->
-    <section id="grid" class="grid"></section>
+    <nav class="nav">
 
-    <div id="empty" class="empty" style="display:none">
-      No items match your filters.
+      <a href="#deals">Deals</a>
+
+      <a href="#categories">Categories</a>
+
+      <a href="#how">How It Works</a>
+
+      <a href="#calculator">Savings Calculator</a>
+
+      <a href="#about">About Us</a>
+
+    </nav>
+
+    <div class="search">
+
+      <input type="text" placeholder="Search deals..." />
+
+      <div class="cart">🛒</div>
+
     </div>
 
-    <footer class="container">© <span id="y"></span> ChopShops — curated finds</footer>
+  </header>
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <h1>Stop Overpaying<br>For <span>Everyday Stuff.</span></h1>
+
+      <p>We find products that replace recurring expenses and <span>save you money</span> all year long.</p>
+
+      <div class="buttons">
+
+        <a href="#deals" class="btn btn-green">🛒 Shop Deals</a>
+
+        <a href="#how" class="btn btn-outline">How It Saves You</a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="trust-strip">
+
+    <div class="trust-item">
+
+      <div class="trust-icon">🏷</div>
+
+      <div>
+
+        <h3>Handpicked Deals</h3>
+
+        <p>Only products that save you real money.</p>
+
+      </div>
+
+    </div>
+
+    <div class="trust-item">
+
+      <div class="trust-icon">💲</div>
+
+      <div>
+
+        <h3>Real Yearly Savings</h3>
+
+        <p>We show you the estimated savings.</p>
+
+      </div>
+
+    </div>
+
+    <div class="trust-item">
+
+      <div class="trust-icon">↔</div>
+
+      <div>
+
+        <h3>Replaces Expenses</h3>
+
+        <p>Each item replaces something you're already paying for.</p>
+
+      </div>
+
+    </div>
+
+    <div class="trust-item">
+
+      <div class="trust-icon">🛡</div>
+
+      <div>
+
+        <h3>Trusted & Transparent</h3>
+
+        <p>No fluff. Just smart, money-saving picks.</p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <main>
+
+    <section class="section" id="deals">
+
+      <div class="section-header">
+
+        <h2>Featured Deals</h2>
+
+        <a href="#" class="view-all">View all deals →</a>
+
+      </div>
+
+      <div class="deals-grid" id="dealsGrid"></div>
+
+      <div class="breakdown" id="how">
+
+        <div class="breakdown-image">
+
+          <img src="https://images.unsplash.com/photo-1622484212850-eb596d769edc?auto=format&fit=crop&w=900&q=80" alt="Water filter pitcher">
+
+        </div>
+
+        <div class="breakdown-content">
+
+          <h2>Water Filter Pitcher</h2>
+
+          <p><strong>Instead of:</strong><br>$10 / week on bottled water</p>
+
+          <p><strong>You pay:</strong><br>$29.99 once + filters</p>
+
+          <div class="big-save">
+
+            $180 – $600+
+
+          </div>
+
+        </div>
+
+        <div class="savings-box">
+
+          <h4>Your Savings By Household Size</h4>
+
+          <div class="savings-row"><span>👤 1 Person</span><strong>$180 / year</strong></div>
+
+          <div class="savings-row"><span>👥 2 People</span><strong>$320 / year</strong></div>
+
+          <div class="savings-row"><span>👨‍👩‍👧 3–4 People</span><strong>$480 / year</strong></div>
+
+          <div class="savings-row"><span>👨‍👩‍👧‍👦 5+ People</span><strong>$600+ / year</strong></div>
+
+        </div>
+
+        <div class="replace-box">
+
+          <h4>What It Replaces</h4>
+
+          <ul>
+
+            <li>Bottled water packs</li>
+
+            <li>Delivery water</li>
+
+            <li>Plastic waste</li>
+
+            <li>Store runs</li>
+
+            <li>Recurring expenses</li>
+
+          </ul>
+
+          <a href="#" class="btn btn-green">🛒 See Best Price</a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="section" id="categories">
+
+      <h2>Shop By Category</h2>
+
+      <br>
+
+      <div class="categories">
+
+        <div class="cat-card"><span class="cat-icon">🍳</span>Kitchen<br>Savings</div>
+
+        <div class="cat-card"><span class="cat-icon">🧽</span>Cleaning<br>Hacks</div>
+
+        <div class="cat-card"><span class="cat-icon">🍼</span>Kids &<br>Baby</div>
+
+        <div class="cat-card"><span class="cat-icon">🐾</span>Pets</div>
+
+        <div class="cat-card"><span class="cat-icon">🚗</span>Car &<br>Garage</div>
+
+        <div class="cat-card"><span class="cat-icon">💲</span>High Profit<br>Deals</div>
+
+      </div>
+
+    </section>
+
+    <section class="why" id="about">
+
+      <h2>Why Chop <span>Shops?</span></h2>
+
+      <div class="why-grid">
+
+        <div class="why-item">
+
+          <div class="why-icon">🏷</div>
+
+          <p>We focus on saving you money, not just selling products.</p>
+
+        </div>
+
+        <div class="why-item">
+
+          <div class="why-icon">↔</div>
+
+          <p>Every item replaces a recurring cost or reduces repeat purchases.</p>
+
+        </div>
+
+        <div class="why-item">
+
+          <div class="why-icon">📈</div>
+
+          <p>We show real yearly savings so you know it’s worth it.</p>
+
+        </div>
+
+        <div class="why-item">
+
+          <div class="why-icon">🛡</div>
+
+          <p>No fluff. Just handpicked deals that make your life cheaper.</p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="bottom-cta">
+
+      <div>
+
+        <h2>Start Saving Smarter Today</h2>
+
+        <p>Small changes. Big savings. Every year.</p>
+
+      </div>
+
+      <div class="bottom-buttons">
+
+        <a href="#deals" class="btn btn-dark">Browse All Deals</a>
+
+        <a href="#deals" class="btn btn-white">Best Savings This Week</a>
+
+      </div>
+
+    </section>
+
   </main>
 
+  <div class="mobile-sticky">
+
+    <a href="#deals" class="deal">Shop Deals</a>
+
+    <a href="#how" class="details">View Details</a>
+
+  </div>
+
   <script>
-    // --- helpers -------------------------------------------------------------
-    const $ = (s, r=document)=>r.querySelector(s);
-    const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
-    const money = n => (n==null||n==="") ? "" : `$${Number(n).toFixed(2)}`;
 
-    // --- state ---------------------------------------------------------------
-    let SCOPE = 'latest';           // latest | approved | ideas
-    let ACTIVE_CATEGORY = 'All';    // chip selection
-    let QUERY = '';
+    /*
 
-    // --- UI: tabs & chips ----------------------------------------------------
-    $$('#tabs .tab').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        $$('#tabs .tab').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        SCOPE = btn.dataset.scope;
-        render();
-      });
-    });
+      FUTURE NOTION SETUP:
 
-    $('#q').addEventListener('input', e=>{ QUERY = e.target.value.trim().toLowerCase(); render(); });
+      Later, this array gets replaced by products pulled from Notion.
 
-    // --- data ----------------------------------------------------------------
-    let ITEMS = [];  // filled after fetch
-    const GRID = $('#grid');
-    const EMPTY = $('#empty');
-    $('#y').textContent = new Date().getFullYear();
+      Public fields shown on website:
 
-    function skeleton(n=8){
-      GRID.innerHTML = '';
-      for(let i=0;i<n;i++){
-        const d = document.createElement('div');
-        d.className = 'col-3 card skeleton';
-        d.innerHTML = `<div class="sk-img"></div><div class="sk-ln"></div><div class="sk-ln" style="width:60%"></div>`;
-        GRID.appendChild(d);
+      - name
+
+      - price
+
+      - image
+
+      - affiliateLink
+
+      - yearlySavings
+
+      - replaces
+
+      - category
+
+      Hidden backend fields in Notion:
+
+      - approvalStatus
+
+      - live
+
+      - featured
+
+      Website should only show:
+
+      approvalStatus = "Approved"
+
+      live = true
+
+    */
+
+    const products = [
+
+      {
+
+        name: "Water Filter Pitcher",
+
+        price: "$29.99",
+
+        yearlySavings: "$180–$600 / YEAR",
+
+        replaces: "Bottled Water & Delivery Water",
+
+        category: "Kitchen Savings",
+
+        affiliateLink: "#",
+
+        image: "https://images.unsplash.com/photo-1622484212850-eb596d769edc?auto=format&fit=crop&w=900&q=80",
+
+        approvalStatus: "Approved",
+
+        live: true,
+
+        featured: true
+
+      },
+
+      {
+
+        name: "Reusable Paper Towels",
+
+        price: "$19.99",
+
+        yearlySavings: "$100–$250 / YEAR",
+
+        replaces: "Paper Towels & Napkins",
+
+        category: "Cleaning Hacks",
+
+        affiliateLink: "#",
+
+        image: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=900&q=80",
+
+        approvalStatus: "Approved",
+
+        live: true,
+
+        featured: true
+
+      },
+
+      {
+
+        name: "Safety Razor Kit",
+
+        price: "$24.99",
+
+        yearlySavings: "$80–$200 / YEAR",
+
+        replaces: "Disposable Razors",
+
+        category: "Bathroom Savings",
+
+        affiliateLink: "#",
+
+        image: "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=900&q=80",
+
+        approvalStatus: "Approved",
+
+        live: true,
+
+        featured: true
+
+      },
+
+      {
+
+        name: "Reusable Coffee Filter",
+
+        price: "$13.99",
+
+        yearlySavings: "$60–$150 / YEAR",
+
+        replaces: "Paper Filters & Pods",
+
+        category: "Kitchen Savings",
+
+        affiliateLink: "#",
+
+        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80",
+
+        approvalStatus: "Approved",
+
+        live: true,
+
+        featured: true
+
+      },
+
+      {
+
+        name: "Steam Mop Cleaner",
+
+        price: "$79.99",
+
+        yearlySavings: "$100–$300 / YEAR",
+
+        replaces: "Disposable Cleaning Pads",
+
+        category: "Cleaning Hacks",
+
+        affiliateLink: "#",
+
+        image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80",
+
+        approvalStatus: "Approved",
+
+        live: true,
+
+        featured: true
+
       }
-    }
 
-    async function load(){
-      skeleton(12);
-      try{
-        const res = await fetch('/functions/fetchProducts', { headers: { 'cache-control': 'no-cache' }});
-        const json = await res.json();
-        ITEMS = (json.items || []).map(x=>({
-          title: x.title || 'Untitled',
-          url: x.url || '#',
-          image: x.image || '',
-          price: x.price ?? null,
-          category: x.category || 'Other',
-          status: (x.status || '').toLowerCase(),
-          why: x.why || '',
-          hook: x.hook || '',
-          liked: !!x.liked
-        }));
-        buildChips();
-        render();
-      }catch(e){
-        GRID.innerHTML = `<div class="empty">Error loading products.</div>`;
-        console.error(e);
-      }
-    }
+    ];
 
-    function buildChips(){
-      const cats = Array.from(new Set(ITEMS.map(i=>i.category))).sort();
-      const chips = ['All', ...cats];
-      const wrap = $('#chips');
-      wrap.innerHTML = '';
-      chips.forEach(c=>{
-        const b = document.createElement('button');
-        b.className = 'chip' + (c===ACTIVE_CATEGORY?' active':'');
-        b.textContent = c;
-        b.addEventListener('click', ()=>{
-          ACTIVE_CATEGORY = c;
-          $$('#chips .chip').forEach(x=>x.classList.remove('active'));
-          b.classList.add('active');
-          render();
-        });
-        wrap.appendChild(b);
-      });
-    }
+    const dealsGrid = document.getElementById("dealsGrid");
 
-    function filterItems(){
-      let a = ITEMS.slice();
-      if (SCOPE === 'approved') a = a.filter(i => i.status === 'approved' || i.liked);
-      if (SCOPE === 'ideas') a = a.filter(i => i.status.startsWith('idea'));
-      if (ACTIVE_CATEGORY !== 'All') a = a.filter(i => i.category === ACTIVE_CATEGORY);
-      if (QUERY) a = a.filter(i =>
-        (i.title?.toLowerCase().includes(QUERY)) ||
-        (i.why?.toLowerCase().includes(QUERY)) ||
-        (i.category?.toLowerCase().includes(QUERY))
-      );
-      return a;
-    }
+    const visibleProducts = products.filter(product =>
 
-    function card(i){
-      const img = i.image
-        ? `<img src="${i.image}" alt="${i.title}"/>`
-        : `<div class="thumb"><span>No Image</span></div>`;
-      return `
-      <article class="card col-3">
-        <div class="thumb">${img}</div>
-        <div class="content">
-          <h3 class="title">${i.title}</h3>
-          <div class="meta">
-            <span>${i.category}</span>
-            ${i.price!=null ? `<span class="price">${money(i.price)}</span>` : ''}
-            ${i.hook ? `<span>• ${i.hook}</span>` : ''}
+      product.approvalStatus === "Approved" &&
+
+      product.live === true &&
+
+      product.featured === true
+
+    );
+
+    dealsGrid.innerHTML = visibleProducts.map(product => `
+
+      <article class="deal-card">
+
+        <img src="${product.image}" alt="${product.name}">
+
+        <div class="deal-body">
+
+          <h3>${product.name}</h3>
+
+          <div class="price">${product.price} <span class="prime">✓prime</span></div>
+
+          <div class="savings">Saves ${product.yearlySavings}</div>
+
+          <div class="replaces">
+
+            <strong>Replaces:</strong> ${product.replaces}
+
           </div>
-          ${i.why ? `<div class="why">${i.why}</div>` : ''}
-          <div class="row">
-            <a class="btn" href="${i.url}" target="_blank" rel="noopener">Buy →</a>
-            <span style="color:${i.status==='approved'?'#34d399':i.status.startsWith('idea')?'#fde68a':'#8b93a1'};font-size:12px">${i.status||'—'}</span>
+
+          <div class="card-buttons">
+
+            <a href="${product.affiliateLink}" class="small-btn green">View Deal</a>
+
+            <a href="#how" class="small-btn">See Breakdown</a>
+
           </div>
+
         </div>
-      </article>`;
-    }
 
-    function render(){
-      const list = filterItems();
-      if (!list.length){ GRID.innerHTML=''; EMPTY.style.display='block'; return; }
-      EMPTY.style.display='none';
-      GRID.innerHTML = list.map(card).join('');
-    }
+      </article>
 
-    load();
+    `).join("");
+
   </script>
+
 </body>
+
 </html>
