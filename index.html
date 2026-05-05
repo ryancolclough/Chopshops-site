@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Chop Shops | Save More. Buy Smarter.</title>
+<title>Chop Shops | Cut Everyday Costs</title>
 
 <style>
 
@@ -23,10 +23,6 @@
   --cream:#f6f6f2;
 
   --border:#dedede;
-
-  --text:#111;
-
-  --muted:#626262;
 
   --gold:#fff4d7;
 
@@ -44,7 +40,7 @@ body{
 
   background:var(--cream);
 
-  color:var(--text);
+  color:#111;
 
 }
 
@@ -128,22 +124,6 @@ a{text-decoration:none;color:inherit;}
 
 }
 
-.cart{
-
-  width:42px;
-
-  height:42px;
-
-  border:1px solid #303030;
-
-  border-radius:10px;
-
-  display:grid;
-
-  place-items:center;
-
-}
-
 .icon{
 
   stroke:currentColor;
@@ -158,19 +138,19 @@ a{text-decoration:none;color:inherit;}
 
 }
 
-.header-icon{width:22px;height:22px;color:white;}
-
 .menu{display:none;}
 
 .hero{
 
-  min-height:470px;
+  min-height:610px;
 
   background:
 
-    linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.78),rgba(0,0,0,.28)),
+    radial-gradient(circle at 72% 45%, rgba(98,179,63,.20), transparent 24%),
 
-    url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1800&q=80");
+    linear-gradient(90deg,rgba(0,0,0,.97),rgba(0,0,0,.78),rgba(0,0,0,.35)),
+
+    url("https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1800&q=80");
 
   background-size:cover;
 
@@ -182,11 +162,11 @@ a{text-decoration:none;color:inherit;}
 
   align-items:center;
 
-  padding:82px 8%;
+  padding:86px 8%;
 
 }
 
-.hero-content{max-width:690px;}
+.hero-content{max-width:760px;}
 
 .hero-kicker{
 
@@ -214,7 +194,7 @@ a{text-decoration:none;color:inherit;}
 
 .hero h1{
 
-  font-size:clamp(44px,7vw,78px);
+  font-size:clamp(44px,7vw,76px);
 
   line-height:.94;
 
@@ -236,11 +216,11 @@ a{text-decoration:none;color:inherit;}
 
   line-height:1.4;
 
-  max-width:590px;
+  max-width:640px;
 
   color:#eee;
 
-  margin-bottom:30px;
+  margin-bottom:28px;
 
 }
 
@@ -251,6 +231,38 @@ a{text-decoration:none;color:inherit;}
   font-weight:900;
 
 }
+
+.hero-points{
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:10px;
+
+  margin-bottom:28px;
+
+}
+
+.hero-pill{
+
+  border:1px solid rgba(255,255,255,.22);
+
+  background:rgba(0,0,0,.35);
+
+  padding:10px 13px;
+
+  border-radius:999px;
+
+  font-size:13px;
+
+  font-weight:900;
+
+  color:#f2f2f2;
+
+}
+
+.hero-pill span{color:var(--green);}
 
 .buttons{
 
@@ -306,17 +318,19 @@ a{text-decoration:none;color:inherit;}
 
 }
 
-.hero-disclaimer{
+.hero-brand{
 
   margin-top:18px;
 
-  font-size:13px;
+  font-size:14px;
 
-  color:#cfcfcf;
+  color:#d8d8d8;
 
-  max-width:560px;
+  max-width:620px;
 
 }
+
+.hero-brand strong{color:white;}
 
 .trust-strip{
 
@@ -460,17 +474,11 @@ a{text-decoration:none;color:inherit;}
 
 }
 
-.badge{
+.badge,.best-badge{
 
   position:absolute;
 
-  top:12px;
-
   left:12px;
-
-  background:var(--green);
-
-  color:white;
 
   border-radius:999px;
 
@@ -484,27 +492,23 @@ a{text-decoration:none;color:inherit;}
 
 }
 
+.badge{
+
+  top:12px;
+
+  background:var(--green);
+
+  color:white;
+
+}
+
 .best-badge{
 
-  position:absolute;
-
   bottom:12px;
-
-  left:12px;
 
   background:#000;
 
   color:white;
-
-  border-radius:999px;
-
-  padding:7px 11px;
-
-  font-size:11px;
-
-  font-weight:1000;
-
-  text-transform:uppercase;
 
 }
 
@@ -594,13 +598,7 @@ a{text-decoration:none;color:inherit;}
 
 }
 
-.payback-box strong,
-
-.payback-box span{
-
-  color:#8a6500;
-
-}
+.payback-box strong,.payback-box span{color:#8a6500;}
 
 .replaces{
 
@@ -738,9 +736,7 @@ a{text-decoration:none;color:inherit;}
 
 }
 
-.breakdown-panel h2,
-
-.breakdown-panel h3{
+.breakdown-panel h2,.breakdown-panel h3{
 
   text-transform:uppercase;
 
@@ -1020,15 +1016,15 @@ a{text-decoration:none;color:inherit;}
 
   .hero{
 
-    min-height:640px;
+    min-height:660px;
 
-    padding:52px 24px 62px;
+    padding:42px 24px 60px;
 
     background:
 
-      linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.58)),
+      linear-gradient(180deg,rgba(0,0,0,.96),rgba(0,0,0,.72),rgba(0,0,0,.55)),
 
-      url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80");
+      url("https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80");
 
     background-size:cover;
 
@@ -1036,19 +1032,45 @@ a{text-decoration:none;color:inherit;}
 
   }
 
-  .hero-kicker{font-size:11px;margin-bottom:18px;}
+  .hero-kicker{
+
+    font-size:11px;
+
+    margin-bottom:18px;
+
+  }
 
   .hero h1{
 
-    font-size:clamp(48px,14vw,72px);
+    font-size:clamp(43px,13vw,66px);
 
-    line-height:.98;
+    line-height:1;
 
     letter-spacing:-2px;
 
   }
 
   .hero p{font-size:18px;}
+
+  .hero-points{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:8px;
+
+  }
+
+  .hero-pill{
+
+    width:max-content;
+
+    max-width:100%;
+
+    font-size:12px;
+
+  }
 
   .buttons{
 
@@ -1306,12 +1328,6 @@ a{text-decoration:none;color:inherit;}
 
     <input class="search" type="text" placeholder="Search deals..." />
 
-    <div class="cart">
-
-      <svg class="icon header-icon" viewBox="0 0 24 24"><path d="M6 6h15l-2 9H8L6 6z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
-
-    </div>
-
   </div>
 
   <div class="menu">
@@ -1326,27 +1342,31 @@ a{text-decoration:none;color:inherit;}
 
   <div class="hero-content">
 
-    <div class="hero-kicker">Smart buys that replace repeat expenses</div>
+    <div class="hero-kicker">Shopping with intention, not impulse</div>
 
-    <h1>Stop Overpaying<br>For <span>Everyday Stuff.</span></h1>
+    <h1>Cut Everyday Costs.<br><span>Keep The Value.</span></h1>
 
-    <p>We find products that replace recurring expenses and <span>save you money</span> all year long.</p>
+    <p><strong>Chop Shops</strong> helps you find smarter products that replace what you keep rebuying — so you spend less every month without sacrificing quality.</p>
 
-    <div class="buttons">
+    <div class="hero-points">
 
-      <a href="#deals" class="btn btn-green">
+      <div class="hero-pill"><span>Cut</span> repeat purchases</div>
 
-        <svg class="icon" viewBox="0 0 24 24"><path d="M6 6h15l-2 9H8L6 6z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+      <div class="hero-pill"><span>Cut</span> disposable waste</div>
 
-        Shop Deals
-
-      </a>
-
-      <a href="#how" class="btn btn-outline">How It Saves You</a>
+      <div class="hero-pill"><span>Cut</span> hidden household costs</div>
 
     </div>
 
-    <p class="hero-disclaimer">Savings estimates are based on average household use. Actual results may vary by usage, price, and household size.</p>
+    <div class="buttons">
+
+      <a href="#deals" class="btn btn-green">Start Saving</a>
+
+      <a href="#how" class="btn btn-outline">See How It Works</a>
+
+    </div>
+
+    <p class="hero-brand"><strong>Why “Chop Shops”?</strong> Because the goal is simple: shop smarter and chop unnecessary spending from everyday life.</p>
 
   </div>
 
@@ -1358,7 +1378,7 @@ a{text-decoration:none;color:inherit;}
 
     <svg class="icon trust-icon" viewBox="0 0 24 24"><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7"/><path d="M4 8h16v4H4z"/><path d="M12 8v13"/></svg>
 
-    <div><h3>Handpicked</h3><p>Only products that save real money.</p></div>
+    <div><h3>Intentional Picks</h3><p>Products chosen to reduce repeat spending.</p></div>
 
   </div>
 
@@ -1474,17 +1494,17 @@ a{text-decoration:none;color:inherit;}
 
   <div class="categories">
 
-    <div class="category-card"><svg class="icon" viewBox="0 0 24 24"><path d="M6 8h12"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><path d="M5 8h14l-1 13H6L5 8z"/></svg>Kitchen<br>Savings</div>
+    <div class="category-card">Kitchen<br>Savings</div>
 
-    <div class="category-card"><svg class="icon" viewBox="0 0 24 24"><path d="M7 21h10"/><path d="M9 21V9l6-3v15"/><path d="M8 9h8"/></svg>Cleaning<br>Hacks</div>
+    <div class="category-card">Cleaning<br>Hacks</div>
 
-    <div class="category-card"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3h8v4l-2 2v12H10V9L8 7V3z"/><path d="M10 14h4"/></svg>Kids &<br>Baby</div>
+    <div class="category-card">Kids &<br>Baby</div>
 
-    <div class="category-card"><svg class="icon" viewBox="0 0 24 24"><circle cx="7" cy="8" r="2"/><circle cx="17" cy="8" r="2"/><circle cx="9" cy="15" r="2"/><circle cx="15" cy="15" r="2"/><path d="M12 12c3 0 5 2 5 5 0 2-2 3-5 3s-5-1-5-3c0-3 2-5 5-5z"/></svg>Pets</div>
+    <div class="category-card">Pets</div>
 
-    <div class="category-card"><svg class="icon" viewBox="0 0 24 24"><path d="M5 16h14"/><path d="M7 16l1-6h8l1 6"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/></svg>Car &<br>Garage</div>
+    <div class="category-card">Car &<br>Garage</div>
 
-    <div class="category-card"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M15 9c-.8-.8-2-.9-3-.6-1.5.5-1.6 2.4-.2 3l2 .8c1.6.7 1.3 2.8-.5 3.2-1.2.3-2.5-.1-3.3-.9"/></svg>High Profit<br>Deals</div>
+    <div class="category-card">High Profit<br>Deals</div>
 
   </div>
 
@@ -1496,13 +1516,13 @@ a{text-decoration:none;color:inherit;}
 
   <div class="why-grid">
 
-    <div class="why-item"><svg class="icon" viewBox="0 0 24 24"><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7"/><path d="M4 8h16v4H4z"/><path d="M12 8v13"/></svg><p>We focus on saving money, not random products.</p></div>
+    <div class="why-item"><p>We focus on saving money, not random products.</p></div>
 
-    <div class="why-item"><svg class="icon" viewBox="0 0 24 24"><path d="M7 7h13"/><path d="M17 4l3 3-3 3"/><path d="M17 17H4"/><path d="M7 14l-3 3 3 3"/></svg><p>Each pick replaces a recurring household cost.</p></div>
+    <div class="why-item"><p>Each pick replaces a recurring household cost.</p></div>
 
-    <div class="why-item"><svg class="icon" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3-4 3 2 5-7"/></svg><p>Annual savings are shown before you click.</p></div>
+    <div class="why-item"><p>Annual savings are shown before you click.</p></div>
 
-    <div class="why-item"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-5"/></svg><p>No fluff — just practical money-saving finds.</p></div>
+    <div class="why-item"><p>No fluff — just practical money-saving finds.</p></div>
 
   </div>
 
@@ -1532,21 +1552,9 @@ a{text-decoration:none;color:inherit;}
 
 <div class="mobile-sticky">
 
-  <a href="#deals" class="shop">
+  <a href="#deals" class="shop">Start Saving</a>
 
-    <svg class="icon" viewBox="0 0 24 24"><path d="M6 6h15l-2 9H8L6 6z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
-
-    Shop Deals
-
-  </a>
-
-  <a href="#categories" class="cat">
-
-    <svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
-
-    Categories
-
-  </a>
+  <a href="#categories" class="cat">Categories</a>
 
 </div>
 
