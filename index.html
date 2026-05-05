@@ -4,11 +4,11 @@
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Chop Shops | Save More. Buy Smarter.</title>
+<title>Chop Shops</title>
 
 <style>
 
@@ -16,55 +16,27 @@
 
   --green:#5dae32;
 
-  --green-dark:#3f8421;
-
   --black:#050505;
-
-  --soft-black:#101010;
 
   --white:#fff;
 
-  --cream:#f7f7f4;
-
-  --border:#dedede;
-
-  --text:#111;
+  --bg:#f7f7f4;
 
 }
 
-*{
-
-  margin:0;
-
-  padding:0;
-
-  box-sizing:border-box;
-
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 
   font-family:Arial, Helvetica, sans-serif;
 
-  background:var(--cream);
-
-  color:var(--text);
-
-}
-
-a{
-
-  color:inherit;
-
-  text-decoration:none;
+  background:var(--bg);
 
 }
 
 /* HEADER */
 
 .header{
-
-  height:74px;
 
   background:#000;
 
@@ -76,23 +48,7 @@ a{
 
   justify-content:space-between;
 
-  padding:0 34px;
-
-  border-bottom:1px solid #1f1f1f;
-
-  position:sticky;
-
-  top:0;
-
-  z-index:100;
-
-}
-
-.logo{
-
-  display:flex;
-
-  align-items:center;
+  padding:14px 24px;
 
 }
 
@@ -100,63 +56,31 @@ a{
 
   height:46px;
 
-  width:auto;
-
-  display:block;
-
 }
+
+/* NAV */
 
 .nav{
 
   display:flex;
 
-  align-items:center;
+  gap:24px;
 
-  gap:28px;
-
-  font-size:14px;
-
-  font-weight:800;
-
-}
-
-.header-actions{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:14px;
+  font-weight:700;
 
 }
 
 .search{
 
-  background:#090909;
+  background:#111;
 
   border:1px solid #333;
 
-  border-radius:8px;
+  padding:10px;
 
-  padding:11px 14px;
+  border-radius:6px;
 
   color:white;
-
-  width:205px;
-
-}
-
-.cart{
-
-  font-size:23px;
-
-}
-
-.menu{
-
-  display:none;
-
-  font-size:28px;
 
 }
 
@@ -164,311 +88,95 @@ a{
 
 .hero{
 
-  min-height:390px;
-
   background:
 
-    linear-gradient(90deg, rgba(0,0,0,.94) 0%, rgba(0,0,0,.78) 42%, rgba(0,0,0,.28) 100%),
+    linear-gradient(90deg, rgba(0,0,0,.9), rgba(0,0,0,.4)),
 
-    url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1800&q=80");
+    url("https://images.unsplash.com/photo-1556911220-bff31c812dba");
 
   background-size:cover;
 
-  background-position:center;
+  padding:80px 8%;
 
   color:white;
-
-  display:flex;
-
-  align-items:center;
-
-  padding:72px 8%;
-
-}
-
-.hero-content{
-
-  max-width:650px;
 
 }
 
 .hero h1{
 
-  font-size:clamp(42px,6vw,72px);
+  font-size:56px;
 
-  line-height:.95;
-
-  letter-spacing:-2px;
-
-  font-weight:1000;
-
-  text-transform:uppercase;
-
-  margin-bottom:22px;
+  margin-bottom:20px;
 
 }
 
-.hero h1 span,
-
-.hero p span{
-
-  color:var(--green);
-
-}
-
-.hero p{
-
-  font-size:22px;
-
-  line-height:1.4;
-
-  margin-bottom:28px;
-
-  max-width:560px;
-
-}
-
-.hero-buttons{
-
-  display:flex;
-
-  gap:14px;
-
-  flex-wrap:wrap;
-
-}
+.hero span{color:var(--green);}
 
 .btn{
 
-  display:inline-flex;
+  padding:14px 22px;
 
-  align-items:center;
+  border-radius:6px;
 
-  justify-content:center;
+  font-weight:800;
 
-  gap:8px;
-
-  padding:15px 28px;
-
-  border-radius:7px;
-
-  font-weight:900;
-
-  text-transform:uppercase;
-
-  font-size:14px;
-
-  cursor:pointer;
+  display:inline-block;
 
 }
 
-.btn-green{
+.green{background:var(--green);color:white;}
 
-  background:var(--green);
+.outline{border:2px solid white;color:white;}
 
-  color:white;
+/* DEALS */
 
-}
+.section{padding:40px 6%;}
 
-.btn-green:hover{
-
-  background:var(--green-dark);
-
-}
-
-.btn-outline{
-
-  border:2px solid white;
-
-  color:white;
-
-}
-
-/* TRUST STRIP */
-
-.trust-strip{
-
-  background:#060606;
-
-  color:white;
-
-  display:grid;
-
-  grid-template-columns:repeat(4,1fr);
-
-  padding:28px 7%;
-
-  border-top:1px solid #191919;
-
-  border-bottom:1px solid #191919;
-
-}
-
-.trust-item{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:16px;
-
-  padding:0 24px;
-
-  border-right:1px solid #252525;
-
-}
-
-.trust-item:last-child{
-
-  border-right:0;
-
-}
-
-.trust-icon{
-
-  color:var(--green);
-
-  font-size:38px;
-
-}
-
-.trust-item h3{
-
-  font-size:15px;
-
-  margin-bottom:5px;
-
-}
-
-.trust-item p{
-
-  color:#d8d8d8;
-
-  font-size:14px;
-
-  line-height:1.35;
-
-}
-
-/* SECTIONS */
-
-.section{
-
-  padding:38px 6%;
-
-}
-
-.section-header{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  margin-bottom:22px;
-
-}
-
-.section-title{
-
-  font-size:30px;
-
-  font-weight:1000;
-
-  text-transform:uppercase;
-
-  letter-spacing:-1px;
-
-}
-
-.view-all{
-
-  color:var(--green-dark);
-
-  font-weight:900;
-
-}
-
-/* DEAL CARDS */
-
-.deals-grid{
+.grid{
 
   display:grid;
 
   grid-template-columns:repeat(5,1fr);
 
-  gap:18px;
+  gap:16px;
 
 }
 
-.deal-card{
+.card{
 
   background:white;
-
-  border:1px solid var(--border);
 
   border-radius:8px;
 
   overflow:hidden;
 
-  box-shadow:0 4px 12px rgba(0,0,0,.06);
-
 }
 
-.deal-card img{
+.card img{
 
   width:100%;
 
-  height:200px;
+  height:180px;
 
   object-fit:cover;
 
-  display:block;
-
 }
 
-.deal-body{
-
-  padding:15px;
-
-}
-
-.deal-body h3{
-
-  font-size:17px;
-
-  margin-bottom:8px;
-
-}
+.card-body{padding:12px;}
 
 .price{
 
-  font-size:22px;
-
-  font-weight:1000;
-
-  margin-bottom:8px;
-
-}
-
-.prime{
-
-  color:#1684d8;
-
-  font-size:13px;
-
   font-weight:900;
+
+  font-size:20px;
 
 }
 
 .annual{
 
-  margin:10px 0;
+  margin-top:6px;
 
-  font-size:14px;
-
-  line-height:1.35;
+  font-size:13px;
 
 }
 
@@ -476,45 +184,15 @@ a{
 
   display:block;
 
-  color:var(--green-dark);
-
-  text-transform:uppercase;
-
-  font-size:13px;
-
-}
-
-.annual span{
-
-  color:var(--green-dark);
-
-  font-weight:1000;
+  color:var(--green);
 
 }
 
 .replaces{
 
-  font-size:14px;
+  font-size:13px;
 
-  line-height:1.4;
-
-  margin-bottom:14px;
-
-}
-
-.replaces strong{
-
-  display:block;
-
-  margin-bottom:3px;
-
-}
-
-.card-actions{
-
-  display:grid;
-
-  gap:8px;
+  margin-top:6px;
 
 }
 
@@ -522,17 +200,15 @@ a{
 
   display:block;
 
+  margin-top:6px;
+
+  padding:8px;
+
   text-align:center;
 
-  padding:11px;
+  border-radius:5px;
 
-  border-radius:6px;
-
-  font-size:13px;
-
-  font-weight:1000;
-
-  text-transform:uppercase;
+  font-weight:800;
 
   border:1px solid #ccc;
 
@@ -544,627 +220,57 @@ a{
 
   color:white;
 
-  border-color:var(--green);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .nav{display:none;}
+
+  .grid{grid-template-columns:repeat(2,1fr);}
 
 }
 
-/* BREAKDOWN */
+@media(max-width:600px){
 
-.breakdown{
-
-  margin-top:28px;
-
-  background:white;
-
-  border:1px solid var(--border);
-
-  border-radius:10px;
-
-  overflow:hidden;
-
-  display:grid;
-
-  grid-template-columns:1.2fr 1.1fr 1fr 1fr;
-
-}
-
-.breakdown-img img{
-
-  width:100%;
-
-  height:100%;
-
-  min-height:280px;
-
-  object-fit:cover;
-
-  display:block;
-
-}
-
-.breakdown-panel{
-
-  padding:24px;
-
-  border-left:1px solid #e6e6e6;
-
-}
-
-.breakdown-panel h2,
-
-.breakdown-panel h3{
-
-  margin-bottom:18px;
-
-  text-transform:uppercase;
-
-}
-
-.breakdown-panel p{
-
-  font-size:15px;
-
-  line-height:1.45;
-
-  margin-bottom:12px;
-
-}
-
-.big-save{
-
-  background:#eef7e8;
-
-  color:var(--green-dark);
-
-  padding:18px;
-
-  border-radius:8px;
-
-  margin-top:18px;
-
-}
-
-.big-save small{
-
-  display:block;
-
-  color:#333;
-
-  font-size:14px;
-
-  margin-bottom:4px;
-
-}
-
-.big-save strong{
-
-  font-size:32px;
-
-}
-
-.savings-row{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  gap:15px;
-
-  border-bottom:1px solid #eee;
-
-  padding:12px 0;
-
-  font-size:14px;
-
-}
-
-.savings-row:last-child{
-
-  border-bottom:0;
-
-}
-
-.replace-list{
-
-  list-style:none;
-
-  line-height:2;
-
-  font-size:14px;
-
-  margin-bottom:20px;
-
-}
-
-.replace-list li::before{
-
-  content:"✓ ";
-
-  color:var(--green);
-
-  font-weight:1000;
-
-}
-
-/* CATEGORIES */
-
-.categories{
-
-  display:grid;
-
-  grid-template-columns:repeat(6,1fr);
-
-  gap:16px;
-
-}
-
-.category-card{
-
-  background:white;
-
-  border:1px solid var(--border);
-
-  border-radius:9px;
-
-  padding:25px 10px;
-
-  text-align:center;
-
-  font-weight:1000;
-
-  font-size:17px;
-
-}
-
-.category-icon{
-
-  display:block;
-
-  color:var(--green-dark);
-
-  font-size:42px;
-
-  margin-bottom:10px;
-
-}
-
-/* WHY */
-
-.why{
-
-  background:#030303;
-
-  color:white;
-
-  padding:34px 7%;
-
-}
-
-.why h2{
-
-  text-align:center;
-
-  font-size:32px;
-
-  text-transform:uppercase;
-
-  margin-bottom:28px;
-
-}
-
-.why h2 span{
-
-  color:var(--green);
-
-}
-
-.why-grid{
-
-  display:grid;
-
-  grid-template-columns:repeat(4,1fr);
-
-  gap:30px;
-
-}
-
-.why-item{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:15px;
-
-  color:#eee;
-
-  line-height:1.45;
-
-  font-size:15px;
-
-}
-
-.why-icon{
-
-  color:var(--green);
-
-  font-size:38px;
-
-}
-
-/* CTA */
-
-.bottom-cta{
-
-  background:linear-gradient(90deg,var(--green-dark),var(--green));
-
-  color:white;
-
-  padding:28px 7%;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:24px;
-
-}
-
-.bottom-cta h2{
-
-  font-size:34px;
-
-  text-transform:uppercase;
-
-}
-
-.bottom-cta p{
-
-  font-size:21px;
-
-}
-
-.bottom-actions{
-
-  display:flex;
-
-  gap:16px;
-
-}
-
-.btn-dark{
-
-  background:#000;
-
-  color:white;
-
-}
-
-.btn-white{
-
-  background:white;
-
-  color:#111;
-
-}
-
-/* MOBILE STICKY */
-
-.mobile-sticky{
-
-  display:none;
-
-}
-
-/* RESPONSIVE */
-
-@media(max-width:1100px){
-
-  .deals-grid{
-
-    grid-template-columns:repeat(3,1fr);
-
-  }
-
-  .breakdown{
-
-    grid-template-columns:1fr 1fr;
-
-  }
-
-  .categories{
-
-    grid-template-columns:repeat(3,1fr);
-
-  }
-
-  .trust-strip,
-
-  .why-grid{
-
-    grid-template-columns:repeat(2,1fr);
-
-  }
-
-  .trust-item{
-
-    border-bottom:1px solid #252525;
-
-    padding:18px;
-
-  }
-
-}
-
-@media(max-width:760px){
-
-  .header{
-
-    height:70px;
-
-    padding:0 16px;
-
-  }
-
-  .logo img{
-
-    height:36px;
-
-  }
-
-  .nav,
-
-  .header-actions{
-
-    display:none;
-
-  }
-
-  .menu{
-
-    display:block;
-
-  }
+  .logo img{height:36px;}
 
   .hero{
 
-    min-height:430px;
-
-    padding:48px 20px;
-
-    background:
-
-      linear-gradient(90deg, rgba(0,0,0,.94), rgba(0,0,0,.58)),
-
-      url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80");
-
-    background-position:center;
+    padding:60px 20px;
 
   }
 
   .hero h1{
 
-    font-size:40px;
+    font-size:36px;
 
   }
 
-  .hero p{
-
-    font-size:17px;
-
-  }
-
-  .hero-buttons{
-
-    display:grid;
+  .grid{
 
     grid-template-columns:1fr;
 
   }
 
-  .trust-strip{
+  .card{
 
-    grid-template-columns:repeat(4,1fr);
-
-    gap:0;
-
-    padding:18px 10px;
-
-    text-align:center;
+    display:flex;
 
   }
 
-  .trust-item{
+  .card img{
 
-    display:block;
+    width:120px;
 
-    padding:8px 5px;
-
-    border:0;
+    height:120px;
 
   }
 
-  .trust-icon{
-
-    font-size:30px;
-
-    margin-bottom:6px;
-
-  }
-
-  .trust-item h3{
-
-    font-size:11px;
-
-  }
-
-  .trust-item p{
-
-    display:none;
-
-  }
-
-  .section{
-
-    padding:28px 16px;
-
-  }
-
-  .section-title{
-
-    font-size:24px;
-
-  }
-
-  .deals-grid{
-
-    grid-template-columns:1fr;
-
-    gap:14px;
-
-  }
-
-  .deal-card{
-
-    display:grid;
-
-    grid-template-columns:120px 1fr;
-
-  }
-
-  .deal-card img{
-
-    height:100%;
-
-    min-height:170px;
-
-  }
-
-  .deal-body{
-
-    padding:12px;
-
-  }
-
-  .deal-body h3{
-
-    font-size:15px;
-
-  }
-
-  .price{
-
-    font-size:20px;
-
-  }
-
-  .card-actions{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .breakdown{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .breakdown-panel{
-
-    border-left:0;
-
-    border-top:1px solid #e6e6e6;
-
-  }
-
-  .categories{
-
-    grid-template-columns:repeat(2,1fr);
-
-  }
-
-  .why-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .bottom-cta{
-
-    flex-direction:column;
-
-    text-align:center;
-
-    padding-bottom:90px;
-
-  }
-
-  .bottom-actions{
-
-    width:100%;
-
-    flex-direction:column;
-
-  }
-
-  .mobile-sticky{
-
-    position:fixed;
-
-    bottom:0;
-
-    left:0;
-
-    width:100%;
-
-    background:#000;
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:8px;
+  .card-body{
 
     padding:10px;
-
-    z-index:200;
-
-  }
-
-  .mobile-sticky a{
-
-    text-align:center;
-
-    padding:14px 10px;
-
-    border-radius:7px;
-
-    font-weight:1000;
-
-    text-transform:uppercase;
-
-    font-size:13px;
-
-  }
-
-  .mobile-sticky .shop{
-
-    background:var(--green);
-
-    color:white;
-
-  }
-
-  .mobile-sticky .cat{
-
-    background:#101010;
-
-    color:white;
-
-    border:1px solid #555;
 
   }
 
@@ -1176,497 +282,169 @@ a{
 
 <body>
 
+<!-- HEADER -->
+
 <header class="header">
 
   <div class="logo">
 
-    <img src="logo.png" alt="Chop Shops Logo">
+    <img src="logo.PNG" alt="Chop Shops Logo">
 
   </div>
 
   <nav class="nav">
 
-    <a href="#deals">Deals</a>
+    <a>Deals</a>
 
-    <a href="#categories">Categories</a>
+    <a>Categories</a>
 
-    <a href="#how">How It Works</a>
-
-    <a href="#calculator">Savings Calculator</a>
-
-    <a href="#about">About Us</a>
+    <a>How It Works</a>
 
   </nav>
 
-  <div class="header-actions">
-
-    <input class="search" type="text" placeholder="Search deals..." />
-
-    <div class="cart">🛒</div>
-
-  </div>
-
-  <div class="menu">☰</div>
+  <input class="search" placeholder="Search deals...">
 
 </header>
 
+<!-- HERO -->
+
 <section class="hero">
 
-  <div class="hero-content">
+  <h1>STOP OVERPAYING FOR <span>EVERYDAY STUFF</span></h1>
 
-    <h1>Stop Overpaying<br>For <span>Everyday Stuff.</span></h1>
+  <p>Products that replace recurring expenses and save money every year.</p>
 
-    <p>We find products that replace recurring expenses and <span>save you money</span> all year long.</p>
+  <a class="btn green">SHOP DEALS</a>
 
-    <div class="hero-buttons">
-
-      <a href="#deals" class="btn btn-green">🛒 Shop Deals</a>
-
-      <a href="#how" class="btn btn-outline">How It Saves You</a>
-
-    </div>
-
-  </div>
+  <a class="btn outline">HOW IT SAVES YOU</a>
 
 </section>
 
-<section class="trust-strip">
+<!-- DEALS -->
 
-  <div class="trust-item">
+<section class="section">
 
-    <div class="trust-icon">🏷</div>
-
-    <div>
-
-      <h3>Handpicked Deals</h3>
-
-      <p>Only products that save you real money.</p>
-
-    </div>
-
-  </div>
-
-  <div class="trust-item">
-
-    <div class="trust-icon">💲</div>
-
-    <div>
-
-      <h3>Real Yearly Savings</h3>
-
-      <p>We show estimated annual savings.</p>
-
-    </div>
-
-  </div>
-
-  <div class="trust-item">
-
-    <div class="trust-icon">↔</div>
-
-    <div>
-
-      <h3>Replaces Expenses</h3>
-
-      <p>Each item replaces something you already pay for.</p>
-
-    </div>
-
-  </div>
-
-  <div class="trust-item">
-
-    <div class="trust-icon">🛡</div>
-
-    <div>
-
-      <h3>Trusted & Transparent</h3>
-
-      <p>No fluff. Just smart money-saving picks.</p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<main>
-
-<section class="section" id="deals">
-
-  <div class="section-header">
-
-    <h2 class="section-title">Featured Deals</h2>
-
-    <a class="view-all" href="#">View all deals →</a>
-
-  </div>
-
-  <div class="deals-grid" id="dealsGrid"></div>
-
-  <div class="breakdown" id="how">
-
-    <div class="breakdown-img">
-
-      <img src="https://images.unsplash.com/photo-1622484212850-eb596d769edc?auto=format&fit=crop&w=900&q=80" alt="Water Filter Pitcher">
-
-    </div>
-
-    <div class="breakdown-panel">
-
-      <h2>Water Filter Pitcher</h2>
-
-      <p><strong>Instead of:</strong><br>$10 / week on bottled water</p>
-
-      <p><strong>You pay:</strong><br>$29.99 once + $20 / year for filters</p>
-
-      <div class="big-save">
-
-        <small>Estimated Annual Savings:</small>
-
-        <strong>$180 – $600+</strong>
-
-      </div>
-
-    </div>
-
-    <div class="breakdown-panel">
-
-      <h3>Your Savings By Household Size</h3>
-
-      <div class="savings-row"><span>👤 1 Person</span><strong>$180 / year</strong></div>
-
-      <div class="savings-row"><span>👥 2 People</span><strong>$320 / year</strong></div>
-
-      <div class="savings-row"><span>👨‍👩‍👧 3–4 People</span><strong>$480 / year</strong></div>
-
-      <div class="savings-row"><span>👨‍👩‍👧‍👦 5+ People</span><strong>$600+ / year</strong></div>
-
-    </div>
-
-    <div class="breakdown-panel">
-
-      <h3>What It Replaces</h3>
-
-      <ul class="replace-list">
-
-        <li>Bottled water packs</li>
-
-        <li>Delivery water</li>
-
-        <li>Plastic waste</li>
-
-        <li>Store runs</li>
-
-        <li>Recurring expenses</li>
-
-      </ul>
-
-      <a href="#" class="btn btn-green">🛒 See Best Price</a>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section" id="categories">
-
-  <h2 class="section-title">Shop By Category</h2>
+  <h2>FEATURED DEALS</h2>
 
   <br>
 
-  <div class="categories">
-
-    <div class="category-card"><span class="category-icon">🍳</span>Kitchen<br>Savings</div>
-
-    <div class="category-card"><span class="category-icon">🧽</span>Cleaning<br>Hacks</div>
-
-    <div class="category-card"><span class="category-icon">🍼</span>Kids &<br>Baby</div>
-
-    <div class="category-card"><span class="category-icon">🐾</span>Pets</div>
-
-    <div class="category-card"><span class="category-icon">🚗</span>Car &<br>Garage</div>
-
-    <div class="category-card"><span class="category-icon">💲</span>High Profit<br>Deals</div>
-
-  </div>
+  <div class="grid" id="grid"></div>
 
 </section>
-
-<section class="why" id="about">
-
-  <h2>Why Chop <span>Shops?</span></h2>
-
-  <div class="why-grid">
-
-    <div class="why-item">
-
-      <div class="why-icon">🏷</div>
-
-      <p>We focus on saving you money, not just selling products.</p>
-
-    </div>
-
-    <div class="why-item">
-
-      <div class="why-icon">↔</div>
-
-      <p>Every item replaces a recurring cost or reduces repeat purchases.</p>
-
-    </div>
-
-    <div class="why-item">
-
-      <div class="why-icon">📈</div>
-
-      <p>We show real yearly savings so you know it’s worth it.</p>
-
-    </div>
-
-    <div class="why-item">
-
-      <div class="why-icon">🛡</div>
-
-      <p>No fluff. Just handpicked deals that make your life cheaper.</p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="bottom-cta">
-
-  <div>
-
-    <h2>Start Saving Smarter Today</h2>
-
-    <p>Small changes. Big savings. Every year.</p>
-
-  </div>
-
-  <div class="bottom-actions">
-
-    <a href="#deals" class="btn btn-dark">Browse All Deals</a>
-
-    <a href="#deals" class="btn btn-white">Best Savings This Week</a>
-
-  </div>
-
-</section>
-
-</main>
-
-<div class="mobile-sticky">
-
-  <a href="#deals" class="shop">🛒 Shop Deals</a>
-
-  <a href="#categories" class="cat">☰ Categories</a>
-
-</div>
 
 <script>
 
-/*
-
-  FUTURE NOTION READY:
-
-  Later this array can be replaced by products pulled from Notion.
-
-  Public website fields:
-
-  name, price, image, affiliateLink, annualSavings, replaces, category
-
-  Hidden backend Notion fields:
-
-  approvalStatus, live, featured, commission, source, lastChecked
-
-  Website only shows:
-
-  approvalStatus = Approved
-
-  live = true
-
-  featured = true
-
-*/
-
 const products = [
 
-  {
+{
 
-    name:"Water Filter Pitcher",
+name:"Water Filter Pitcher",
 
-    price:"$29.99",
+price:"$29.99",
 
-    annualSavings:"$180 – $600 / year",
+savings:"$180–$600/year",
 
-    replaces:"Bottled water & delivery water",
+replaces:"Bottled water & delivery water",
 
-    category:"Kitchen Savings",
+img:"https://images.unsplash.com/photo-1622484212850-eb596d769edc"
 
-    affiliateLink:"#",
+},
 
-    image:"https://images.unsplash.com/photo-1622484212850-eb596d769edc?auto=format&fit=crop&w=900&q=80",
+{
 
-    approvalStatus:"Approved",
+name:"Reusable Paper Towels",
 
-    live:true,
+price:"$19.99",
 
-    featured:true
+savings:"$100–$250/year",
 
-  },
+replaces:"Paper towels & napkins",
 
-  {
+img:"https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec"
 
-    name:"Reusable Paper Towels",
+},
 
-    price:"$19.99",
+{
 
-    annualSavings:"$100 – $250 / year",
+name:"Safety Razor Kit",
 
-    replaces:"Paper towels & napkins",
+price:"$24.99",
 
-    category:"Cleaning Hacks",
+savings:"$80–$200/year",
 
-    affiliateLink:"#",
+replaces:"Disposable razors",
 
-    image:"https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&w=900&q=80",
+img:"https://images.unsplash.com/photo-1621607512214-68297480165e"
 
-    approvalStatus:"Approved",
+},
 
-    live:true,
+{
 
-    featured:true
+name:"Reusable Coffee Filter",
 
-  },
+price:"$13.99",
 
-  {
+savings:"$60–$150/year",
 
-    name:"Safety Razor Kit",
+replaces:"Paper filters & pods",
 
-    price:"$24.99",
+img:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085"
 
-    annualSavings:"$80 – $200 / year",
+},
 
-    replaces:"Disposable razors",
+{
 
-    category:"Bathroom Savings",
+name:"Steam Mop Cleaner",
 
-    affiliateLink:"#",
+price:"$79.99",
 
-    image:"https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=900&q=80",
+savings:"$100–$300/year",
 
-    approvalStatus:"Approved",
+replaces:"Cleaning pads & chemicals",
 
-    live:true,
+img:"https://images.unsplash.com/photo-1581578731548-c64695cc6952"
 
-    featured:true
-
-  },
-
-  {
-
-    name:"Reusable Coffee Filter",
-
-    price:"$13.99",
-
-    annualSavings:"$60 – $150 / year",
-
-    replaces:"Paper coffee filters & pods",
-
-    category:"Kitchen Savings",
-
-    affiliateLink:"#",
-
-    image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80",
-
-    approvalStatus:"Approved",
-
-    live:true,
-
-    featured:true
-
-  },
-
-  {
-
-    name:"Steam Mop Cleaner",
-
-    price:"$79.99",
-
-    annualSavings:"$100 – $300 / year",
-
-    replaces:"Disposable cleaning pads & chemicals",
-
-    category:"Cleaning Hacks",
-
-    affiliateLink:"#",
-
-    image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80",
-
-    approvalStatus:"Approved",
-
-    live:true,
-
-    featured:true
-
-  }
+}
 
 ];
 
-const dealsGrid = document.getElementById("dealsGrid");
+const grid = document.getElementById("grid");
 
-const visibleProducts = products.filter(product =>
+grid.innerHTML = products.map(p => `
 
-  product.approvalStatus === "Approved" &&
+<div class="card">
 
-  product.live === true &&
+<img src="${p.img}">
 
-  product.featured === true
+<div class="card-body">
 
-);
+<h3>${p.name}</h3>
 
-dealsGrid.innerHTML = visibleProducts.map(product => `
+<div class="price">${p.price}</div>
 
-  <article class="deal-card">
+<div class="annual">
 
-    <img src="${product.image}" alt="${product.name}">
+<strong>Annual Savings:</strong>
 
-    <div class="deal-body">
+${p.savings}
 
-      <h3>${product.name}</h3>
+</div>
 
-      <div class="price">${product.price} <span class="prime">✓prime</span></div>
+<div class="replaces">
 
-      <div class="annual">
+<strong>Replaces:</strong>
 
-        <strong>Annual Savings:</strong>
+${p.replaces}
 
-        <span>${product.annualSavings}</span>
+</div>
 
-      </div>
+<a class="small-btn green">View Deal</a>
 
-      <div class="replaces">
+<a class="small-btn">Details</a>
 
-        <strong>Replaces:</strong>
+</div>
 
-        ${product.replaces}
-
-      </div>
-
-      <div class="card-actions">
-
-        <a href="${product.affiliateLink}" class="small-btn green">View Deal</a>
-
-        <a href="#how" class="small-btn">See Breakdown</a>
-
-      </div>
-
-    </div>
-
-  </article>
+</div>
 
 `).join("");
 
